@@ -7,13 +7,15 @@ import Nosotros from '../Nosotros/Nosotros';
 
 function App() {
   return (
-      <div className="App">
-        <Navegacion/>
-        <Router>
-          <Route exact path="/" component={Home}/>
-          <Route path="/nosotros" component={Nosotros}/>
-        </Router>
-      </div>
+      <Router>
+        <div className="App">
+          <Navegacion/>
+            <Switch>
+              <Route exact path="/" component={Home}/>
+              <Route path="/nosotros" component={Nosotros}/>
+            </Switch>
+        </div>
+      </Router>
   );
 }
 
