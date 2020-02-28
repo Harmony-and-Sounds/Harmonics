@@ -1,0 +1,24 @@
+.center{
+    width: 50%;
+    object-fit: cover;
+    //padding: 20px;
+    padding-top: 80px;
+    height: 400px;
+    }
+
+  section.example {
+    text-align: justify;
+    padding: 80px;
+  }
+  
+  @media screen and (min-width: 601px) {
+    section.example {
+      font-size: 20px;
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+    section.example {
+      font-size: 15px;
+    }
+  }

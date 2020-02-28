@@ -24,9 +24,11 @@ class Navegacion extends Component {
                                     <a className="nav-link" href="#">Nosotros</a>
                                 </li>
                                 </Link>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">Empezar</a>
-                                </li>
+                                <Link to="/empezar">
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="#">Empezar</a>
+                                    </li>
+                                </Link>
                             </ul>
                         </div>
                     </div>
