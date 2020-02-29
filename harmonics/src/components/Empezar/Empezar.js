@@ -1,6 +1,10 @@
-import React, {useMemo} from 'react';
+import React, {useMemo,useState} from 'react';
 import {useDropzone} from 'react-dropzone';
+import Multiselect from 'react-widgets/lib/Multiselect'
+import 'react-widgets/dist/css/react-widgets.css';
 import './Empezar.css';
+
+let instrumentos = ['Guitarra', 'Charango', 'Flauta', 'Bateria', 'Voz'];
 
 const baseStyle = {
     flex: 1,
@@ -52,6 +56,8 @@ function Empezar(props) {
     </li>
   ));
 
+  const [value, setValue] = useState([]);
+
   return (
     <div className="container-fluid vertical-center">
         <div className="row">
@@ -69,11 +75,18 @@ function Empezar(props) {
                 </aside>
             </div>
             <div className="col-sm-6 col-md-6 col-lg-6">
-                <p>aidua</p>
+              <h4>Basic multi-select</h4>
+              <Multiselect
+                data={instrumentos}
+                value={value}
+                onChange={(value) => setValue(value)}
+              />
             </div>
         </div>
     </div>
   );
 }
+
+
 
 export default Empezar;
