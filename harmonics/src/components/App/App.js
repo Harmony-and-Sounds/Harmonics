@@ -5,6 +5,7 @@ import Navegacion from '../Navegacion/Navegacion'
 import Home from '../Home/PaginaPrincipal/Home'
 import Nosotros from '../Nosotros/Nosotros';
 import Empezar from '../Empezar/Empezar';
+import Instrumentros from '../Instrumentos/Instrumentos';
 
 function App() {
   return (
@@ -13,8 +14,10 @@ function App() {
           <Navegacion/>
             <Switch>
               <Route exact path="/" component={Home}/>
-              <Route path="/nosotros" component={Nosotros}/>
-              <Route path="/empezar" component={Empezar}/>
+              <Route exact path="/nosotros" component={Nosotros}/>
+              <Route exact path="/empezar" component={Empezar}/>
+              <Route path="/instrumentos" component={Instrumentros}/>
+              <Route component={Home} />
             </Switch>
         </div>
       </Router>

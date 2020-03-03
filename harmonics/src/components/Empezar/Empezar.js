@@ -1,6 +1,7 @@
-import React, {useMemo,useState} from 'react';
+import React, {useMemo,useState,useCallback} from 'react';
 import {useDropzone} from 'react-dropzone';
 import Multiselect from 'react-widgets/lib/Multiselect'
+import {Link} from 'react-router-dom'
 import 'react-widgets/dist/css/react-widgets.css';
 import './Empezar.css';
 
@@ -34,10 +35,23 @@ const baseStyle = {
     borderColor: '#ff1744'
   };
 
+
 function Empezar(props) {
+
+  const [value, setValue] = useState([]);
+  const [archivo, setArchivo] = useState(null);
+
+  const onDrop = useCallback(acceptedFiles => {
+    // Do something with the files
+    acceptedFiles.map(file => (
+      getBase64(file)
+  ));
+  }, [])
+
   const {acceptedFiles, rejectedFiles, getRootProps, getInputProps,  isDragActive, isDragAccept, isDragReject} = useDropzone({
     accept: 'audio/mp3', //audio/mp3
-    multiple: false
+    multiple: false,
+    onDrop
   });
 
   const style = useMemo(() => ({
@@ -56,7 +70,27 @@ function Empezar(props) {
     </li>
   ));
 
-  const [value, setValue] = useState([]);
+  function getBase64(file) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      //console.log(reader.result);
+      var data = reader.result;
+      setArchivo(data);
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+ }
+ 
+   const valid = () => {
+    if (archivo !=null && value.lenght > 0){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
   return (
     <div className="container-fluid vertical-center">
@@ -82,6 +116,11 @@ function Empezar(props) {
                 onChange={(value) => setValue(value)}
               />
             </div>
+        </div>
+        <div className="flex-row">
+          <Link to="/instrumentos">
+            <button className="btn btn-success justify-content-center" disabled = {(archivo == null || value.length == 0)? true : false} >Realizar serparacion</button>
+          </Link>
         </div>
     </div>
   );
