@@ -1,0 +1,25 @@
+#loader-wrapper {
+  top: 50;
+  left: 0;
+  width: 80%;
+  height: 100%;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 1);
+  position: absolute;
+}
+#loader {
+  display: block;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  width: 100px;
+  height: 100px;
+  margin: -75px 0 0 -75px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+
+}
+
+.my-button {
+  margin-top: 50px;
+}
