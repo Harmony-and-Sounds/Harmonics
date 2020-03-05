@@ -4,6 +4,7 @@ import Multiselect from 'react-widgets/lib/Multiselect'
 import {Link} from 'react-router-dom'
 import 'react-widgets/dist/css/react-widgets.css';
 import './Empezar.css';
+import {obtenerDatos} from '../../servicios/servicios'
 
 let instrumentos = ['Guitarra', 'Charango', 'Flauta', 'Bateria', 'Voz'];
 
@@ -119,7 +120,9 @@ function Empezar(props) {
         </div>
         <div className="flex-row">
           <Link to="/instrumentos">
-            <button className="btn btn-success justify-content-center" disabled = {(archivo == null || value.length == 0)? true : false} >Realizar serparacion</button>
+            <button className="btn btn-success justify-content-center" disabled = {(archivo === null || value.length == 0)? true : false} onClick={obtenerDatos.bind(value, archivo)} >
+              Realizar serparacion
+            </button>
           </Link>
         </div>
     </div>
