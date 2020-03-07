@@ -4,6 +4,7 @@ import Multiselect from 'react-widgets/lib/Multiselect'
 import {Link} from 'react-router-dom'
 import 'react-widgets/dist/css/react-widgets.css';
 import './Empezar.css';
+import {obtenerDatos} from '../../servicios/servicios'
 
 let instrumentos = ['Guitarra', 'Charango', 'Flauta', 'Bateria', 'Voz'];
 
@@ -22,15 +23,15 @@ const baseStyle = {
     outline: 'none',
     transition: 'border .24s ease-in-out'
   };
-  
+
   const activeStyle = {
     borderColor: '#2196f3'
   };
-  
+
   const acceptStyle = {
     borderColor: '#00e676'
   };
-  
+
   const rejectStyle = {
     borderColor: '#ff1744'
   };
@@ -63,7 +64,7 @@ function Empezar(props) {
     isDragActive,
     isDragReject
   ]);
-  
+
   const acceptedFilesItems = acceptedFiles.map(file => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
@@ -82,7 +83,7 @@ function Empezar(props) {
       console.log('Error: ', error);
     };
  }
- 
+
    const valid = () => {
     if (archivo !=null && value.lenght > 0){
       return true;
@@ -93,6 +94,7 @@ function Empezar(props) {
   }
 
   return (
+
     <div className="container-fluid vertical-center">
         <div className="row">
             <div className="col-sm-6 col-md-6 col-lg-6">
@@ -119,7 +121,9 @@ function Empezar(props) {
         </div>
         <div className="flex-row">
           <Link to="/instrumentos">
-            <button className="btn btn-success justify-content-center" disabled = {(archivo == null || value.length == 0)? true : false} >Realizar serparacion</button>
+            <button className="btn btn-success justify-content-center" disabled = {(archivo === null || value.length == 0)? true : false} onClick={obtenerDatos.bind(value, archivo)} >
+              Realizar serparacion
+            </button>
           </Link>
         </div>
     </div>
