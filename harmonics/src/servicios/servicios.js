@@ -1,5 +1,3 @@
-
-
 export async function obtenerDatos (instrumentos ,file){
 
     const form = new FormData()
@@ -12,5 +10,5 @@ export async function obtenerDatos (instrumentos ,file){
       headers: { 'Content-Type': 'multipart/form-data' },
       body: form,
     })
-    console.log(await response.json())
+    return await response.json();
 }

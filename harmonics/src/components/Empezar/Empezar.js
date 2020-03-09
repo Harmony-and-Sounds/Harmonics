@@ -126,7 +126,7 @@ function Empezar(props) {
             </button>
           </Link>
         </div>
-        <PopUp/>
+        
     </div>
   );
 }
