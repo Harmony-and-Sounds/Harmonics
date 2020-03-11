@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import './Navegacion.css';
+import {logout} from '../../servicios/servicios-sesion'
+import logo from '../../recursos/output-onlinepngtools.png'
 
 
 function Navegacion(){
 
     const [user, setUser] = useState('');
+
+    const history = useHistory();
 
     useEffect(() => {
         const usuario = localStorage.getItem('sesion');
@@ -15,12 +19,26 @@ function Navegacion(){
         }
       });
 
+    async function cerrarSesion () {
+        //Encriptar si se requiere
+        const respuesta = await logout(user);
+        if (respuesta[0].name==="Colombia"){
+            localStorage.removeItem('sesion');
+            /*var user = JSON.parse(localStorage.getItem('sesion')).name;
+            console.log(user);*/
+            history.push("/");
+        }
+        else{
+            alert("Error cerrando sesion.");
+        }
+    }
+
     return (
     <div className="Navegacion">
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style={{padding: 3}}>
                 <Link to="/">
-                    <span className="navbar-brand">
-                        <img src="/docs/4.4/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="Harmonics"/>
+                    <span className="navbar-brand perso">
+                        <img src={logo} className="logoPrincipal" alt="Harmonics"/>
                     </span>
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +67,7 @@ function Navegacion(){
                                 </button>
                                 <div className="dropdown-menu">
                                     <button className="dropdown-item" type="button">Mis Proyectos</button>
-                                    <button className="dropdown-item" type="button">Logout</button>
+                                    <button className="dropdown-item" type="button" onClick={cerrarSesion}>Logout</button>
                                 </div>
                             </div>
                         ) : (

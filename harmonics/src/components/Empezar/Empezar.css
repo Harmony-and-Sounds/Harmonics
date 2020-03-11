@@ -1,4 +1,43 @@
-.vertical-center {
+.container-fluid.vertical-center {
 	position: absolute;
-    top: 40%;
+    width: 70%;
+    right: 50%;
+    bottom: 50%;
+    transform: translate(50%,60%);
+    position: absolute;
   }
+
+
+  .fila {
+    min-height: 150px;
+    position: relative;
+    text-align: center;
+  }
+  
+  .columna_centrada {
+    display: inline-block;
+    width: 500px;
+  }
+  
+  label {
+    float: left;
+    margin: 0 5px;
+  }
+  
+  .columna_centrada.input {
+    width: 100000px;
+    height: 50px;
+    display: block;
+  }
+
+  .logoEmpezar {
+    width: 400px;
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+    /*width: 50%;*/
+    right: 50%;
+    bottom: 50%;
+    transform: translate(50%,-210%);
+    position: absolute;
+}

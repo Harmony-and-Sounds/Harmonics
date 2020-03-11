@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css';
 import fotoUsuario from '../../recursos/userFace.png'
-import logo from '../../recursos/harm-removebg-preview.png'
+import logo from '../../recursos/output-onlinepngtools.png'
 import {login} from '../../servicios/servicios-sesion'
 import { useHistory, Link } from "react-router-dom";
 

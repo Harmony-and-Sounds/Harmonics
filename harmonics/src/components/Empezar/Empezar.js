@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import 'react-widgets/dist/css/react-widgets.css';
 import './Empezar.css';
 import {obtenerDatos} from '../../servicios/servicios'
+import logo from '../../recursos/output-onlinepngtools.png'
 
 let instrumentos = ['Guitarra', 'Charango', 'Flauta', 'Bateria', 'Voz'];
 
@@ -41,6 +42,7 @@ function Empezar(props) {
 
   const [value, setValue] = useState([]);
   const [archivo, setArchivo] = useState(null);
+  const [nombreProy, setNombreProy] = useState('');
 
   const onDrop = useCallback(acceptedFiles => {
     // Do something with the files
@@ -84,34 +86,32 @@ function Empezar(props) {
     };
  }
 
-   const valid = () => {
-    if (archivo !=null && value.lenght > 0){
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
   return (
 
     <div className="container-fluid vertical-center">
+      <img src={logo} alt="Harmonics" className="logoEmpezar"/>
+        <div className="fila">
+          <div className="columna_centrada">
+            <h4>Nombre del proyecto</h4>
+            <input type="text" className="form-control over" placeholder="Ingrese el nombre del proyecto" value={nombreProy} onChange={e => setNombreProy(e.target.value)} required/>
+          </div>
+        </div>
         <div className="row">
             <div className="col-sm-6 col-md-6 col-lg-6">
                 <div {...getRootProps({style})}>
                     <input {...getInputProps()} />
-                    <p>Drag 'n' drop some files here, or click to select files</p>
-                    <em>(Only *.jpeg and *.png images will be accepted)</em>
+                    <p>Drag 'n' drop la cancion de musica andina que desa separar.</p>
+                    <em>(Solo archivos .mp3 seran permitidos.)</em>
                 </div>
                 <aside>
-                    <h4>Accepted files</h4>
+                    <h4>Archivos aceptados</h4>
                     <ul>
                     {acceptedFilesItems}
                     </ul>
                 </aside>
             </div>
             <div className="col-sm-6 col-md-6 col-lg-6">
-              <h4>Basic multi-select</h4>
+              <h4>Instrumentos</h4>
               <Multiselect
                 data={instrumentos}
                 value={value}
