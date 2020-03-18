@@ -23,7 +23,7 @@ function Navegacion(){
         const usuario = localStorage.getItem('sesion');
         if(usuario !== null){
             //let  useri = JSON.parse(usuario)
-            setUser(" "+(JSON.parse(usuario)).name)
+            setUser(" "+(JSON.parse(usuario)).name);
 
             solicitarNotificaciones();
         }
@@ -120,7 +120,7 @@ function Navegacion(){
                 <Modal.Header closeButton>
                     <Modal.Title>Notificaciones</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Se ha creado la solicitud de forma exitosa, se le notificara cuando su proceso alla sido completado.</Modal.Body>
+                <Modal.Body>Colocar aqui dentro las notificaciones que son guardadas en el estado.</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" /*onClick={volverHome}*/>
                         Borrar

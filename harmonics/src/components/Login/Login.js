@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import fotoUsuario from '../../recursos/userFace.png'
 import logo from '../../recursos/output-onlinepngtools.png'
@@ -40,9 +40,9 @@ function Login() {
                     <div className="col-sm-9 main-section over">
                         <div className = "modal-content over">
                             <div className="col-12 user-img over">
-                                <img src={fotoUsuario} className="logo"/>
+                                <img src={fotoUsuario} className="logo" alt="fotoUsuario"/>
                             </div>
-                            <img src={logo} className="logo"/>
+                            <img src={logo} className="logo" alt="Logo"/>
                             <div className="col-12 form-input over">
                                 <form>
                                     <div className="form-group over">

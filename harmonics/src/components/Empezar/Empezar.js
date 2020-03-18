@@ -1,7 +1,7 @@
 import React, {useMemo,useState,useCallback} from 'react';
 import {useDropzone} from 'react-dropzone';
 import Multiselect from 'react-widgets/lib/Multiselect'
-import {Link, useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import 'react-widgets/dist/css/react-widgets.css';
 import './Empezar.css';
 import {obtenerDatos} from '../../servicios/servicios'
@@ -57,7 +57,7 @@ function Empezar(props) {
   ));
   }, []);
 
-  const {acceptedFiles, rejectedFiles, getRootProps, getInputProps,  isDragActive, isDragAccept, isDragReject} = useDropzone({
+  const {acceptedFiles, getRootProps, getInputProps,  isDragActive, isDragAccept, isDragReject} = useDropzone({
     accept: 'audio/mp3', //audio/mp3
     multiple: false,
     onDrop
@@ -94,7 +94,7 @@ function Empezar(props) {
 
  async function realizarPerticion () {
   //Encriptar si se requiere
-  if (archivo !== null && value.length != 0 && nombreProy !== ""){
+  if (archivo !== null && value.length !== 0 && nombreProy !== ""){
       const respuesta = await obtenerDatos(archivo,value);
       if (respuesta[0].name==="Colombia"){
         setMostrar(true);

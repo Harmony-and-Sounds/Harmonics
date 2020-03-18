@@ -14,7 +14,7 @@ function App() {
   const Main = withRouter(({ location }) => {
     return (
         <div>
-          { location.pathname != '/login' && location.pathname != '/signup' && <Navegacion/>}
+          { location.pathname !== '/login' && location.pathname !== '/signup' && <Navegacion/>}
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route exact path="/login" component={Login}/>

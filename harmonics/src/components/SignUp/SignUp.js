@@ -53,9 +53,9 @@ function SignUp() {
                     <div className="col-sm-9 main-section a">
                         <div className = "modal-content over">
                             <div className="col-12 user-img over">
-                                <img src={fotoUsuario} className="logo"/>
+                                <img src={fotoUsuario} className="logo" alt="fotoUsuario"/>
                             </div>
-                            <img src={logo} className="logo"/>
+                            <img src={logo} className="logo" alt="Logo"/>
                             <div className="col-12 form-input over">
                                 <form>
                                     <div className="form-group over email">
