@@ -9,13 +9,32 @@ const MIDI_PAUSE = 'MIDI_PAUSE';
 const MIDI_END = 'MIDI_END';
 const MIDI_ERROR = 'MIDI_ERROR';
 
+const getPlayPauseButton = (songState, player) => {
+  switch (songState) {
+      default: {
+          return (
+              <button onClick={() => player.play({ url: midi})}>▶️</button>
+          );
+      }
+      case MIDI_PLAY: {
+          return <button onClick={() => player.pause()}>⏸️</button>;
+      }
+      case MIDI_PAUSE: {
+          return <button onClick={() => player.resume()}>▶️</button>;
+      }
+  }
+};
+
 function ReproductorMidi(props) {
 
   const [midiPlayer, setMidiPlayer] = useState(null);
+  const [currentSongTime, setCurrentSongTime] = useState(0);
+  const [currentSongState, setCurrentSongState] = useState(null);
+  const [volume, setVolume] = useState(50);
 
   useEffect(() => {
     if (!midiPlayer) {
-      setMidiPlayer( new MidiPlayer() );
+      setMidiPlayer( new MidiPlayer({volume}) );
     }
     //midiPlayer.setLogger({ eventLogger });
   });
@@ -23,7 +42,9 @@ function ReproductorMidi(props) {
   useEffect(() => {
     if (midiPlayer) {
       const eventLogger = payload => {
-        console.log(payload.time);
+        setCurrentSongTime(payload.time || 0);
+        setCurrentSongState(payload.event);
+        //console.log(payload.time);
         if (payload.event === MIDI_ERROR) {
           console.error(payload.message);
           console.error(payload.error);
@@ -36,22 +57,25 @@ function ReproductorMidi(props) {
       midiPlayer.setLogger({ eventLogger });
     }
   });
-
-  function play (){
-    midiPlayer.play({ url: midi});
-  }
-
-  function pause (){
-    midiPlayer.pause();
-  }
-
   return (
     <div className="ReproductorMidi">
         <div className="card repo">
             <div className="card-body">
                 <h5 className="card-title">Reproductor MiDi</h5>
-                <button className="btn btn-primary" onClick={play}>Play</button>
-                <button className="btn btn-primary" onClick={pause}>Pause</button>
+                {getPlayPauseButton(currentSongState,midiPlayer)}
+                <button onClick={() => midiPlayer.stop()}>⏹️</button>
+                <div className="slidecontainer">
+                  <input type="range" className="slider" value={volume} onChange={(e) => 
+                  {
+                    if (midiPlayer.gainNode !== undefined){
+                      const vol = parseInt(e.target.value);
+                      midiPlayer.setVolume({ volume: vol });
+                      setVolume(vol);
+                    }
+                  }}
+                  />
+                </div>
+                {Math.floor(currentSongTime)} Segundos
             </div>
         </div>
     </div>
