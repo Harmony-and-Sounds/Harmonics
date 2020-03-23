@@ -1,2 +1,0 @@
-# Harmonics
-Proyecto de grado
