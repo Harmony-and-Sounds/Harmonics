@@ -33,36 +33,36 @@ class ProjectRestController (ViewSet):
         return Response(project.name, status.HTTP_201_CREATED)
 
 
-    @action(methods=['GET'], url_path='voice/(?P<voiceId>.+)', detail=False)
+    @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)', detail=False)
     def get_isolated_voice(self, request, voiceId):
         directory = BASE_DIR+"/testfiles/vocals.mp3"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
-        response['Content-Disposition'] = 'attachment; filename="%s"' % file.name
+        response['Content-Disposition'] = 'attachment; filename="%s"' % 'vocals.mp3'
         return response
 
-    @action(methods=['GET'], url_path='voice/(?P<voiceId>.+)/transcription/sheet', detail=False)
-    def get_transcription_audio(self, request, voiceId):
+    @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/sheet', detail=False)
+    def get_transcription_sheet(self, request, voiceId):
         directory = BASE_DIR + "/testfiles/midi_sheet.pdf"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
-        response['Content-Disposition'] = 'attachment; filename="%s"' % file.name
+        response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi_sheet.pdf'
         return response
 
-    @action(methods=['GET'], url_path='voice/(?P<voiceId>.+)/transcription/midi', detail=False)
+    @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/midi', detail=False)
     def get_transcription_midi(self, request, voiceId):
         directory = BASE_DIR + "/testfiles/vocals_midi.mid"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
-        response['Content-Disposition'] = 'attachment; filename="%s"' % file.name
+        response['Content-Disposition'] = 'attachment; filename="%s"' % 'vocals_midi.mid'
         return response
 
-    @action(methods=['GET'], url_path='voice/(?P<voiceId>.+)/transcription/audio', detail=False)
-    def get_transcription_sheet(self, request, voiceId):
+    @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/audio', detail=False)
+    def get_transcription_audio(self, request, voiceId):
         directory = BASE_DIR + "/testfiles/midi_audio.mp3"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
-        response['Content-Disposition'] = 'attachment; filename="%s"' % file.name
+        response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi_audio.mp3'
         return response
 
     def retrieve(self,request,pk):

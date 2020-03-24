@@ -20,9 +20,9 @@ from users.views import ProfileRestController
 from projects.views import ProjectRestController
 from rest_framework_simplejwt import views as jwt_views
 
-router = routers.SimpleRouter()
-router.register('user', ProfileRestController , basename= "UserController")
-router.register('project', ProjectRestController, basename="ProjectRestController")
+router = routers.DefaultRouter()
+router.register(r'user', ProfileRestController , basename= "UserController")
+router.register(r'project', ProjectRestController, basename="ProjectRestController")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
