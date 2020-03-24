@@ -1,5 +1,6 @@
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 from rest_framework.parsers import FormParser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ViewSet
@@ -21,6 +22,7 @@ class ProfileRestController (ViewSet):
         profile = ser.create(request.data)
         return Response(profile.user.username, status.HTTP_201_CREATED)
 
+    @permission_classes((IsAuthenticated,))
     def retrieve(self,request,pk):
         profile = Profile.objects.get(id = pk)
         ser = ProfileGetSerializer(profile)
