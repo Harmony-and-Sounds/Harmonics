@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './SignUp.css';
 import fotoUsuario from '../../recursos/userFace.png'
 import logo from '../../recursos/output-onlinepngtools.png'
-import {login} from '../../servicios/servicios-sesion'
+import {signup} from '../../servicios/servicios-sesion'
 import { useHistory, Link } from "react-router-dom";
 
 function SignUp() {
@@ -26,13 +26,11 @@ function SignUp() {
         //Encriptar si se requiere
 
         if (userName !== "" && password !== "" && validarEmail()){
-            const respuesta = await login(userName,password);
-            if (respuesta[0].name==="Colombia"){
-                localStorage.setItem('sesion', JSON.stringify(respuesta[0]))
-                /*var user = JSON.parse(localStorage.getItem('sesion')).name;
-                console.log(user);*/
+            const respuesta = await signup( userName, password, email );
+            console.log(respuesta);
+            if (respuesta.status == 201){
                 alert("Usuario creado correctamente.");
-                history.push("/");
+                history.push("/login");
             }
             else{
                 alert("Error creando el usuario");
