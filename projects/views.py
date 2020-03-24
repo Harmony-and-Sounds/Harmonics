@@ -20,7 +20,7 @@ class ProjectRestController (ViewSet):
     parser_classes = (MultiPartParser, FormParser,)
 
     def list(self,request):
-        projects = Project.objects.filter(active = True)
+        projects = Project.objects.filter(active = False)
         ser = ProjectSerializer(projects, many=True)
         return Response(ser.data, status.HTTP_200_OK)
 
@@ -65,10 +65,17 @@ class ProjectRestController (ViewSet):
         response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi_audio.mp3'
         return response
 
+    @action(methods=['GET'], url_path='user', detail= False)
+    def get_user_projects(self,request):
+        projects = Project.objects.filter(user__user = request.user)
+        ser = ProjectSerializer(projects, many= True)
+        return Response(ser.data, status.HTTP_200_OK)
+
     def retrieve(self,request,pk):
         project = Project.objects.get(id = pk)
         ser = ProjectSerializer(project)
         return Response(ser.data,status.HTTP_200_OK)
+
 
 
 # Create your views here.

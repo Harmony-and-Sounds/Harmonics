@@ -22,8 +22,8 @@ class ProfileRestController (ViewSet):
         profile = ser.create(request.data)
         return Response(profile.user.username, status.HTTP_201_CREATED)
 
-    @permission_classes((IsAuthenticated,))
-    def retrieve(self,request,pk):
-        profile = Profile.objects.get(id = pk)
+    @action(methods=['GET'], detail= False, url_path='detail', permission_classes=(IsAuthenticated,))
+    def retrieve_user(self,request):
+        profile = Profile.objects.get(user = request.user)
         ser = ProfileGetSerializer(profile)
         return Response(ser.data,status.HTTP_200_OK)
