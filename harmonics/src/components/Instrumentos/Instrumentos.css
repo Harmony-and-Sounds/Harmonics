@@ -1,0 +1,4 @@
+.fluid-container.correcion{
+    position: relative;
+    transform: translate(0, 80px);
+}

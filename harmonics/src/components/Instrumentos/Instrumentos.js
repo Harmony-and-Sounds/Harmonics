@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Tab,Tabs} from 'react-bootstrap';
+//import ReproductorMidi from '../ReproductorMidi/ReproductorMidi';
+import Reproductor from '../Reproductor/Reproductor';
+import VisualizadorPDF from '../VisualizadorPDF/VisualizadorPDF';
+import './Instrumentos.css';
 
 function Instrumentos(props) {
+
+  const [usuario, setUsuario] = useState(props.usuario);
+  const [nomProyecto, setNomProyecto] = useState(props.nomProyecto);
+  const [instrumentos, setInstrumentos] = useState(props.instrumentos);
+
   return (
         <div className="Instrumentos">
+          <div className="fluid-container correcion">
             <h2>Instrumentos</h2>
             <br/>
-            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+            <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
               <Tab eventKey="home" title="Home">
-                <p>a</p>
+                <br/>
+                <h3>Instrumento</h3>
+                <Reproductor usuario={null} nomProyecto={null} instrumento={null}/>
+                <VisualizadorPDF usuario={null} nomProyecto={null} instrumento={null}/>
               </Tab>
-              <Tab eventKey="profile" title="Profile">
-                <p>a</p>
-              </Tab>
-              <Tab eventKey="contact" title="Contact">
-                <p>a</p>
+              <Tab eventKey="PRUEBA" title="PRUEBA">
+                <h1>hola</h1>
               </Tab>
             </Tabs>
+          </div>
+
         </div>
   );
 }
