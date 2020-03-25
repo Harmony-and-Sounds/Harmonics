@@ -15,8 +15,7 @@ function SignUp() {
 
     function validarEmail(){
         if (email!==""){
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            console.log(re.test(String(email).toLowerCase()));
+            var re = /\S+@\S+\.\S+/;
             return re.test(String(email).toLowerCase());
         }
         return false;
@@ -28,7 +27,7 @@ function SignUp() {
         if (userName !== "" && password !== "" && validarEmail()){
             const respuesta = await signup( userName, password, email );
             console.log(respuesta);
-            if (respuesta.status == 201){
+            if (respuesta.status === 201){
                 alert("Usuario creado correctamente.");
                 history.push("/login");
             }
