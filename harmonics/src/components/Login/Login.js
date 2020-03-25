@@ -12,21 +12,21 @@ function Login() {
 
     const history = useHistory();
 
-    async function realizarPerticion () {
+    function realizarPerticion () {
         //Encriptar si se requiere
         if (userName !== "" && password !== ""){
-            const respuesta = await login(userName,password);
-            if (respuesta[0].name==="Colombia"){
-                localStorage.setItem('sesion', JSON.stringify(respuesta[0]))
-                /*var user = JSON.parse(localStorage.getItem('sesion')).name;
-                console.log(user);*/
-                history.push("/");
-            }
-            else{
-                alert("El nombre de usuario o la contrsaeña no son correctos.")
-                setUserName("");
-                setPassword("");
-            }
+            login(userName,password).then(respuesta => {
+                if (respuesta.bandera === true){
+                    localStorage.setItem('access', respuesta.data.access);
+                    localStorage.setItem('refresh', respuesta.data.refresh);
+                    history.push("/");
+                }
+                else{
+                    alert(respuesta.data)
+                    setUserName("");
+                    setPassword("");
+                }
+            });
         }
         else{
             alert("Los campos no han sido llenados correctamente.")
