@@ -21,22 +21,20 @@ function SignUp() {
         return false;
     }
 
-    async function realizarPerticion () {
-        //Encriptar si se requiere
-
+    function realizarPerticion () {
         if (userName !== "" && password !== "" && validarEmail()){
-            const respuesta = await signup( userName, password, email );
-            console.log(respuesta);
-            if (respuesta.status === 201){
-                alert("Usuario creado correctamente.");
-                history.push("/login");
-            }
-            else{
-                alert("Error creando el usuario");
-                setUserName("");
-                setPassword("");
-                setEmail("");
-            }
+            signup( userName, password, email ).then( data => {
+                if (data.bandera === true){
+                    alert("Usuario creado correctamente.");
+                    history.push("/login");
+                }
+                else{
+                    alert(data.data);
+                    setUserName("");
+                    setPassword("");
+                    setEmail("");
+                }
+            })
         }
         else{
             alert("Los campos no han sido llenados correctamente.")

@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import {Link, useHistory} from 'react-router-dom'
 import './Navegacion.css';
 import {logout} from '../../servicios/servicios-sesion'
-import {getNotificaciones} from '../../servicios/servicio-usuario'
+import {getInfoUsuario} from '../../servicios/servicio-usuario'
 import logo from '../../recursos/output-onlinepngtools.png'
 import { Button, Modal } from 'react-bootstrap';
 
 
 function Navegacion(){
 
-    const [user, setUser] = useState('');
-    const [notificaciones, setNotificaciones] = useState(null);
-    const [color, setColor] = useState('#6c757d');
+    const [token, setToken] = useState('');
+    const [username, setUsername] = useState('');
+    const [color, setColor] = useState('btn btn-secondary');
     const [mostrar,setMostrar] = useState(false);
 
     const handleClose = () => setMostrar(false);
@@ -20,39 +20,45 @@ function Navegacion(){
     const history = useHistory();
 
     useEffect(() => {
-        const usuario = localStorage.getItem('sesion');
-        if(usuario !== null){
-            //let  useri = JSON.parse(usuario)
-            setUser(" "+(JSON.parse(usuario)).name);
-
+        document.getElementById("notificacion").style.visibility = "hidden";
+        const access = localStorage.getItem('access');
+        if(access !== null){
+            setToken(access);
             solicitarNotificaciones();
         }
-      });
+      }, [solicitarNotificaciones] );
 
-    async function cerrarSesion () {
-        //Encriptar si se requiere
-        const respuesta = await logout(user);
+    function cerrarSesion () {
+        /*const respuesta = await logout(user);
         if (respuesta[0].name==="Colombia"){
-            localStorage.removeItem('sesion');
+            localStorage.removeItem('access');
             /*var user = JSON.parse(localStorage.getItem('sesion')).name;
-            console.log(user);*/
+            console.log(user);
             history.push("/");
         }
         else{
             alert("Error cerrando sesion.");
-        }
+        }*/
+        localStorage.removeItem('access');
+        localStorage.removeItem('refresh');
+        window.location.reload();
     }
 
 
-    async function solicitarNotificaciones () {
-        //Encriptar si se requiere
-        const respuesta = await getNotificaciones(user);
-        if (respuesta[0].name==="Colombia"){
-            setNotificaciones(respuesta);
-            setColor('blue');
-        }
-        else{
-            alert("Error cargando notificaciones.");
+    function solicitarNotificaciones () {
+        if (token !== ""){
+            getInfoUsuario(token).then( respuesta => {
+                if (respuesta.bandera === true){
+                    setUsername(" "+respuesta.data.user.username);
+                    if (respuesta.data.pending_notifications !== true){
+                        document.getElementById("notificacion").style.visibility = "visible";
+                        setColor('btn btn-primary');
+                    }
+                }
+                else{
+                    alert(respuesta.data);
+                }
+            });
         }
     }
 
@@ -82,18 +88,18 @@ function Navegacion(){
                                 </li>
                             </Link>
                         </ul>
-                        {(user !== "") ? (
+                        {(username !== "") ? (
                             <div className="btn-group dropleft">
                                 <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i className="fas fa-user"></i>
-                                    <span>{user}</span>
+                                    <span>{username}</span>
                                 </button>
                                 <div className="dropdown-menu">
                                     <button className="dropdown-item" type="button">Mis Proyectos</button>
                                     <button className="dropdown-item" type="button" onClick={cerrarSesion}>Logout</button>
                                 </div>
 
-                                <button type="button" className="btn btn-secondary" style={{backgroundColor: color}} onClick={handleShow}> 
+                                <button type="button" className={color} onClick={handleShow} id="notificacion"> 
                                     <i className="fas fa-bell"></i>
                                 </button>
                             </div>
@@ -101,7 +107,6 @@ function Navegacion(){
                             <div className="btn-group dropleft">
                                 <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i className="fas fa-user"></i>
-                                    <span>{user}</span>
                                 </button>
                                 <div className="dropdown-menu">
                                     <Link to="/login">
@@ -111,6 +116,10 @@ function Navegacion(){
                                         <button className="dropdown-item" type="button">SignUp</button>
                                     </Link>
                                 </div>
+                                
+                                <button type="button" className={color} onClick={handleShow} id="notificacion"> 
+                                    <i className="fas fa-bell"></i>
+                                </button>
                             </div>
                         )}
                     </div>
@@ -120,7 +129,7 @@ function Navegacion(){
                 <Modal.Header closeButton>
                     <Modal.Title>Notificaciones</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Colocar aqui dentro las notificaciones que son guardadas en el estado.</Modal.Body>
+                <Modal.Body>El proceso de uno o mas proyectos ya ha finalizado.</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" /*onClick={volverHome}*/>
                         Borrar

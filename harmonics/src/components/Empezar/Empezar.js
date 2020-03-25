@@ -1,10 +1,10 @@
-import React, {useMemo,useState,useCallback} from 'react';
+import React, {useMemo,useState,useCallback,useEffect} from 'react';
 import {useDropzone} from 'react-dropzone';
 import Multiselect from 'react-widgets/lib/Multiselect'
 import { useHistory } from 'react-router-dom'
 import 'react-widgets/dist/css/react-widgets.css';
 import './Empezar.css';
-import {obtenerDatos} from '../../servicios/servicios'
+import {crearProyecto} from '../../servicios/servicios-proyecto'
 import logo from '../../recursos/output-onlinepngtools.png'
 import { Button, Modal } from 'react-bootstrap';
 
@@ -40,11 +40,19 @@ const baseStyle = {
 
 function Empezar(props) {
 
-
+  const [token, setToken] = useState('');
   const [value, setValue] = useState([]);
   const [archivo, setArchivo] = useState(null);
   const [nombreProy, setNombreProy] = useState('');
   const [mostrar,setMostrar] = useState(false);
+
+  useEffect(() => {
+    const access = localStorage.getItem('access');
+    if(access !== null){
+        setToken(access);
+    }
+  });
+
 
   const handleClose = () => setMostrar(false);
 
@@ -53,7 +61,8 @@ function Empezar(props) {
   const onDrop = useCallback(acceptedFiles => {
     // Do something with the files
     acceptedFiles.map(file => (
-      getBase64(file)
+      setArchivo(file)
+      //getBase64(file)
   ));
   }, []);
 
@@ -70,7 +79,8 @@ function Empezar(props) {
     ...(isDragReject ? rejectStyle : {})
   }), [
     isDragActive,
-    isDragReject
+    isDragReject,
+    isDragAccept
   ]);
 
   const acceptedFilesItems = acceptedFiles.map(file => (
@@ -92,19 +102,21 @@ function Empezar(props) {
     };
  }
 
- async function realizarPerticion () {
+ function crearProy () {
   //Encriptar si se requiere
   if (archivo !== null && value.length !== 0 && nombreProy !== ""){
-      const respuesta = await obtenerDatos(archivo,value);
-      if (respuesta[0].name==="Colombia"){
-        setMostrar(true);
-      }
-      else{
-          alert("Error mandando la solicitud.")
-          setValue([]);
-          setArchivo(null);
-          setNombreProy("");
-      }
+
+      crearProyecto(token, nombreProy, archivo, value).then( respuesta => {
+        if (respuesta.bandera === true){
+          setMostrar(true);
+        }
+        else{
+            alert(respuesta.data);
+            setValue([]);
+            setArchivo(null);
+            setNombreProy("");
+        }
+      });
   }
   else{
       alert("Los campos no han sido llenados correctamente.")
@@ -112,6 +124,7 @@ function Empezar(props) {
 } 
 
 function volverHome (){
+
   history.push("/");
 }
 
@@ -144,7 +157,7 @@ return (
       </div>
     </div>
     <div className="flex-row">
-      <button className="btn btn-success justify-content-center" onClick={realizarPerticion}>Realizar serparacion </button>
+      <button className="btn btn-success justify-content-center" onClick={crearProy}>Realizar serparacion </button>
     </div>
 
     <Modal show={mostrar} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
