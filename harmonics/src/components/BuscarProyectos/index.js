@@ -64,8 +64,8 @@ class Search extends React.Component {
 				} )
 		});
 
-
-		/*const pageNumber = updatedPageNo ? `&page=${updatedPageNo}` : '';
+		/*
+		const pageNumber = updatedPageNo ? `&page=${updatedPageNo}` : '';
 		const searchUrl = `https://pixabay.com/api/?key=15542906-13f04010e64dbf82fca50e361&q=${query}${pageNumber}`;
 		console.log(searchUrl);
 		if( this.cancel ) {
@@ -120,8 +120,7 @@ class Search extends React.Component {
 	 *
 	 * @param {String} type 'prev' or 'next'
 	 */
-	handlePageClick = ( type ) => {
-		event.preventDefault();
+	handlePageClick = ( type, event ) => {
 		const updatePageNo = 'prev' === type
 			? this.state.currentPageNo - 1
 			: this.state.currentPageNo + 1;
@@ -189,7 +188,7 @@ class Search extends React.Component {
 				 				value={tags}
 				 				onChange={this.setTags}
 			 				/>
-				 	 	<button type="submit" onClick={() => this.handleOnInputChange(event)} >buscar</button>
+				 	 	<button type="submit" onClick={() => this.handleOnInputChange()} >buscar</button>
 					 </label>
 
 			{/*	Error Message*/}
@@ -203,8 +202,8 @@ class Search extends React.Component {
 				loading={loading}
 				showPrevLink={showPrevLink}
 				showNextLink={showNextLink}
-				handlePrevClick={ () => this.handlePageClick('prev', event )}
-				handleNextClick={ () => this.handlePageClick('next', event )}
+				handlePrevClick={ () => this.handlePageClick('prev' )}
+				handleNextClick={ () => this.handlePageClick('next' )}
 			/>
 
 			{/*	Result*/}
@@ -215,8 +214,8 @@ class Search extends React.Component {
 				loading={loading}
 				showPrevLink={showPrevLink}
 				showNextLink={showNextLink}
-				handlePrevClick={ () => this.handlePageClick('prev', event )}
-				handleNextClick={ () => this.handlePageClick('next', event )}
+				handlePrevClick={ () => this.handlePageClick('prev')}
+				handleNextClick={ () => this.handlePageClick('next')}
 			/>
 
 			</div>
