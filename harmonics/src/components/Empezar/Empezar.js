@@ -51,7 +51,7 @@ function Empezar(props) {
     if(access !== null){
         setToken(access);
     }
-  });
+  }, []);
 
 
   const handleClose = () => setMostrar(false);
@@ -88,19 +88,6 @@ function Empezar(props) {
       {file.path} - {file.size} bytes
     </li>
   ));
-
-  function getBase64(file) {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      //console.log(reader.result);
-      var data = reader.result;
-      setArchivo(data);
-    };
-    reader.onerror = function (error) {
-      console.log('Error: ', error);
-    };
- }
 
  function crearProy () {
   //Encriptar si se requiere

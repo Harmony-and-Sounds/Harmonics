@@ -11,12 +11,9 @@ function Instrumentos(props) {
 
   const location = useLocation();
 
-  const [usuario, setUsuario] = useState(props.usuario);
-  const [nomProyecto, setNomProyecto] = useState(props.nomProyecto);
-  const [instrumentos, setInstrumentos] = useState(props.instrumentos);
-  console.log(location.state.usuario);
-  console.log(location.state.nomProyecto);
-  console.log(location.state.instrumentos);
+  const [idProyecto] = useState(location.state.idProyecto);
+  const [nomProyecto] = useState(location.state.nomProyecto);
+  const [voices] = useState(location.state.voices);
 
   return (
 
@@ -24,16 +21,17 @@ function Instrumentos(props) {
           <div className="fluid-container correcion">
             <h2>Instrumentos</h2>
             <br/>
-            <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
-              <Tab eventKey="home" title="Home">
-                <br/>
-                <h3>Instrumento</h3>
-                <Reproductor usuario={null} nomProyecto={null} instrumento={null}/>
-                <VisualizadorPDF usuario={null} nomProyecto={null} instrumento={null}/>
-              </Tab>
-              <Tab eventKey="PRUEBA" title="PRUEBA">
-                <h1>hola</h1>
-              </Tab>
+            <Tabs id="uncontrolled-tab-example">
+              { 
+                voices.map( voz => (
+                  <Tab key={voz.id} eventKey={voz.id} title={voz.instrument}>
+                    <br/>
+                    <h3>{voz.instrument}</h3>
+                    <Reproductor idVoz={voz.id}/>
+                    <VisualizadorPDF idVoz={voz.id}/>
+                  </Tab>
+                ))
+              }
             </Tabs>
           </div>
 

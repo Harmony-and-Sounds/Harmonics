@@ -50,7 +50,7 @@ function Navegacion(){
             getInfoUsuario(token).then( respuesta => {
                 if (respuesta.bandera === true){
                     setUsername(" "+respuesta.data.user.username);
-                    if (respuesta.data.pending_notifications !== true){
+                    if (respuesta.data.pending_notifications === true){
                         document.getElementById("notificacion").style.visibility = "visible";
                         setColor('btn btn-primary');
                     }

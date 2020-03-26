@@ -2,14 +2,11 @@ const URL_PROYECTO = "http://localhost:8000/";
 
 export async function getInfoUsuario (token){
     try {
-        console.log(token);
         const response = await fetch(URL_PROYECTO+'user/detail/', {
             method: 'GET',
             headers: { 'Authorization': 'Bearer '+token },
         });
-
         const json = await response.json();
-        console.log(json);
         if (response.ok) {
           return {data:json , bandera: true};
         }

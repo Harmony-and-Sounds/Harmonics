@@ -27,8 +27,6 @@ export async function crearProyecto (token, project_name, archivo, voces){
 
 export async function getProyectos (){
     try {
-        const form = new FormData()
-
         const response = await fetch(URL_PROYECTO+'project/', {
             method: 'GET',})
             const json = await response.json();
@@ -39,34 +37,74 @@ export async function getProyectos (){
       }
 }
 
-export async function getAudioMidi (user, proyecto, instrumento){
+export async function getAudioMidi (token, idVoz){
 
-    const form = new FormData()
+    try {
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/audio', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer '+token}
+        })
 
-    form.append('user', user);
-    form.append('nombreProy', proyecto);
-    form.append('instrumento', instrumento);
-
-    const response = await fetch('https://restcountries.eu/rest/v2/name/Colombia', {
-    method: 'GET',
-    /*headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: form,*/
-    })
-    return await response.json();
+        if (response.ok) {
+            let blob = await response.blob();
+            blob.name = "mp3Midi";
+            //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
+            var url = window.URL.createObjectURL(blob);
+            return {data:url , bandera: true}
+        }
+        else {
+            let json = await response.json();
+            return {data:json.detail , bandera: false}
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-export async function getAudioVozSeparada (user, proyecto, instrumento){
+export async function getAudioVozSeparada (token, idVoz) {
 
-    const form = new FormData()
+    try {
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz, {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer '+token}
+        })
 
-    form.append('user', user);
-    form.append('nombreProy', proyecto);
-    form.append('instrumento', instrumento);
+        if (response.ok) {
+            let blob = await response.blob();
+            blob.name = "mp3Voz";
+            //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
+            var url = window.URL.createObjectURL(blob);
+            return {data:url , bandera: true}
+        }
+        else {
+            let json = await response.json();
+            return {data:json.detail , bandera: false}
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-    const response = await fetch('https://restcountries.eu/rest/v2/name/Colombia', {
-    method: 'GET',
-    /*headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: form,*/
-    })
-    return await response.json();
+export async function getPDF (token, idVoz) {
+
+    try {
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/sheet/', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer '+token}
+        })
+
+        if (response.ok) {
+            let blob = await response.blob();
+            blob.name = "pdf";
+            //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
+            var url = window.URL.createObjectURL(blob);
+            return {data:url , bandera: true}
+        }
+        else {
+            let json = await response.json();
+            return {data:json.detail , bandera: false}
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }

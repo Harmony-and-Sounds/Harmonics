@@ -19,7 +19,7 @@ function ProyectoItem({data}) {
     alert(id);
   }
   function goToInstruments ({id},{name},{voices}){
-    history.push("/instrumentos", {usuario:id ,nomProyecto:name,instrumentos:voices });
+    history.push("/instrumentos", {idProyecto:id ,nomProyecto:name,voices:voices });
   }
 
   return (

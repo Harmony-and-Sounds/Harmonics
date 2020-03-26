@@ -21,7 +21,7 @@
 }
 
 .modal-content.over {
-    background-color: #444c66;
+    background-color: dodgerblue;
     opacity: 0.8;
     padding: 0 18px;
     border-radius: 10px;
@@ -77,7 +77,7 @@
 }
 
 .btn-success.over {
-    background-color: #1c6288;
+    background-color: #545b62;
     font-size: 17px;
     border-radius: 5px;
     padding: 7px 14px;
@@ -85,7 +85,7 @@
 }
 
 .btn-success.over:hover {
-    background-color: #13445e;
+    background-color: #343a40;
     border: 1px solid #daf1ff;
 }
 

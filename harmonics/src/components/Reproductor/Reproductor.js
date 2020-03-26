@@ -5,42 +5,47 @@ import 'react-h5-audio-player/lib/styles.css';
 import './Reproductor.css';
 import {getAudioMidi, getAudioVozSeparada} from '../../servicios/servicios-proyecto'
 
-import cancion from '../../recursos/AndeanTest.mp3'
-
 function Reproductor(props) {
 
-    const [usuario, setUsuario] = useState(props.usuario);
-    const [nomProyecto, setNomProyecto] = useState(props.nomProyecto);
-    const [instrumento, setInstrumento] = useState(props.instrumento);
+    const [idVoz] = useState(props.idVoz);
     const [midiMp3, setMidiMP3] = useState(null);
     const [vozSeparada, setvozSeparada] = useState(null);
 
 
-    async function getMidi () {
-        const respuestaMidi = await getAudioMidi(usuario, nomProyecto, instrumento);
-        if (respuestaMidi[0].name==="Colombia"){
-            setMidiMP3(respuestaMidi);
-        }
-        else{
-            alert("Error cargando audio midi.");
+    function getMidi () {
+
+        const access = localStorage.getItem('access');
+        if(access !== null){
+            getAudioMidi(access, idVoz).then(respuesta => {
+                if (respuesta.bandera === true){
+                    setMidiMP3(respuesta.data);
+                }
+                else{
+                    alert(respuesta.data);
+                }
+            });
         }
     }
 
-
     async function getVozSeparada () {
-        const respuestaVoz = await getAudioVozSeparada(usuario, nomProyecto, instrumento);
-        if (respuestaVoz[0].name==="Colombia"){
-            setvozSeparada(respuestaVoz);
-        }
-        else{
-            alert("Error cargando audio con la voz separada.");
+        const access = localStorage.getItem('access');
+        if(access !== null){
+            getAudioVozSeparada(access, idVoz).then(respuesta => {
+                if (respuesta.bandera === true){
+                    setvozSeparada(respuesta.data);
+                }
+                else{
+                    alert(respuesta.data);
+                }
+            });
         }
     }
 
     useEffect(() => {
-        //getMidi();
-        //getVozSeparada();
-      });
+        getMidi();
+        getVozSeparada();
+    },[]);
+    
 
   return (
         <div className="Reproductor">

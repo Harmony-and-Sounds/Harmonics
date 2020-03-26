@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import './search.css';
-import axios from 'axios';
 import Loader from './loader.gif';
 import Paginacion from '../Paginacion';
 import ProyectoItem from '../ProyectoItem';
