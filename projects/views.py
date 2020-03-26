@@ -9,7 +9,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.viewsets import ViewSet
 
 from harmonicsServer.settings import BASE_DIR
-from .models import Project
+from .models import Project,Voice
 from .projectSerializer import ProjectSerializer
 from .projectPermissions import projectPermissions
 from . import projectHandler
@@ -76,6 +76,19 @@ class ProjectRestController (ViewSet):
         ser = ProjectSerializer(project)
         return Response(ser.data,status.HTTP_200_OK)
 
+    @action(methods=['GET'], url_path='(?P<keyWord>[0-9a-zA-Z]+)', detail=False)
+    def get_projects_fltered(self, request, keyWord):
+        print(request.query_params['keyVoices'])
+        l = list(request.query_params['keyVoices'].split(","))
+        projects1 = Voice.objects.filter(instrument__in = l).select_related("project")
+        projects2 = Voice.objects.filter(project__name__icontains = keyWord).select_related("project")
+        voices = (projects1 | projects2 ).distinct()
+        projects = []
+        for voice in voices:
+            if voice.project not in projects:
+                projects.append(voice.project)
+        ser = ProjectSerializer(projects, many= True)
 
+        return Response(ser.data, status.HTTP_200_OK)
 
 # Create your views here.
