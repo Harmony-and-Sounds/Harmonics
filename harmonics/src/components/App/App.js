@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter as Router, Switch, Route, withRouter} from 'react-router-dom'; 
+import {BrowserRouter as Router, Switch, Route, withRouter} from 'react-router-dom';
 import Navegacion from '../Navegacion/Navegacion'
 import Login from '../Login/Login'
 import SignUp from '../SignUp/SignUp'
@@ -8,6 +8,7 @@ import Home from '../Home/PaginaPrincipal/Home'
 import Nosotros from '../Nosotros/Nosotros';
 import Empezar from '../Empezar/Empezar';
 import Instrumentros from '../Instrumentos/Instrumentos';
+import BuscarProyectos from '../BuscarProyectos';
 
 function App() {
 
@@ -20,8 +21,9 @@ function App() {
               <Route exact path="/login" component={Login}/>
               <Route exact path="/signup" component={SignUp}/>
               <Route exact path="/nosotros" component={Nosotros}/>
-              <Route exact path="/empezar" component={Empezar}/>     
+              <Route exact path="/empezar" component={Empezar}/>
               <Route path="/instrumentos" component={Instrumentros}/>
+              <Route path="/Proyectos" component={BuscarProyectos}/>
               <Route component={Home} />
             </Switch>
         </div>

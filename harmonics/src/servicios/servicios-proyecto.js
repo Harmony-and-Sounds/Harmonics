@@ -11,7 +11,7 @@ export async function crearProyecto (token, project_name, archivo, voces){
             headers: { 'Authorization': 'Bearer '+token},
             body: form,
         });
-        
+
         const json = await response.json();
         console.log(json);
         if (response.ok) {
@@ -25,6 +25,20 @@ export async function crearProyecto (token, project_name, archivo, voces){
     }
 }
 
+export async function getProyectos (){
+    try {
+        const form = new FormData()
+
+        const response = await fetch(URL_PROYECTO+'project/', {
+            method: 'GET',})
+            const json = await response.json();
+            console.log(json);
+        return await json;
+      } catch (error) {
+          console.log(error);
+      }
+}
+
 export async function getAudioMidi (user, proyecto, instrumento){
 
     const form = new FormData()
@@ -32,7 +46,7 @@ export async function getAudioMidi (user, proyecto, instrumento){
     form.append('user', user);
     form.append('nombreProy', proyecto);
     form.append('instrumento', instrumento);
-    
+
     const response = await fetch('https://restcountries.eu/rest/v2/name/Colombia', {
     method: 'GET',
     /*headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -48,7 +62,7 @@ export async function getAudioVozSeparada (user, proyecto, instrumento){
     form.append('user', user);
     form.append('nombreProy', proyecto);
     form.append('instrumento', instrumento);
-    
+
     const response = await fetch('https://restcountries.eu/rest/v2/name/Colombia', {
     method: 'GET',
     /*headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

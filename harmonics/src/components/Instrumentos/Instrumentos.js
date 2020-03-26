@@ -5,14 +5,21 @@ import {Tab,Tabs} from 'react-bootstrap';
 import Reproductor from '../Reproductor/Reproductor';
 import VisualizadorPDF from '../VisualizadorPDF/VisualizadorPDF';
 import './Instrumentos.css';
+import { useLocation } from "react-router-dom";
 
 function Instrumentos(props) {
+
+  const location = useLocation();
 
   const [usuario, setUsuario] = useState(props.usuario);
   const [nomProyecto, setNomProyecto] = useState(props.nomProyecto);
   const [instrumentos, setInstrumentos] = useState(props.instrumentos);
+  console.log(location.state.usuario);
+  console.log(location.state.nomProyecto);
+  console.log(location.state.instrumentos);
 
   return (
+
         <div className="Instrumentos">
           <div className="fluid-container correcion">
             <h2>Instrumentos</h2>
