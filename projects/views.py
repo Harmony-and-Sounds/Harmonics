@@ -13,16 +13,12 @@ from .models import Project,Voice
 from .projectSerializer import ProjectSerializer
 from .projectPermissions import projectPermissions
 from . import projectHandler
+from django.db.models import Q
 
 class ProjectRestController (ViewSet):
     queryset = ''
     permission_classes = (projectPermissions,)
     parser_classes = (MultiPartParser, FormParser,)
-
-    def list(self,request):
-        projects = Project.objects.filter(active = False)
-        ser = ProjectSerializer(projects, many=True)
-        return Response(ser.data, status.HTTP_200_OK)
 
     def create(self, request):
         project = None
@@ -76,13 +72,20 @@ class ProjectRestController (ViewSet):
         ser = ProjectSerializer(project)
         return Response(ser.data,status.HTTP_200_OK)
 
-    @action(methods=['GET'], url_path='(?P<keyWord>[0-9a-zA-Z]+)', detail=False)
-    def get_projects_fltered(self, request, keyWord):
-        print(request.query_params['keyVoices'])
-        l = list(request.query_params['keyVoices'].split(","))
-        projects1 = Voice.objects.filter(instrument__in = l).select_related("project")
-        projects2 = Voice.objects.filter(project__name__icontains = keyWord).select_related("project")
-        voices = (projects1 | projects2 ).distinct()
+
+    def list(self, request):
+        voiceParams = request.query_params.get('keyVoices',None)
+        keyWord = request.query_params.get('keyWord', None)
+        query = Q()
+        l = None
+        if voiceParams != None:
+            l = list(request.query_params['keyVoices'].split(","))
+            query |= Q(instrument__in = l)
+        if keyWord != None :
+            query |= Q(project__name__icontains = keyWord)
+
+        voices  = Voice.objects.filter(query).select_related("project").distinct()
+
         projects = []
         for voice in voices:
             if voice.project not in projects:
