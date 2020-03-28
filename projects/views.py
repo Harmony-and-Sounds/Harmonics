@@ -9,20 +9,16 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.viewsets import ViewSet
 
 from harmonicsServer.settings import BASE_DIR
-from .models import Project
+from .models import Project,Voice
 from .projectSerializer import ProjectSerializer
 from .projectPermissions import projectPermissions
 from . import projectHandler
+from django.db.models import Q
 
 class ProjectRestController (ViewSet):
     queryset = ''
     permission_classes = (projectPermissions,)
     parser_classes = (MultiPartParser, FormParser,)
-
-    def list(self,request):
-        projects = Project.objects.filter(active = False)
-        ser = ProjectSerializer(projects, many=True)
-        return Response(ser.data, status.HTTP_200_OK)
 
     def create(self, request):
         project = None
@@ -35,7 +31,7 @@ class ProjectRestController (ViewSet):
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)', detail=False)
     def get_isolated_voice(self, request, voiceId):
-        directory = BASE_DIR+"/testfiles/vocals.mp3"
+        directory = BASE_DIR+"/testfiles/vocals.mp3" if int(voiceId)%2 == 2 else BASE_DIR+"/testfiles/novacaine.mp3"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
         response['Content-Disposition'] = 'attachment; filename="%s"' % 'vocals.mp3'
@@ -43,7 +39,7 @@ class ProjectRestController (ViewSet):
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/sheet', detail=False)
     def get_transcription_sheet(self, request, voiceId):
-        directory = BASE_DIR + "/testfiles/midi_sheet.pdf"
+        directory = BASE_DIR + "/testfiles/midi_sheet.pdf" if int(voiceId)%2 == 2 else BASE_DIR+"/testfiles/Libertango.pdf"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
         response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi_sheet.pdf'
@@ -51,7 +47,7 @@ class ProjectRestController (ViewSet):
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/midi', detail=False)
     def get_transcription_midi(self, request, voiceId):
-        directory = BASE_DIR + "/testfiles/vocals_midi.mid"
+        directory = BASE_DIR + "/testfiles/vocals_midi.mid" if int(voiceId)%2 == 2 else BASE_DIR+"/testfiles/mario.mid"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
         response['Content-Disposition'] = 'attachment; filename="%s"' % 'vocals_midi.mid'
@@ -59,7 +55,7 @@ class ProjectRestController (ViewSet):
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/audio', detail=False)
     def get_transcription_audio(self, request, voiceId):
-        directory = BASE_DIR + "/testfiles/midi_audio.mp3"
+        directory = BASE_DIR + "/testfiles/midi_audio.mp3" if int(voiceId)%2 == 2 else BASE_DIR+"/testfiles/charisma.mp3"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
         response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi_audio.mp3'
@@ -77,5 +73,25 @@ class ProjectRestController (ViewSet):
         return Response(ser.data,status.HTTP_200_OK)
 
 
+    def list(self, request):
+        voiceParams = request.query_params.get('keyVoices',None)
+        keyWord = request.query_params.get('keyWord', None)
+        query = Q()
+        l = None
+        if voiceParams != None:
+            l = list(request.query_params['keyVoices'].split(","))
+            query |= Q(instrument__in = l)
+        if keyWord != None :
+            query |= Q(project__name__icontains = keyWord)
+
+        voices  = Voice.objects.filter(query).select_related("project").distinct()
+
+        projects = []
+        for voice in voices:
+            if voice.project not in projects:
+                projects.append(voice.project)
+        ser = ProjectSerializer(projects, many= True)
+
+        return Response(ser.data, status.HTTP_200_OK)
 
 # Create your views here.

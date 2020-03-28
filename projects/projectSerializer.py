@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Project,Voice
 from users.models import Profile
 from harmonicsServer.settings import BASE_DIR
+from users.userSerializer import ProfileGetSerializer
 import os
 class VoiceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,9 +12,10 @@ class VoiceSerializer(serializers.ModelSerializer):
 
 class ProjectSerializer(serializers.ModelSerializer):
     voices = VoiceSerializer(many=True,read_only=True)
+    user = serializers.CharField(max_length=50 , source= "user.user.username")
     class Meta:
         model = Project
-        fields = ("id","name","voices")
+        fields = ("id","name","voices","user")
 
     @transaction.atomic
     def create(self, validated_data, user):
