@@ -31,7 +31,7 @@ class ProjectRestController (ViewSet):
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)', detail=False)
     def get_isolated_voice(self, request, voiceId):
-        directory = BASE_DIR+"/testfiles/vocals.mp3" if voiceId%2 == 2 else BASE_DIR+"/testfiles/novacaine.mp3"
+        directory = BASE_DIR+"/testfiles/vocals.mp3" if int(voiceId)%2 == 2 else BASE_DIR+"/testfiles/novacaine.mp3"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
         response['Content-Disposition'] = 'attachment; filename="%s"' % 'vocals.mp3'
@@ -39,7 +39,7 @@ class ProjectRestController (ViewSet):
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/sheet', detail=False)
     def get_transcription_sheet(self, request, voiceId):
-        directory = BASE_DIR + "/testfiles/midi_sheet.pdf" if voiceId%2 == 2 else BASE_DIR+"/testfiles/Libertango.pdf"
+        directory = BASE_DIR + "/testfiles/midi_sheet.pdf" if int(voiceId)%2 == 2 else BASE_DIR+"/testfiles/Libertango.pdf"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
         response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi_sheet.pdf'
@@ -47,7 +47,7 @@ class ProjectRestController (ViewSet):
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/midi', detail=False)
     def get_transcription_midi(self, request, voiceId):
-        directory = BASE_DIR + "/testfiles/vocals_midi.mid" if voiceId%2 == 2 else BASE_DIR+"/testfiles/mario.mid"
+        directory = BASE_DIR + "/testfiles/vocals_midi.mid" if int(voiceId)%2 == 2 else BASE_DIR+"/testfiles/mario.mid"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
         response['Content-Disposition'] = 'attachment; filename="%s"' % 'vocals_midi.mid'
@@ -55,7 +55,7 @@ class ProjectRestController (ViewSet):
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/audio', detail=False)
     def get_transcription_audio(self, request, voiceId):
-        directory = BASE_DIR + "/testfiles/midi_audio.mp3" if voiceId%2 == 2 else BASE_DIR+"/testfiles/charisma.mp3"
+        directory = BASE_DIR + "/testfiles/midi_audio.mp3" if int(voiceId)%2 == 2 else BASE_DIR+"/testfiles/charisma.mp3"
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
         response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi_audio.mp3'
