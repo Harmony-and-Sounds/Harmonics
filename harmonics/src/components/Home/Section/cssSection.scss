@@ -1,0 +1,55 @@
+#hero{
+    background: #101010;
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.h-text{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+
+.wave-background {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+#wave {
+
+	width: 1000px;
+	fill: #40a09f;
+}
+
+@for $i from 1 through 28 {
+	#Line_#{$i} {
+		animation: pulse 1s infinite;
+		animation-delay: $i * .15s;
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: scaleY(1);
+		transform-origin: 50% 50%;
+	}
+
+	50% {
+		transform: scaleY(.7);
+		transform-origin: 50% 50%;
+	}
+
+	100% {
+		transform: scaleY(1);
+		transform-origin: 50% 50%;
+	}
+}

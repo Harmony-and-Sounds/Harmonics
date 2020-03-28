@@ -37,6 +37,18 @@ export async function getProyectos (){
       }
 }
 
+export async function getProyectosBusqueda (searchWord,Voces){
+    try {
+        const response = await fetch(URL_PROYECTO+'project/'+searchWord+'?keyVoices='+Voces, {
+            method: 'GET',})
+            const json = await response.json();
+            console.log(json);
+        return await json;
+      } catch (error) {
+          console.log(error);
+      }
+}
+
 export async function getAudioMidi (token, idVoz){
 
     try {

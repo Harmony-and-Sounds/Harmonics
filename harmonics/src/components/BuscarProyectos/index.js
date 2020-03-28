@@ -4,7 +4,7 @@ import Loader from './loader.gif';
 import Paginacion from '../Paginacion';
 import ProyectoItem from '../ProyectoItem';
 import Multiselect from 'react-widgets/lib/Multiselect'
-import {getProyectos} from '../../servicios/servicios-proyecto'
+import {getProyectosBusqueda} from '../../servicios/servicios-proyecto'
 
 let instrumentos = ['Guitarra', 'Charango', 'Flauta', 'Bateria', 'Voz'];
 
@@ -49,8 +49,10 @@ class Search extends React.Component {
 	 * @param {String} query Search Query.
 	 *
 	 */
-	fetchSearchResults = ( updatedPageNo = '', query = '' ) => {
-		getProyectos().then( respuesta => {
+	fetchSearchResults = ( updatedPageNo = '', query = '', voices ='Guitarra,Charango,Flauta,Bateria,Voz', ) => {
+
+
+		getProyectosBusqueda(query ,voices).then( respuesta => {
 			const json = respuesta;
 			console.log(json);
 			const resultNotFoundMsg = ! respuesta.length
@@ -104,12 +106,22 @@ class Search extends React.Component {
 	};
 
 	handleOnInputChange = ( event ) => {
-		const query = this.state.query;
-		if ( ! query ) {
-			this.setState( { query, results: {}, message: '', totalPages: 0, totalResults: 0 } );
-		} else {
+		var query = this.state.query;
+		const tags = this.state.tags;
+		var voices = 'Guitarra,Charango,Flauta,Bateria,Voz';
+		if ( ! query && tags.length == 0 ) {
+			this.setState( { query, tags:[] ,results: {}, message: '', totalPages: 0, totalResults: 0 } );
+		}
+		 else {
+			if (! query) {
+			 	query = 'a';
+			}
+			if(tags.length > 0){
+				voices = tags.join(",")
+				console.log(voices);
+			}
 			this.setState( { query, loading: true, message: '' }, () => {
-				this.fetchSearchResults( 1, query );
+				this.fetchSearchResults( 1, query,voices );
 			} );
 		}
 	};
