@@ -1,6 +1,6 @@
 .container-fluid.vertical-center {
 	position: absolute;
-    width: 70%;
+    width: 80%;
     right: 50%;
     bottom: 50%;
     transform: translate(50%,60%);

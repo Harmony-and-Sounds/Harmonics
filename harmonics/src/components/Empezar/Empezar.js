@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom'
 import 'react-widgets/dist/css/react-widgets.css';
 import './Empezar.css';
 import {crearProyecto} from '../../servicios/servicios-proyecto'
-import logo from '../../recursos/output-onlinepngtools.png'
 import { Button, Modal } from 'react-bootstrap';
 
 let instrumentos = ['Guitarra', 'Charango', 'Flauta', 'Bateria', 'Voz'];
@@ -117,33 +116,33 @@ function volverHome (){
 
 return (
   <div className="container-fluid vertical-center">
-    <img src={logo} alt="Harmonics" className="logoEmpezar"/>
     <div className="fila">
       <div className="columna_centrada">
-        <h4>Nombre del proyecto</h4>
+        <h2>Nombre del proyecto</h2>
         <input type="text" className="form-control over" placeholder="Ingrese el nombre del proyecto" value={nombreProy} onChange={e => setNombreProy(e.target.value)} required/>
       </div>
     </div>
     <div className="row">
       <div className="col-sm-6 col-md-6 col-lg-6">
+        <h2>Canción</h2>
         <div {...getRootProps({style})}>
           <input {...getInputProps()} />
-          <p>Drag 'n' drop la cancion de musica andina que desa separar.</p>
-          <em>(Solo archivos .mp3 seran permitidos.)</em>
+          <p>Drag 'n' drop</p>
+          <p>La canción de musica andina que desea separar.</p>
+          <em>(Solo un archivo .mp3 sera permitido.)</em>
         </div>
         <aside>
-          <h4>Archivos aceptados</h4>
-          <ul>
+          {archivo !== null && <h4>Archivos aceptados</h4>}
           {acceptedFilesItems}
-          </ul>
         </aside>
       </div>
       <div className="col-sm-6 col-md-6 col-lg-6">
-        <h4>Instrumentos</h4>
+        <h2>Instrumentos</h2>
         <Multiselect data={instrumentos} value={value} onChange={(value) => setValue(value)}/>
       </div>
     </div>
     <div className="flex-row">
+      <br/>
       <button className="btn btn-success justify-content-center" onClick={crearProy}>Realizar serparacion </button>
     </div>
 
