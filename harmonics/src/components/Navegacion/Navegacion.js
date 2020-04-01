@@ -90,22 +90,18 @@ function Navegacion(){
                             </Link>
                             <Link to="/proyectos">
                                 <li className="nav-item">
-                                    <span className="nav-link">Proyectos</span>
+                                    <span className="nav-link link">Proyectos</span>
                                 </li>
                             </Link>
                         </ul>
                         {(username !== "") ? (
                             <div className="btn-group dropleft">
                                 <button type="button" className="btn btn-light dropdown-toggle colorPersona" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img className="persona" src={persona} alt="persona" align="middle"/> 
+                                    <img className="persona" src={persona} alt="persona" align="middle"/>
                                     <span>{" Mi cuenta "}</span>
                                 </button>
                                 <div className="dropdown-menu">
-<<<<<<< HEAD
                                   <Link to="/misproyectos">
-=======
-                                    <h5 className="text-center margen">Bienvenido {username}</h5>
->>>>>>> 03b780b5bf04659cb3f2275af33641afd5384d59
                                     <button className="dropdown-item" type="button">Mis Proyectos</button>
                                   </Link>
                                     <button className="dropdown-item" type="button" onClick={cerrarSesion}>Logout</button>
@@ -120,7 +116,6 @@ function Navegacion(){
                                 <button type="button" className="btn btn-light colorPersona" onClick={() => {history.push("/login")}}>
                                    <p><img className="persona" src={persona} alt="persona" align="middle"/> Iniciar sesion</p>
                                 </button>
-<<<<<<< HEAD
                                 <div className="dropdown-menu">
                                     <Link to="/login">
                                         <button className="dropdown-item" type="button">LogIn</button>
@@ -131,9 +126,6 @@ function Navegacion(){
                                 </div>
 
                                 <button type="button" className={color} onClick={handleShow} id="notificacion">
-=======
-                                <button type="button" className={color} onClick={handleShow} id="notificacion"> 
->>>>>>> 03b780b5bf04659cb3f2275af33641afd5384d59
                                     <i className="fas fa-bell"></i>
                                 </button>
                             </div>
