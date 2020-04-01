@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SignUp.css';
-import fotoUsuario from '../../recursos/userFace.png'
-import logo from '../../recursos/output-onlinepngtools.png'
+import fotoUsuario from '../../recursos/icono_usuario.png'
+import logo from '../../recursos/Logo_texto_negro.png'
 import {signup} from '../../servicios/servicios-sesion'
 import { useHistory, Link } from "react-router-dom";
 

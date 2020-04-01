@@ -3,7 +3,8 @@ import {Link, useHistory} from 'react-router-dom'
 import './Navegacion.css';
 import {logout} from '../../servicios/servicios-sesion'
 import {getInfoUsuario} from '../../servicios/servicio-usuario'
-import logo from '../../recursos/output-onlinepngtools.png'
+import logo from '../../recursos/logo_horizontal_blanco.png'
+import persona from '../../recursos/icono_usuario_miniatura.png'
 import { Button, Modal } from 'react-bootstrap';
 
 
@@ -64,7 +65,7 @@ function Navegacion(){
 
     return (
     <div className="Navegacion">
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style={{padding: 3}}>
+            <nav className="navbar navbar-expand-lg navbar-dark fixed-top color" style={{padding: 3}}>
                 <Link to="/">
                     <span className="navbar-brand perso">
                         <img src={logo} className="logoPrincipal" alt="Harmonics"/>
@@ -77,14 +78,14 @@ function Navegacion(){
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <div className="container">
                         <ul className="navbar-nav mr-auto">
-                            <Link to="/nosotros">
+                            <Link to="/nosotros" style={{ textDecoration: 'none' }}>
                             <li className="nav-item">
-                                <span className="nav-link">Nosotros</span>
+                                <span className="nav-link link">Nosotros</span>
                             </li>
                             </Link>
-                            <Link to="/empezar">
+                            <Link to="/empezar" style={{ textDecoration: 'none' }}>
                                 <li className="nav-item">
-                                    <span className="nav-link">Empezar</span>
+                                    <span className="nav-link link">Empezar</span>
                                 </li>
                             </Link>
                             <Link to="/proyectos">
@@ -95,12 +96,16 @@ function Navegacion(){
                         </ul>
                         {(username !== "") ? (
                             <div className="btn-group dropleft">
-                                <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i className="fas fa-user"></i>
-                                    <span>{username}</span>
+                                <button type="button" className="btn btn-light dropdown-toggle colorPersona" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img className="persona" src={persona} alt="persona" align="middle"/> 
+                                    <span>{" Mi cuenta "}</span>
                                 </button>
                                 <div className="dropdown-menu">
+<<<<<<< HEAD
                                   <Link to="/misproyectos">
+=======
+                                    <h5 className="text-center margen">Bienvenido {username}</h5>
+>>>>>>> 03b780b5bf04659cb3f2275af33641afd5384d59
                                     <button className="dropdown-item" type="button">Mis Proyectos</button>
                                   </Link>
                                     <button className="dropdown-item" type="button" onClick={cerrarSesion}>Logout</button>
@@ -111,10 +116,11 @@ function Navegacion(){
                                 </button>
                             </div>
                         ) : (
-                            <div className="btn-group dropleft">
-                                <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i className="fas fa-user"></i>
+                            <div>
+                                <button type="button" className="btn btn-light colorPersona" onClick={() => {history.push("/login")}}>
+                                   <p><img className="persona" src={persona} alt="persona" align="middle"/> Iniciar sesion</p>
                                 </button>
+<<<<<<< HEAD
                                 <div className="dropdown-menu">
                                     <Link to="/login">
                                         <button className="dropdown-item" type="button">LogIn</button>
@@ -125,6 +131,9 @@ function Navegacion(){
                                 </div>
 
                                 <button type="button" className={color} onClick={handleShow} id="notificacion">
+=======
+                                <button type="button" className={color} onClick={handleShow} id="notificacion"> 
+>>>>>>> 03b780b5bf04659cb3f2275af33641afd5384d59
                                     <i className="fas fa-bell"></i>
                                 </button>
                             </div>
