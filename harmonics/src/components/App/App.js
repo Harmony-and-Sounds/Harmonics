@@ -9,6 +9,7 @@ import Nosotros from '../Nosotros/Nosotros';
 import Empezar from '../Empezar/Empezar';
 import Instrumentros from '../Instrumentos/Instrumentos';
 import BuscarProyectos from '../BuscarProyectos';
+import MisProyectos from '../MisProyectos';
 
 function App() {
 
@@ -23,7 +24,8 @@ function App() {
               <Route exact path="/nosotros" component={Nosotros}/>
               <Route exact path="/empezar" component={Empezar}/>
               <Route path="/instrumentos" component={Instrumentros}/>
-              <Route path="/Proyectos" component={BuscarProyectos}/>
+              <Route path="/proyectos" component={BuscarProyectos}/>
+              <Route path="/misproyectos" component={MisProyectos}/>
               <Route component={Home} />
             </Switch>
         </div>

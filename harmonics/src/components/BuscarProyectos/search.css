@@ -13,14 +13,10 @@
 	text-align: center;
 }
 
-.search-label {
-	position: relative;
-}
 
 .containerSearch input {
 	width: 100%;
-	padding: 16px;
-	font-size: 36px;
+	font-size: 26px;
 	font-style: italic;
 	color: #444;
 	box-sizing: border-box;

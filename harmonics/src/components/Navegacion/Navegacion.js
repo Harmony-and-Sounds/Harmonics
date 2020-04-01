@@ -87,6 +87,11 @@ function Navegacion(){
                                     <span className="nav-link">Empezar</span>
                                 </li>
                             </Link>
+                            <Link to="/proyectos">
+                                <li className="nav-item">
+                                    <span className="nav-link">Proyectos</span>
+                                </li>
+                            </Link>
                         </ul>
                         {(username !== "") ? (
                             <div className="btn-group dropleft">
@@ -95,11 +100,13 @@ function Navegacion(){
                                     <span>{username}</span>
                                 </button>
                                 <div className="dropdown-menu">
+                                  <Link to="/misproyectos">
                                     <button className="dropdown-item" type="button">Mis Proyectos</button>
+                                  </Link>
                                     <button className="dropdown-item" type="button" onClick={cerrarSesion}>Logout</button>
                                 </div>
 
-                                <button type="button" className={color} onClick={handleShow} id="notificacion"> 
+                                <button type="button" className={color} onClick={handleShow} id="notificacion">
                                     <i className="fas fa-bell"></i>
                                 </button>
                             </div>
@@ -116,8 +123,8 @@ function Navegacion(){
                                         <button className="dropdown-item" type="button">SignUp</button>
                                     </Link>
                                 </div>
-                                
-                                <button type="button" className={color} onClick={handleShow} id="notificacion"> 
+
+                                <button type="button" className={color} onClick={handleShow} id="notificacion">
                                     <i className="fas fa-bell"></i>
                                 </button>
                             </div>
