@@ -10,7 +10,7 @@ from rest_framework.viewsets import ViewSet
 
 from harmonicsServer.settings import BASE_DIR
 from .models import Project,Voice
-from .projectSerializer import ProjectSerializer
+from .projectSerializer import ProjectSerializer, VoiceSerializer
 from .projectPermissions import projectPermissions
 from . import projectHandler
 from django.db.models import Q
@@ -28,6 +28,13 @@ class ProjectRestController (ViewSet):
             return Response("Error: proyecto ya creado con ese nombre" ,status.HTTP_409_CONFLICT)
         return Response(project.name, status.HTTP_201_CREATED)
 
+    @action(methods=['GET'], url_path='(?P<projectId>[0-9]+)/voice', detail=False)
+    def get_voices(self, request,projectId):
+        project = Project.objects.get(id = projectId)
+        voices = project.voices.all()
+        print(voices)
+        ser = VoiceSerializer(voices,many=True)
+        return Response(ser.data, status.HTTP_200_OK)
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)', detail=False)
     def get_isolated_voice(self, request, voiceId):

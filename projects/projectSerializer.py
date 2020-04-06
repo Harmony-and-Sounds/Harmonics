@@ -21,6 +21,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     def create(self, validated_data, user):
         profile = Profile.objects.get(user = user)
         project = Project.objects.filter(user__user = user, name= validated_data['project_name'])
+        print(project.count())
         if project.count() > 0 :
             raise AssertionError("Erro: ya existe un proyecto creado cone se nombre")
 

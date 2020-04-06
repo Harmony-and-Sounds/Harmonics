@@ -27,3 +27,10 @@ class ProfileRestController (ViewSet):
         profile = Profile.objects.get(user = request.user)
         ser = ProfileGetSerializer(profile)
         return Response(ser.data,status.HTTP_200_OK)
+
+    @action(methods=['DELETE'], detail=False, url_path='notifications', permission_classes=(IsAuthenticated,))
+    def delete_notifications(self,request):
+        profile = Profile.objects.get(user = request.user)
+        profile.pending_notifications = False
+        profile.save()
+        return Response(True,status.HTTP_200_OK)
