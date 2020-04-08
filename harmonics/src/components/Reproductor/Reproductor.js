@@ -14,10 +14,11 @@ function Reproductor(props) {
 
     function getMidi () {
 
-        const access = localStorage.getItem('access');
+        const access = sessionStorage.getItem('access');
         if(access !== null){
             getAudioMidi(access, idVoz).then(respuesta => {
                 if (respuesta.bandera === true){
+                    console.log(respuesta.data);
                     setMidiMP3(respuesta.data);
                 }
                 else{
@@ -28,7 +29,7 @@ function Reproductor(props) {
     }
 
     async function getVozSeparada () {
-        const access = localStorage.getItem('access');
+        const access = sessionStorage.getItem('access');
         if(access !== null){
             getAudioVozSeparada(access, idVoz).then(respuesta => {
                 if (respuesta.bandera === true){
@@ -42,6 +43,7 @@ function Reproductor(props) {
     }
 
     useEffect(() => {
+        console.log(idVoz);
         getMidi();
         getVozSeparada();
     },[]);

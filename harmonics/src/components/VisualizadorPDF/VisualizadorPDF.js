@@ -12,10 +12,11 @@ function VisualizadorPDF(props) {
 
 
     function getPartitura () {
-        const access = localStorage.getItem('access');
+        const access = sessionStorage.getItem('access');
         if(access !== null){
             getPDF(access, idVoz).then(respuesta => {
                 if (respuesta.bandera === true){
+                    console.log(respuesta.data);
                     setPdf(respuesta.data);
                 }
                 else{

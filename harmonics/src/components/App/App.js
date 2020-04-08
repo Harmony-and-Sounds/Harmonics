@@ -9,6 +9,7 @@ import Nosotros from '../Nosotros/Nosotros';
 import Empezar from '../Empezar/Empezar';
 import Instrumentros from '../Instrumentos/Instrumentos';
 import BuscarProyectos from '../BuscarProyectos';
+import Editar from '../EditorPartitura/EditorPartitura';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
               <Route exact path="/empezar" component={Empezar}/>
               <Route path="/instrumentos" component={Instrumentros}/>
               <Route path="/Proyectos" component={BuscarProyectos}/>
+              <Route path="/Editar" component={Editar}/>
               <Route component={Home} />
             </Switch>
         </div>
