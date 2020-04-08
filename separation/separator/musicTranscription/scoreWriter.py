@@ -44,13 +44,25 @@ def resolveSongKey(notes):
     else:
         return 'C'
 
+def getInstument(instrumentName):
+    if instrumentName == 'vocals':
+        return instrument.Vocalist()
+    elif instrumentName == 'piano':
+        return instrument.Piano()
+    elif instrumentName == 'drums':
+        return instrument.BassDrum
+    elif instrumentName == 'bass':
+        return instrument.Bass()
+    else :
+        return instrument.Piano()
 
-def createScoreFromMidi(midiV1Path,midiOutputPath,directory):
+
+def createScoreFromMidi(midiV1Path,midiOutputPath,directory, instrumentName):
 
     notes = get_notes_chords_rests(midiV1Path)
     key = resolveSongKey(notes)
     sc = m21.stream.Score()
-    sc.insert(0, instrument.Trombone())
+    sc.insert(0, getInstument(instrumentName))
 
     s = m21.stream.Stream()
 
@@ -64,6 +76,9 @@ def createScoreFromMidi(midiV1Path,midiOutputPath,directory):
             s.append(m21.note.Rest(quarterLength=note[1]))
         else:
             s.append(m21.note.Note(note[0], quarterLength=note[1]))
+
+    s.metadata.title = instrumentName
+    s.metadata.composer = "Harmonics"
 
     sc.insert(1, s)
 

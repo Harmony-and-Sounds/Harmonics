@@ -43,7 +43,7 @@ class ProjectRestController (ViewSet):
         directory = BASE_DIR + "/media/"+voice.isolated_voice_directory
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
-        response['Content-Disposition'] = 'attachment; filename="%s"' % 'vocals.mp3'
+        response['Content-Disposition'] = 'attachment; filename="%s"' % 'isolatedVoice.mp3'
         return response
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/sheet', detail=False)
@@ -63,7 +63,7 @@ class ProjectRestController (ViewSet):
         directory = BASE_DIR + "/media/"+voice.voice_midi_directory
         file = open(directory, 'rb')
         response = HttpResponse(FileWrapper(file), content_type='audio')
-        response['Content-Disposition'] = 'attachment; filename="%s"' % 'vocals_midi.mid'
+        response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi.mid'
         return response
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/audio', detail=False)

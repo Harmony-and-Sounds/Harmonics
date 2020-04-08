@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="96b89b84-6e21-4cf8-8461-736d1a58a9d4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/media/randy/queue/last-of-the-american-girls-official-music-video.mp3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/celerybeat-schedule" beforeDir="false" afterPath="$PROJECT_DIR$/celerybeat-schedule" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/separation/separator/SeparatorFacade.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/SeparatorFacade.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/musicTranscription/scoreWriter.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/musicTranscription/scoreWriter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
