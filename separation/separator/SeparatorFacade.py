@@ -50,14 +50,15 @@ def createSeparation(filename,project):
             else:
                 data =np.append(data,x)
         write(f'{userPath}/{instrument}/{instrument}.mp3',srr, data)
-        voice.isolated_voice_directory = f'/{project.name}/{instrument}/{instrument}.mp3'
+        voice.isolated_voice_directory = f'/{project.user.user.username}/{project.name}/{instrument}/{instrument}.mp3'
 
     for voice in voices:
         instrument = voice.instrument
         audio_to_midi_melodia(infile=f'{userPath}/{instrument}/{instrument}.mp3',outfile=f'{path}/{instrument}_midi.mid',bpm=80)
-        voice.voice_midi_directory = f'/{project.name}/{instrument}/{instrument}_midi.mid'
+        voice.voice_midi_directory = f'/{project.user.user.username}/{project.name}/{instrument}/{instrument}_midi.mid'
         scoreWriter.createScoreFromMidi(f'{path}/{instrument}_midi.mid',f'{userPath}/{instrument}/{instrument}_midi.mid',path)
-        voice.voice_midi_audio_directory = f'/{project.name}/{instrument}/{instrument}_midi_audio.mp3'
+        voice.voice_midi_audio_directory = f'/{project.user.user.username}/{project.name}/{instrument}/{instrument}_midi_audio.mp3'
+        voice.voice_sheet_directory = f'/{project.user.user.username}/{project.name}/{instrument}/{instrument}_midi.pdf'
 
     for voice in voices:
         voice.save()
