@@ -22,7 +22,7 @@ function Navegacion(){
 
     useEffect(() => {
         document.getElementById("notificacion").style.visibility = "hidden";
-        const access = localStorage.getItem('access');
+        const access = sessionStorage.getItem('access');
         if(access !== null){
             setToken(access);
             solicitarNotificaciones();
@@ -32,16 +32,16 @@ function Navegacion(){
     function cerrarSesion () {
         /*const respuesta = await logout(user);
         if (respuesta[0].name==="Colombia"){
-            localStorage.removeItem('access');
-            /*var user = JSON.parse(localStorage.getItem('sesion')).name;
+            sessionStorage.removeItem('access');
+            /*var user = JSON.parse(sessionStorage.getItem('sesion')).name;
             console.log(user);
             history.push("/");
         }
         else{
             alert("Error cerrando sesion.");
         }*/
-        localStorage.removeItem('access');
-        localStorage.removeItem('refresh');
+        sessionStorage.removeItem('access');
+        sessionStorage.removeItem('refresh');
         window.location.reload();
     }
 

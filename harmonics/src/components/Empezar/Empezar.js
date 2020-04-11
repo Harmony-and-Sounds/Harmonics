@@ -6,6 +6,7 @@ import 'react-widgets/dist/css/react-widgets.css';
 import './Empezar.css';
 import {crearProyecto} from '../../servicios/servicios-proyecto'
 import { Button, Modal } from 'react-bootstrap';
+import Carousel from 'react-bootstrap/Carousel'
 
 let instrumentos = ['Guitarra', 'Charango', 'Flauta', 'Bateria', 'Voz'];
 
@@ -44,15 +45,16 @@ function Empezar(props) {
   const [archivo, setArchivo] = useState(null);
   const [nombreProy, setNombreProy] = useState('');
   const [mostrar,setMostrar] = useState(false);
+  const [mostrarAyuda,setMostrarAyuda] = useState(false);
 
   useEffect(() => {
-    const access = localStorage.getItem('access');
+    const access = sessionStorage.getItem('access');
     if(access !== null){
         setToken(access);
     }
   }, []);
 
-
+  const handleCloseAyuda = () => setMostrarAyuda(false);
   const handleClose = () => setMostrar(false);
 
   const history = useHistory();
@@ -144,10 +146,11 @@ return (
     <div className="flex-row">
       <br/>
       <button className="btn btn-success justify-content-center" onClick={crearProy}>Realizar serparacion </button>
+      <button className="btn btn-warning justify-content-center" onClick={() => {setMostrarAyuda(true)}}><i class="fas fa-question-circle"></i></button>
     </div>
 
     <Modal show={mostrar} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Información</Modal.Title>
         </Modal.Header>
         <Modal.Body>Se ha creado la solicitud de forma exitosa, se le notificara cuando su proceso alla sido completado.</Modal.Body>
@@ -155,6 +158,57 @@ return (
           <Button variant="secondary" onClick={volverHome}>
             Volver a la pantalla principal
           </Button>
+        </Modal.Footer>
+    </Modal>
+
+
+    
+    <Modal show={mostrarAyuda} onHide={handleCloseAyuda} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Ayuda</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+        <Carousel>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src="holder.js/800x400?text=First slide&bg=373940"
+              alt="First slide"
+            />
+            <Carousel.Caption>
+              <h3>First slide label</h3>
+              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src="holder.js/800x400?text=Second slide&bg=282c34"
+              alt="Third slide"
+            />
+
+            <Carousel.Caption>
+              <h3>Second slide label</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src="holder.js/800x400?text=Third slide&bg=20232a"
+              alt="Third slide"
+            />
+
+            <Carousel.Caption>
+              <h3>Third slide label</h3>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+
+        </Modal.Body>
+        <Modal.Footer>
         </Modal.Footer>
     </Modal>
   </div>
