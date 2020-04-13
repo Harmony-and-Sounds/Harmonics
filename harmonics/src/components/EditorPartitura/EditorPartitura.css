@@ -1,0 +1,27 @@
+.container.pad {
+    padding-top: 30px;
+}
+
+.botoneraE {
+    display: flex;
+    justify-content: center;
+}
+
+.botonera {
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.botonespacio {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.prueba .abcjs-inner svg{
+    width: 175px;
+}
+
+.desaparecer {
+    /*display: none;*/
+}
