@@ -88,20 +88,26 @@ function Navegacion(){
                                     <span className="nav-link link">Empezar</span>
                                 </li>
                             </Link>
+                            <Link to="/proyectos">
+                                <li className="nav-item">
+                                    <span className="nav-link link">Proyectos</span>
+                                </li>
+                            </Link>
                         </ul>
                         {(username !== "") ? (
                             <div className="btn-group dropleft">
                                 <button type="button" className="btn btn-light dropdown-toggle colorPersona" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img className="persona" src={persona} alt="persona" align="middle"/> 
+                                    <img className="persona" src={persona} alt="persona" align="middle"/>
                                     <span>{" Mi cuenta "}</span>
                                 </button>
                                 <div className="dropdown-menu">
-                                    <h5 className="text-center margen">Bienvenido {username}</h5>
+                                  <Link to="/misproyectos">
                                     <button className="dropdown-item" type="button">Mis Proyectos</button>
+                                  </Link>
                                     <button className="dropdown-item" type="button" onClick={cerrarSesion}>Logout</button>
                                 </div>
 
-                                <button type="button" className={color} onClick={handleShow} id="notificacion"> 
+                                <button type="button" className={color} onClick={handleShow} id="notificacion">
                                     <i className="fas fa-bell"></i>
                                 </button>
                             </div>
@@ -110,7 +116,16 @@ function Navegacion(){
                                 <button type="button" className="btn btn-light colorPersona" onClick={() => {history.push("/login")}}>
                                    <p><img className="persona" src={persona} alt="persona" align="middle"/> Iniciar sesion</p>
                                 </button>
-                                <button type="button" className={color} onClick={handleShow} id="notificacion"> 
+                                <div className="dropdown-menu">
+                                    <Link to="/login">
+                                        <button className="dropdown-item" type="button">LogIn</button>
+                                    </Link>
+                                    <Link to="/signup">
+                                        <button className="dropdown-item" type="button">SignUp</button>
+                                    </Link>
+                                </div>
+
+                                <button type="button" className={color} onClick={handleShow} id="notificacion">
                                     <i className="fas fa-bell"></i>
                                 </button>
                             </div>

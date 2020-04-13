@@ -54,7 +54,6 @@ class Search extends React.Component {
 
 		getProyectosBusqueda(query ,voices).then( respuesta => {
 			const json = respuesta;
-			console.log(json);
 			const resultNotFoundMsg = ! respuesta.length
 									? 'There are no more search results. Please try a new search'
 									: '';
@@ -114,11 +113,10 @@ class Search extends React.Component {
 		}
 		 else {
 			if (! query) {
-			 	query = 'a';
+			 	query = '';
 			}
 			if(tags.length > 0){
 				voices = tags.join(",")
-				console.log(voices);
 			}
 			this.setState( { query, loading: true, message: '' }, () => {
 				this.fetchSearchResults( 1, query,voices );
@@ -144,13 +142,11 @@ class Search extends React.Component {
 	};
 	setValue = ( event ) => {
 		const query = event.target.value;
-		console.log(query);
 
 		this.setState( { query: query });
 	};
 	setTags = ( values ) => {
 		const tags = values;
-		console.log(tags);
 
 		this.setState( { tags: tags });
 	};
@@ -164,7 +160,10 @@ class Search extends React.Component {
 					{ results.map( result => {
 						return (
 							<ProyectoItem
-				       data={result} />
+							key = {result.id}
+							name = {result.name}
+							voices = {result.voices}
+				       />
 						)
 					} ) }
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./MisProyectos.css"
-import axios from 'axios';
 import Paginacion from '../Paginacion';
 import ProyectoItem from '../ProyectoItem';
+import {getProyectosUsusario} from '../../servicios/servicios-proyecto'
+
 
 class Search extends React.Component {
 
@@ -11,6 +12,7 @@ class Search extends React.Component {
 		super( props );
 
 		this.state = {
+			token:'',
 			query: '',
 			results: {},
 			loading: false,
@@ -18,6 +20,7 @@ class Search extends React.Component {
 			totalResults: 0,
 			totalPages: 0,
 			currentPageNo: 0,
+
 		};
 		this.fetchSearchResults( 1,'');
 		this.cancel = '';
@@ -37,6 +40,7 @@ class Search extends React.Component {
 		return Math.floor( total/denominator ) + valueToBeAdded;
 	};
 
+
 	/**
 	 * Fetch the search results and update the state with the result.
 	 * Also cancels the previous query before making the new one.
@@ -46,6 +50,21 @@ class Search extends React.Component {
 	 *
 	 */
 	fetchSearchResults = ( updatedPageNo = '', query = '' ) => {
+		const access = localStorage.getItem('access');
+		console.log(this.state.token);
+		getProyectosUsusario(access).then( respuesta => {
+			const json = respuesta;
+			const resultNotFoundMsg = ! respuesta.length
+									? 'There are no more search results. Please try a new search'
+									: '';
+				this.setState( {
+					results: respuesta,
+					message: resultNotFoundMsg,
+					loading: false
+				} )
+		});
+
+		/*
 		const pageNumber = updatedPageNo ? `&page=${updatedPageNo}` : '';
 		const searchUrl = `https://pixabay.com/api/?key=15542906-13f04010e64dbf82fca50e361&q=${query}${pageNumber}`;
 		console.log(searchUrl);
@@ -80,7 +99,7 @@ class Search extends React.Component {
 						message: 'Failed to fetch the data. Please check network'
 					})
 				}
-			} )
+			} )*/
 	};
 
 
@@ -111,8 +130,10 @@ class Search extends React.Component {
 					{ results.map( result => {
 						return (
 							<ProyectoItem
-				       id={result.id}
-				       title={result.user} />
+							key = {result.id}
+						 name = {result.name}
+						 voices = {result.voices}
+						  />
 						)
 					} ) }
 
@@ -141,8 +162,8 @@ class Search extends React.Component {
 				loading={loading}
 				showPrevLink={showPrevLink}
 				showNextLink={showNextLink}
-				handlePrevClick={ () => this.handlePageClick('prev', event )}
-				handleNextClick={ () => this.handlePageClick('next', event )}
+				handlePrevClick={ () => this.handlePageClick('prev' )}
+				handleNextClick={ () => this.handlePageClick('next' )}
 			/>
 
 			{/*	Result*/}
@@ -153,8 +174,8 @@ class Search extends React.Component {
 				loading={loading}
 				showPrevLink={showPrevLink}
 				showNextLink={showNextLink}
-				handlePrevClick={ () => this.handlePageClick('prev', event )}
-				handleNextClick={ () => this.handlePageClick('next', event )}
+				handlePrevClick={ () => this.handlePageClick('prev' )}
+				handleNextClick={ () => this.handlePageClick('next' )}
 			/>
 
 			</div>

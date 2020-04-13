@@ -39,8 +39,22 @@ export async function getProyectos (){
 
 export async function getProyectosBusqueda (searchWord,Voces){
     try {
-        const response = await fetch(URL_PROYECTO+'project/'+searchWord+'?keyVoices='+Voces, {
+        const response = await fetch(URL_PROYECTO+'project/?keyWord='+searchWord+'&keyVoices='+Voces, {
             method: 'GET',})
+            const json = await response.json();
+        return await json;
+      } catch (error) {
+          console.log(error);
+      }
+}
+
+export async function getProyectosUsusario (token){
+    try {
+        const response = await fetch(URL_PROYECTO+'project/user', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer '+token}
+          })
+
             const json = await response.json();
             console.log(json);
         return await json;
