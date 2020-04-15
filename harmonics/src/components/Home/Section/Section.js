@@ -11,11 +11,9 @@ class Section extends Component {
                   <WaveBackground />
                     <div className="h-text text-light">
                         <h1>Harmonics</h1>
-                        <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac dignissim dolor. Cras fringilla at libero eget vehicula.
-                        Aliquam sed nunc sit amet lorem gravida lacinia sit amet laoreet nisl. Phasellus tincidunt augue vitae est rutrum elementum.
-                        Proin tincidunt porta dapibus. Sed sit amet tempus libero, pharetra fermentum dolor. Nam porttitor purus vel consequat mollis.
-                        </p>
+                        <h5>
+                        ¡Bienvenido(s)! Aquí en Harmonics, cualquier persona que este interesada en tener acceso a más recursos para su aprendizaje en el campo de la música encontrará una herramienta apropiada. El único requisito es saber cómo leer una partitura. Así, puede cargar sus propias canciones para generar una pseudo-partitura de cada instrumento en ella que desee, con la cual pueda practicar, e incluso apoyar a la creciente comunidad.
+                        </h5>
                     </div>
                 </section>
             </div>
