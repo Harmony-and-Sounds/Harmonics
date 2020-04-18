@@ -8,6 +8,11 @@ import {crearProyecto} from '../../servicios/servicios-proyecto'
 import { Button, Modal } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel'
 
+import SeleccionarArchivo from '../../recursos/PU_SeleccionarArchivo.png'
+import ElegirInstrumentos from '../../recursos/PU_ElegirInstrumentos.png'
+import RealizarSeparacion from '../../recursos/PU_RealizarSeparacion.png'
+import MisProyectos from '../../recursos/PU_MisProyectos.png'
+
 let instrumentos = ['Guitarra', 'Charango', 'Flauta', 'Bateria', 'Voz'];
 
 const baseStyle = {
@@ -99,7 +104,7 @@ function Empezar(props) {
           setMostrar(true);
         }
         else{
-            alert(respuesta.data);
+            alert("Debes tener una sesión activa para poder usar este servicio");
             setValue([]);
             setArchivo(null);
             setNombreProy("");
@@ -109,7 +114,7 @@ function Empezar(props) {
   else{
       alert("Los campos no han sido llenados correctamente.")
   }
-} 
+}
 
 function volverHome (){
 
@@ -145,7 +150,7 @@ return (
     </div>
     <div className="flex-row">
       <br/>
-      <button className="btn btn-success justify-content-center" onClick={crearProy}>Realizar serparacion </button>
+      <button className="btn btn-success justify-content-center" onClick={crearProy}>Realizar separación </button>
       <button className="btn btn-warning justify-content-center" onClick={() => {setMostrarAyuda(true)}}><i class="fas fa-question-circle"></i></button>
     </div>
 
@@ -162,7 +167,7 @@ return (
     </Modal>
 
 
-    
+
     <Modal show={mostrarAyuda} onHide={handleCloseAyuda} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header closeButton>
           <Modal.Title>Ayuda</Modal.Title>
@@ -172,38 +177,35 @@ return (
         <Carousel>
           <Carousel.Item>
             <img
-              className="d-block w-100"
-              src="holder.js/800x400?text=First slide&bg=373940"
+              className="imageCarousel"
+              src={SeleccionarArchivo}
               alt="First slide"
             />
-            <Carousel.Caption>
-              <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-            </Carousel.Caption>
+
           </Carousel.Item>
           <Carousel.Item>
             <img
-              className="d-block w-100"
-              src="holder.js/800x400?text=Second slide&bg=282c34"
-              alt="Third slide"
+              className="imageCarousel"
+              src={ElegirInstrumentos}
+              alt="Second slide"
             />
 
-            <Carousel.Caption>
-              <h3>Second slide label</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
             <img
-              className="d-block w-100"
-              src="holder.js/800x400?text=Third slide&bg=20232a"
+              className="imageCarousel"
+              src={RealizarSeparacion}
               alt="Third slide"
             />
 
-            <Carousel.Caption>
-              <h3>Third slide label</h3>
-              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="imageCarousel"
+              src={MisProyectos}
+              alt="fourth slide"
+            />
+
           </Carousel.Item>
         </Carousel>
 

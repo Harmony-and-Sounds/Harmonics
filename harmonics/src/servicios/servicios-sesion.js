@@ -11,8 +11,9 @@ export async function signup (username ,password, email){
             method: 'POST',
             body: form,
         });
-        
+
         const json = await response.json();
+        console.log(json);
         if (response.ok) {
           return {data:json , bandera: true};
         }
