@@ -9,6 +9,8 @@ import Nosotros from '../Nosotros/Nosotros';
 import Empezar from '../Empezar/Empezar';
 import Instrumentros from '../Instrumentos/Instrumentos';
 import BuscarProyectos from '../BuscarProyectos';
+import Editar from '../EditorPartitura/EditorPartitura';
+import MisProyectos from '../MisProyectos';
 import MisProyectos from '../MisProyectos';
 import Editar from '../EditorPartitura/EditorPartitura';
 
@@ -28,6 +30,8 @@ function App() {
               <Route path="/Proyectos" component={BuscarProyectos}/>
               <Route path="/misproyectos" component={MisProyectos}/>
               <Route path="/Editar" component={Editar}/>
+              <Route path="/proyectos" component={BuscarProyectos}/>
+              <Route path="/misproyectos" component={MisProyectos}/>
               <Route component={Home} />
             </Switch>
         </div>
