@@ -1,3 +1,6 @@
+import JSZip from "jszip";
+import { saveAs } from 'file-saver';
+
 const URL_PROYECTO = "http://localhost:8000/";
 
 export async function crearProyecto (token, project_name, archivo, voces){
@@ -87,28 +90,57 @@ export async function getAudioMidi (token, idVoz){
     }
 }
 
-export async function getAudioVozSeparada (token, idVoz) {
+export async function descargarProyecto (idProyecto) {
 
     try {
-        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz, {
+        const response = await fetch(URL_PROYECTO+'project/'+idProyecto+'/download', {
             method: 'GET',
-            headers: { 'Authorization': 'Bearer '+token}
+            //headers: { 'Authorization': 'Bearer '+token}
         })
+          console.log("entro");
 
         if (response.ok) {
-            let blob = await response.blob();
-            blob.name = "mp3Voz";
-            //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
-            var url = window.URL.createObjectURL(blob);
-            return {data:url , bandera: true}
+
+          let blob = await response.blob();
+          blob.name = "proyZip";
+          //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
+          var url = window.URL.createObjectURL(blob);
+          
+          return {data:url , bandera: true}
         }
         else {
             let json = await response.json();
-            return {data:json.detail , bandera: false}
+            console.log(json);
+          return {bandera: false}
         }
     } catch (error) {
         console.log(error);
     }
+}
+
+export async function getAudioVozSeparada (token, idVoz) {
+  try {
+      const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz, {
+          method: 'GET',
+          headers: { 'Authorization': 'Bearer '+token}
+      })
+
+      if (response.ok) {
+          let blob = await response.blob();
+          blob.name = "mp3Voz";
+          //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
+          var url = window.URL.createObjectURL(blob);
+
+          return {data:url , bandera: true}
+      }
+      else {
+          let json = await response.json();
+          return {data:json.detail , bandera: false}
+      }
+  } catch (error) {
+      console.log(error);
+  }
+
 }
 
 export async function getPDF (token, idVoz) {

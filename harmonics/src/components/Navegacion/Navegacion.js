@@ -104,7 +104,7 @@ function Navegacion(){
                                     <span className="nav-link link">Empezar</span>
                                 </li>
                             </Link>
-                            <Link to="/proyectos">
+                            <Link to="/proyectos" style={{ textDecoration: 'none' }}>
                                 <li className="nav-item">
                                     <span className="nav-link link">Proyectos</span>
                                 </li>

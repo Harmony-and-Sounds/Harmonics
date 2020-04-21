@@ -151,7 +151,7 @@ return (
     <div className="flex-row">
       <br/>
       <button className="btn btn-success justify-content-center" onClick={crearProy}>Realizar separación </button>
-      <button className="btn btn-warning justify-content-center" onClick={() => {setMostrarAyuda(true)}}><i class="fas fa-question-circle"></i></button>
+      <button className="btn btn-warning justify-content-center" onClick={() => {setMostrarAyuda(true)}}><i className="fas fa-question-circle"></i></button>
     </div>
 
     <Modal show={mostrar} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>

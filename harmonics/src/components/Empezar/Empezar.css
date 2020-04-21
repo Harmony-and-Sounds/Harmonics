@@ -37,6 +37,14 @@
     transform: translate(50%,-210%);
     position: absolute;
 }
+.carousel-control-next,
+.carousel-control-prev {
+    filter: invert(80%);
+}
+.carousel-indicators  {
+	filter: invert(80%);
+}
+
 .imageCarousel{
 	margin-top: 50px;
   margin-bottom: 50px;
