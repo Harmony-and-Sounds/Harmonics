@@ -108,7 +108,7 @@ class Search extends React.Component {
 	 *
 	 * @param {String} type 'prev' or 'next'
 	 */
-	handlePageClick = ( type ) => {
+	handlePageClick = ( type, event ) => {
 		event.preventDefault();
 		const updatePageNo = 'prev' === type
 			? this.state.currentPageNo - 1

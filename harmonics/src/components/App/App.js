@@ -11,8 +11,6 @@ import Instrumentros from '../Instrumentos/Instrumentos';
 import BuscarProyectos from '../BuscarProyectos';
 import Editar from '../EditorPartitura/EditorPartitura';
 import MisProyectos from '../MisProyectos';
-import MisProyectos from '../MisProyectos';
-import Editar from '../EditorPartitura/EditorPartitura';
 
 function App() {
 

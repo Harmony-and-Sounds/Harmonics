@@ -23,5 +23,20 @@
 }
 
 .desaparecer {
-    /*display: none;*/
+    display: none;
+}
+
+.encabezado {
+    float: right;
+    padding-right: 60px;
+}
+
+#midi-id {
+    width: 900px;
+    display: inline-block;
+}
+
+.item .image{
+    width: 30px;
+    height: 30px;
 }
