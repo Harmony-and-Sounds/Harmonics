@@ -7,7 +7,7 @@ import Paginacion from "../Paginacion";
 
 
 
-function ProyectoItem({key,name,voices}) {
+function ProyectoItem({id,name,voices}) {
 
 
   const history = useHistory();
@@ -15,13 +15,14 @@ function ProyectoItem({key,name,voices}) {
   function sayHello(id) {
     alert(id);
   }
-  function goToInstruments ({key},{name},{voices}){
-    history.push("/instrumentos", {idProyecto:key ,nomProyecto:name,voices:voices });
+  function goToInstruments ({id},{name},{voices}){
+console.log(id);
+    history.push("/instrumentos", {idProyecto:id ,nomProyecto:name,voices:voices });
   }
 
   return (
   <div className="responsive">
-    <div className="gallery" onClick={() => goToInstruments({key},{name},{voices})} >
+    <div className="gallery" onClick={() => goToInstruments({id},{name},{voices})} >
         <img src={carpetaIcon} alt="Carpeta" width="600" height="400" />
      <div className="desc">{name}</div>
     </div>

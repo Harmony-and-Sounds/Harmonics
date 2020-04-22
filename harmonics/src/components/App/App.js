@@ -25,8 +25,6 @@ function App() {
               <Route exact path="/nosotros" component={Nosotros}/>
               <Route exact path="/empezar" component={Empezar}/>
               <Route path="/instrumentos" component={Instrumentros}/>
-              <Route path="/Proyectos" component={BuscarProyectos}/>
-              <Route path="/misproyectos" component={MisProyectos}/>
               <Route path="/Editar" component={Editar}/>
               <Route path="/proyectos" component={BuscarProyectos}/>
               <Route path="/misproyectos" component={MisProyectos}/>

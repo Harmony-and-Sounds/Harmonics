@@ -161,6 +161,7 @@ class Search extends React.Component {
 						return (
 							<ProyectoItem
 							key = {result.id}
+							id = {result.id}
 							name = {result.name}
 							voices = {result.voices}
 				       />

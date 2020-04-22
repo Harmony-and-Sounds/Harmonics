@@ -17,13 +17,13 @@
     text-align: justify;
     padding: 20px;
   }
-  
+
   @media screen and (min-width: 601px) {
     section.example {
       font-size: 20px;
     }
   }
-  
+
   @media screen and (max-width: 600px) {
     section.example {
       font-size: 15px;

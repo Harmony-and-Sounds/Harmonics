@@ -50,7 +50,7 @@ class Search extends React.Component {
 	 *
 	 */
 	fetchSearchResults = ( updatedPageNo = '', query = '' ) => {
-		const access = localStorage.getItem('access');
+		const access = sessionStorage.getItem('access');
 		console.log(this.state.token);
 		getProyectosUsusario(access).then( respuesta => {
 			const json = respuesta;

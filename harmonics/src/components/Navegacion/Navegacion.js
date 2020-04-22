@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Link, useHistory} from 'react-router-dom'
 import './Navegacion.css';
 import {logout} from '../../servicios/servicios-sesion'
-import {getInfoUsuario} from '../../servicios/servicio-usuario'
+import {getInfoUsuario,borrarNotificaciones} from '../../servicios/servicio-usuario'
 import logo from '../../recursos/logo_horizontal_blanco.png'
 import persona from '../../recursos/icono_usuario_miniatura.png'
 import { Button, Modal } from 'react-bootstrap';
@@ -43,6 +43,22 @@ function Navegacion(){
         sessionStorage.removeItem('access');
         sessionStorage.removeItem('refresh');
         window.location.reload();
+    }
+
+    function borrarNotificacion () {
+      if (token !== ""){
+          borrarNotificaciones(token).then( respuesta => {
+              if (respuesta.bandera === true){
+                //if (respuesta.data.pending_notifications === false){
+                    document.getElementById("notificacion").style.visibility = "hidden";
+                    setColor('btn btn-primary');
+                //}
+              }
+              else{
+                  alert(respuesta.data);
+              }
+          });
+      }
     }
 
 
@@ -88,7 +104,7 @@ function Navegacion(){
                                     <span className="nav-link link">Empezar</span>
                                 </li>
                             </Link>
-                            <Link to="/proyectos">
+                            <Link to="/proyectos" style={{ textDecoration: 'none' }}>
                                 <li className="nav-item">
                                     <span className="nav-link link">Proyectos</span>
                                 </li>
@@ -139,7 +155,7 @@ function Navegacion(){
                 </Modal.Header>
                 <Modal.Body>El proceso de uno o mas proyectos ya ha finalizado.</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" /*onClick={volverHome}*/>
+                    <Button variant="secondary" onClick={borrarNotificacion}>
                         Borrar
                     </Button>
                 </Modal.Footer>
