@@ -1,10 +1,36 @@
+import CuadradaPuntillo from '../../recursos/Notas-iconos/CuadradaPuntilloIcon.png';
 import Cuadrada from '../../recursos/Notas-iconos/CuadradaIcon.png';
+import RedondaPuntillo from '../../recursos/Notas-iconos/RedondaPuntilloIcon.png';
 import Redonda from '../../recursos/Notas-iconos/RedondaIcon.png';
+import BlancaPuntillo from '../../recursos/Notas-iconos/BlancaPuntilloIcon.png';
 import Blanca from '../../recursos/Notas-iconos/BlancaIcon.png';
+import NegraPuntillo from '../../recursos/Notas-iconos/NegraPuntilloIcon.png';
 import Negra from '../../recursos/Notas-iconos/NegraIcon.png';
+import CorcehaPuntillo from '../../recursos/Notas-iconos/CorcheaPuntilloIcon.png';
 import Corceha from '../../recursos/Notas-iconos/CorcheaIcon.png';
+import SemiCorcheaPuntillo from '../../recursos/Notas-iconos/SemicorcheaIcon.png';
 import SemiCorchea from '../../recursos/Notas-iconos/SemicorcheaIcon.png';
+import FusaPuntillo from '../../recursos/Notas-iconos/FusaPuntilloIcon.png';
 import Fusa from '../../recursos/Notas-iconos/FusaIcon.png';
+import SemiFusa from '../../recursos/Notas-iconos/SemiFusaIcon.png';
+import SemiFusaPuntillo from '../../recursos/Notas-iconos/SemiFusaPuntilloIcon.png';
+
+//import RedondaPuntillo from '../../recursos/Notas-iconos/RedondaPuntilloIcon.png';
+import SilencioRedonda from '../../recursos/Notas-iconos/SilencioRedondaIcon.png';
+//import BlancaPuntillo from '../../recursos/Notas-iconos/BlancaPuntilloIcon.png';
+import SilencioBlanca from '../../recursos/Notas-iconos/SilencioBlancaIcon.png';
+//import NegraPuntillo from '../../recursos/Notas-iconos/NegraPuntilloIcon.png';
+import SilencioNegra from '../../recursos/Notas-iconos/SilencioNegraicon.png';
+//import CorcehaPuntillo from '../../recursos/Notas-iconos/CorcheaPuntilloIcon.png';
+import SilencioCorceha from '../../recursos/Notas-iconos/SilencioCorcheaicon.png';
+//import SemiCorcheaPuntillo from '../../recursos/Notas-iconos/SemicorcheaIcon.png';
+import SilencioSemiCorchea from '../../recursos/Notas-iconos/SilencioSemiCorcheaIcon.png';
+//import FusaPuntillo from '../../recursos/Notas-iconos/FusaPuntilloIcon.png';
+import SilencioFusa from '../../recursos/Notas-iconos/SilencioFusaIcon.png';
+//import SemiFusaPuntillo from '../../recursos/Notas-iconos/SemiFusaPuntilloIcon.png';
+import SilencioSemiFusa from '../../recursos/Notas-iconos/SilencioSemiFusaIcon.png';
+
+
 
 
 const Modo = [
@@ -21,7 +47,7 @@ const Modo = [
     {value: 'Gm', name: 'G Menor'}, {value: 'Cm', name: 'C Menor'}, {value: 'Fm', name: 'F Menor'}, 
     {value: 'Bbm', name: 'Bb Menor'}, {value: 'Ebm', name: 'Eb Menor'}, {value: 'Abm', name: 'Ab Menor'},
     //Mixolydian
-    {value: 'G#Mix', name: 'G# Mixolidio'}, {value: 'C#Mix', name: 'C# Mixolidio'}, {value: 'F#Mix', name: 'F# Mixolidio'}, 
+    /*{value: 'G#Mix', name: 'G# Mixolidio'}, {value: 'C#Mix', name: 'C# Mixolidio'}, {value: 'F#Mix', name: 'F# Mixolidio'}, 
     {value: 'BMix', name: 'B Mixolidio'}, {value: 'EMix', name: 'E Mixolidio'}, {value: 'AMix', name: 'A Mixolidio'},
     {value: 'DMix', name: 'D Mixolidio'}, {value: 'GMix', name: 'G Mixolidio'}, {value: 'CMix', name: 'C Mixolidio'}, 
     {value: 'FMix', name: 'F Mixolidio'}, {value: 'BbMix', name: 'Bb Mixolidio'}, {value: 'EbMix', name: 'Eb Mixolidio'}, 
@@ -49,73 +75,65 @@ const Modo = [
     {value: 'D#Loc', name: 'D# Locrio'}, {value: 'G#Loc', name: 'G# Locrio'}, {value: 'C#Loc', name: 'C# Locrio'},
     {value: 'F#Loc', name: 'F# Locrio'}, {value: 'BLoc', name: 'B Locrio'}, {value: 'ELoc', name: 'E Locrio'}, 
     {value: 'ALoc', name: 'A Locrio'}, {value: 'DLoc', name: 'D Locrio'}, {value: 'GLoc', name: 'G Locrio'}, 
-    {value: 'CLoc', name: 'C Locrio'}, {value: 'FLoc', name: 'F Locrio'}, {value: 'BbLoc', name: 'Bb Locrio'}
+    {value: 'CLoc', name: 'C Locrio'}, {value: 'FLoc', name: 'F Locrio'}, {value: 'BbLoc', name: 'Bb Locrio'}*/
 ]
 
 
 const Claves = [
-    //Ionian
+
     {value: 'treble', name: 'Clave de Sol'}, {value: 'bass', name: 'Clave de Fa'}, {value: 'bass3', name: 'Clave de Fa en tercera'}, 
     {value: 'tenor', name: 'Clave de Do en cuarta'}, {value: 'alto', name: 'Clave de Do en tercera'}, {value: 'alto2', name: 'Clave de Do en segunda'},
     {value: 'alto1', name: 'Clave de Do en primera'}
 ]
 
 const Notas = [
-    //Ionian
-    {value: 'C', name: 'Do'}, {value: 'D', name: 'Re'}, {value: 'E', name: 'Mi'}, 
-    {value: 'F', name: 'Fa'}, {value: 'G', name: 'Sol'}, {value: 'A', name: 'La'},
-    {value: 'B', name: 'Si'}
+    {key: 'Do', text: 'Do', value: 'C'}, {key: 'Re', text: 'Re', value: 'D'}, {key: 'Mi',  text: 'Mi', value: 'E'}, 
+    {key: 'Fa', text: 'Fa', value: 'F'}, {key: 'Sol', text: 'Sol', value: 'G'}, {key: 'La', text: 'La', value: 'A'},
+    {key: 'Si', text: 'Si', value: 'B'}
 ]
 
 
 const Alteraciones = [
-    //Ionian
-    {value: '_', name: 'Bemol'}, {value: '__', name: 'Doble bemol'}, {value: '^', name: 'Sostenido'}, 
-    {value: '^^', name: 'Doble Sostenido'}, {value: '=', name: 'Becuadro'}
+    {key: 'Sin-alteraciones',  text: 'Sin alteraciones', value: ' '},{key: 'Bemol',  text: 'Bemol', value: '_'}, {key: 'Doble bemol', text: 'Doble bemol', value: '__'}, {key: 'Sostenido', text: 'Sostenido', value: '^'}, 
+    {key: 'Doble Sostenido', text: 'Doble Sostenido', value: '^^'}, {key: 'Becuadro', text: 'Becuadro', value: '='}
 ]
 
 const Duraciones = [
-    {
-      key: 'Cuadrada',
-      text: 'Cuadrada',
-      value: '8',
-      image: { avatar: true, src: Cuadrada },
-    },
-    {
-      key: 'Redonda',
-      text: 'Redonda',
-      value: '4',
-      image: { avatar: true, src: Redonda },
-    },
-    {
-      key: 'Blanca',
-      text: 'Blanca',
-      value: '2',
-      image: { avatar: true, src: Blanca },
-    },
-    {
-      key: 'Negra',
-      text: 'Negra',
-      value: '',
-      image: { avatar: true, src: Negra },
-    },
-    {
-      key: 'Corceha',
-      text: 'Corceha',
-      value: '/2',
-      image: { avatar: true, src: Corceha },
-    },
-    {
-      key: 'SemiCorchea',
-      text: 'SemiCorchea',
-      value: '/4',
-      image: { avatar: true, src: SemiCorchea },
-    },
-    {
-      key: 'Fusa',
-      text: 'Fusa',
-      value: '/8',
-      image: { avatar: true, src: Fusa },
-      }
+    {key: 'CuadradaPuntillo', text: 'Cuadrada con Puntillo', value: '3/1', image: { avatar: true, src: CuadradaPuntillo },},
+    {key: 'Cuadrada', text: 'Cuadrada', value: '2/1', image: { avatar: true, src: Cuadrada },},
+    {key: 'RedondaPuntillo', text: 'Redonda con Puntillo', value: '3/2', image: { avatar: true, src: RedondaPuntillo },},
+    {key: 'Redonda', text: 'Redonda', value: '1/1', image: { avatar: true, src: Redonda },},
+    {key: 'BlancaPuntillo',text: 'Blanca con Puntillo',value: '3/4',image: { avatar: true, src: BlancaPuntillo },},
+    {key: 'Blanca',text: 'Blanca',value: '1/2',image: { avatar: true, src: Blanca },},
+    {key: 'NegraPuntillo',text: 'Negra con Puntillo',value: '3/8',image: { avatar: true, src: NegraPuntillo },},
+    {key: 'Negra',text: 'Negra',value: '1/4',image: { avatar: true, src: Negra },},
+    {key: 'CorcehaPuntillo', text: 'Corceha con Puntillo', value: '3/16', image: { avatar: true, src: CorcehaPuntillo },},
+    {key: 'Corceha', text: 'Corceha', value: '1/8', image: { avatar: true, src: Corceha },},
+    {key: 'SemiCorcheaPuntillo', text: 'SemiCorchea con Puntillo', value: '3/32', image: { avatar: true, src: SemiCorcheaPuntillo },},
+    {key: 'SemiCorchea', text: 'SemiCorchea', value: '1/16', image: { avatar: true, src: SemiCorchea },},
+    {key: 'FusaPuntillo', text: 'Fusa con Puntillo', value: '3/64', image: { avatar: true, src: FusaPuntillo },},
+    {key: 'Fusa', text: 'Fusa', value: '1/32', image: { avatar: true, src: Fusa },},
+    {key: 'SemiFusaPuntillo', text: 'SemiFusa con Puntillo', value: '3/128', image: { avatar: true, src: SemiFusaPuntillo },},
+    {key: 'SemiFusa', text: 'SemiFusa', value: '1/64', image: { avatar: true, src: SemiFusa },}
   ]
-export default { Modo, Claves, Notas, Alteraciones, Duraciones} ;
+
+  const DuracionesSilencios = [
+    //{key: 'RedondaPuntillo', text: 'Redonda con Puntillo', value: '5', image: { avatar: true, src: RedondaPuntillo },},
+    {key: 'SilencioRedonda', text: 'Silencio Redonda', value: '1/1', image: { avatar: true, src: SilencioRedonda },},
+    //{key: 'BlancaPuntillo',text: 'Blanca con Puntillo',value: '3',image: { avatar: true, src: BlancaPuntillo },},
+    {key: 'SilencioBlanca',text: 'Silencio Blanca',value: '1/2',image: { avatar: true, src: SilencioBlanca },},
+    //{key: 'NegraPuntillo',text: 'Negra con Puntillo',value: '3/2',image: { avatar: true, src: NegraPuntillo },},
+    {key: 'SilencioNegra',text: 'Silencio Negra',value: '1/4',image: { avatar: true, src: SilencioNegra },},
+    //{key: 'CorcehaPuntillo', text: 'Corceha con Puntillo', value: '2/3', image: { avatar: true, src: CorcehaPuntillo },},
+    {key: 'SilencioCorceha', text: 'Silencio Corceha', value: '1/8', image: { avatar: true, src: SilencioCorceha },},
+    //{key: 'SemiCorcheaPuntillo', text: 'SemiCorchea con Puntillo', value: '/3', image: { avatar: true, src: SemiCorcheaPuntillo },},
+    {key: 'SilencioSemiCorchea', text: 'Silencio SemiCorchea', value: '1/16', image: { avatar: true, src: SilencioSemiCorchea },},
+    //{key: 'FusaPuntillo', text: 'Fusa con Puntillo', value: '/7', image: { avatar: true, src: FusaPuntillo },},
+    {key: 'SilencioFusa', text: 'Silencio Fusa', value: '1/32', image: { avatar: true, src: SilencioFusa },},
+    //{key: 'SemiFusaPuntillo', text: 'SemiFusa con Puntillo', value: '/15', image: { avatar: true, src: SemiFusaPuntillo },},
+    {key: 'SilencioSemiFusa', text: 'Silencio SemiFusa', value: '1/64', image: { avatar: true, src: SilencioSemiFusa },}
+  ]
+
+
+
+export default { Modo, Claves, Notas, Alteraciones, Duraciones, DuracionesSilencios} ;

@@ -1,6 +1,3 @@
-import JSZip from "jszip";
-import { saveAs } from 'file-saver';
-
 const URL_PROYECTO = "http://localhost:8000/";
 
 export async function crearProyecto (token, project_name, archivo, voces){
