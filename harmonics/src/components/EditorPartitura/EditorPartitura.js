@@ -25,6 +25,7 @@ function EditorPartitura(props) {
 
   //Menu
   const [mostrarMenu, setMostrarMenu] = useState(false);
+  const [tipoNotaBase, setTipoNotaBase] = useState('');
   
   //Partitura completa
   const [partitura, setPartitura] = useState('T: TITULO\nM: 4/4\nL: 1\nK: C treble\n|z1/4|C1/8|');
@@ -259,6 +260,7 @@ function EditorPartitura(props) {
           console.log(n.substring(posNumero+1,n.length));
           setDuracion(n.substring(posNumero+1,n.length));
         }
+        setTipoNotaBase('Nota');
         setMostrar(true);
       }
       else{
@@ -293,37 +295,52 @@ function EditorPartitura(props) {
           console.log(n.substring(posNumero+1,n.length));
           setDuracion(n.substring(posNumero+1,n.length));
         }
+        setTipoNotaBase('Silencio');
         setMostrarSilencio(true);
       }
     }
     if (ligar && abcElem.el_type === "note") {
       if (abcElem.pitches !== undefined){
-        let InicioNotas = partitura.indexOf('|');
         if (abcElem.startChar !== notaInicio){
+          let InicioNotas = partitura.indexOf('|');
+          let  primero = notaInicio - InicioNotas;
+          let  segundo = abcElem.startChar - InicioNotas;
           if (accion === 'Agregar'){
-            console.log(partitura.substring(InicioNotas, partitura.length) ,notaInicio - InicioNotas, abcElem.startChar - InicioNotas);
-            handler.tieNotes(notaInicio - InicioNotas, abcElem.startChar - InicioNotas);
-            let partituraSinEncabezadoModificada = handler.getScore();
-            console.log(partituraSinEncabezadoModificada);
-            setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
+            if (primero < segundo){
+              handler.tieNotes(primero, segundo);
+              let partituraSinEncabezadoModificada = handler.getScore();
+              setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
+            }
+            if (segundo < primero){
+              handler.tieNotes(segundo, primero);
+              let partituraSinEncabezadoModificada = handler.getScore();
+              setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
+            }
           }
           if (accion === 'Eliminar'){
-            handler.untieNotes(notaInicio - InicioNotas, abcElem.startChar - InicioNotas);
-            let partituraSinEncabezadoModificada = handler.getScore();
-            console.log(partituraSinEncabezadoModificada);
-            setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
+            if (primero < segundo){
+              handler.untieNotes(primero, segundo);
+              let partituraSinEncabezadoModificada = handler.getScore();
+              setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
+            }
+            if (segundo < primero) {
+              handler.untieNotes(segundo, primero);
+              let partituraSinEncabezadoModificada = handler.getScore();
+              setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
+            }
           }
-        setMostrarLigadura(false);
-        setLigar(false);
-        setAccion('');
-        setNota('');
-        setNotaSimplePos(0);
-        setAlteracion(' ');
-        setDuracion('');
-        setNotaInicio(null);
-        setNotaFinal(null);
-        setEditar('');
-        setMostrarEditar(false);
+          setMostrarLigadura(false);
+          setLigar(false);
+          setAccion('');
+          setNota('');
+          setNotaSimplePos(0);
+          setAlteracion(' ');
+          setDuracion('');
+          setNotaInicio(null);
+          setNotaFinal(null);
+          setEditar('');
+          setTipoNotaBase('');
+          setMostrarEditar(false);
   
         }
         else{
@@ -410,56 +427,12 @@ function EditorPartitura(props) {
 
   function editarDuracion(duracionCombo){
     let editado = 0;
-    console.log(duracionCombo);
-    let regexDuracion = /[^0-9][/][\d]+$/gm;
-    let posSlash = nota.search(regexDuracion);
-    console.log(posSlash);
-    if (posSlash !== -1 && editado === 0) {
-      let copiNota = nota.substring(0,posSlash+1) + duracionCombo /*+ nota.substring(posSlash+3,nota.length)*/;
-      console.log(nota.substring(posSlash+3,nota.length));
-      console.log(nota);
-      console.log(copiNota);
-      setEditar(editar.replace(nota, copiNota));
-      setNota(copiNota);
-      setDuracion(duracionCombo);
-      let regex = /[cCdDeEfFgGaAbB]/;
-      let i = copiNota.search(regex);
-      setNotaSimplePos(i);
-      editado = 1;
-    }
     let regexfrac = /[\d][/][\d]+$/gm;
     let posDur = nota.search(regexfrac);
     console.log(posDur);
     if (posDur !== -1 && editado === 0){
       let copiNota = nota.substring(0,posDur) + duracionCombo /*+ nota.substring(posDur+3,nota.length)*/;
       console.log(nota);
-      console.log(copiNota);
-      setEditar(editar.replace(nota, copiNota));
-      setNota(copiNota);
-      setDuracion(duracionCombo);
-      let regex = /[cCdDeEfFgGaAbB]/;
-      let i = copiNota.search(regex);
-      setNotaSimplePos(i);
-      editado = 1;
-    }
-    let regexNumero = /[^/][1-9]$/gm;
-    let posNumero = nota.search(regexNumero);
-      console.log(posNumero);
-    if (posNumero !== -1 && editado === 0){
-      let copiNota = nota.substring(0,posNumero+1) + duracionCombo /*+ nota.substring(posNumero+2,nota.length)*/;
-      console.log(nota);
-      console.log(copiNota);
-      setEditar(editar.replace(nota, copiNota));
-      setNota(copiNota);
-      setDuracion(duracionCombo);
-      let regex = /[cCdDeEfFgGaAbB]/;
-      let i = copiNota.search(regex);
-      setNotaSimplePos(i);
-      editado = 1;
-    }
-
-    if (posSlash === -1 && posDur === -1 && posNumero === -1){
-      let copiNota = nota.substring(0,nota.length) + duracionCombo;
       console.log(copiNota);
       setEditar(editar.replace(nota, copiNota));
       setNota(copiNota);
@@ -523,6 +496,7 @@ function EditorPartitura(props) {
     setNotaInicio(null);
     setNotaFinal(null);
     setEditar('');
+    setTipoNotaBase('');
     setMostrar(false);
     setMostrarSilencio(false);
     setMostrarEditar(false);
@@ -543,6 +517,7 @@ function EditorPartitura(props) {
     setNotaInicio(null);
     setNotaFinal(null);
     setEditar('');
+    setTipoNotaBase('');
     setMostrarEliminar(false);
     setMostrarMenu(false);
   }
@@ -558,6 +533,148 @@ function EditorPartitura(props) {
     setPartituraAgregar(compas + longitudNotas + key + cleff + notaAgregar );
     setMostrarNotaAgregar(true);
     setMostrarSilencioAgregar(false);
+  }
+
+  function editarAgregadoNota(notaSimple){
+    let notaOriginal = notaAgregar.substring(notaSimpleAgregarPos, notaSimpleAgregarPos+1);
+    if (notaOriginal === notaOriginal.toUpperCase()){
+      let remplazo = notaAgregar.substring(0, notaSimpleAgregarPos) + notaSimple + notaAgregar.substring(notaSimpleAgregarPos+1, notaAgregar.length);
+      setPartituraAgregar(partituraAgregar.replace(notaAgregar, remplazo));
+      setNotaAgregar(remplazo);
+    }
+    else{
+      notaSimple = notaSimple.toLowerCase();
+      let remplazo = notaAgregar.substring(0, notaSimpleAgregarPos) + notaSimple + notaAgregar.substring(notaSimpleAgregarPos+1, notaAgregar.length);
+      setPartituraAgregar(partituraAgregar.replace(notaAgregar, remplazo));
+      setNotaAgregar(remplazo);
+      console.log(editar);
+    }
+  }
+
+  function aumentarOctavaAgregar(){
+    if (notaAgregar.indexOf(',') !== -1){
+      let i = notaAgregar.indexOf(',');
+      let copiNota = notaAgregar.substring(0,i)+notaAgregar.substring(i+1,notaAgregar.length);
+      setPartituraAgregar(partituraAgregar.replace(notaAgregar, copiNota));
+      setNotaAgregar(copiNota);
+    } else{
+      let copiNota = notaAgregar.substring(0,notaSimpleAgregarPos+1) + "'"+ notaAgregar.substring(notaSimpleAgregarPos+1,notaAgregar.length);
+      setPartituraAgregar(partituraAgregar.replace(notaAgregar, copiNota));
+      setNotaAgregar(copiNota);
+    }
+  }
+
+  
+  function disminuirOctavaAgregar(){
+    if (notaAgregar.indexOf("'") !== -1){
+      let i = notaAgregar.indexOf("'");
+      let copiNota = notaAgregar.substring(0,i)+notaAgregar.substring(i+1,notaAgregar.length);
+      setPartituraAgregar(partituraAgregar.replace(notaAgregar, copiNota));
+      setNotaAgregar(copiNota);
+    } else{
+      let copiNota = notaAgregar.substring(0,notaSimpleAgregarPos+1) + ","+ notaAgregar.substring(notaSimpleAgregarPos+1,notaAgregar.length);
+      setPartituraAgregar(partituraAgregar.replace(notaAgregar, copiNota));
+      setNotaAgregar(copiNota);
+    }
+  }
+
+  function editarAlteracionesAgregar(alteracionCombo){
+    let regexAlteracion = /[_^=]/;
+    let pos = notaAgregar.search(regexAlteracion);
+    if (alteracionCombo === ' '){
+      alteracionCombo = '';
+    }
+    console.log(alteracionCombo);
+    if (pos !== -1) {
+      let copiNota = notaAgregar.substring(0,pos) + alteracionCombo + notaAgregar.substring(notaSimpleAgregarPos,notaAgregar.length);
+      //console.log(copiNota);
+      setPartituraAgregar(partituraAgregar.replace(notaAgregar, copiNota));
+      setNotaAgregar(copiNota);
+      setAlteracionAgregar(alteracionCombo);
+      let regex = /[cCdDeEfFgGaAbB]/;
+      let i = copiNota.search(regex);
+      setNotaSimpleAgregarPos(i);
+    }
+    else {
+      let copiNota = notaAgregar.substring(0,notaSimpleAgregarPos) + alteracionCombo + notaAgregar.substring(notaSimpleAgregarPos,notaAgregar.length);
+      //console.log(copiNota);
+      setPartituraAgregar(partituraAgregar.replace(notaAgregar, copiNota));
+      setNotaAgregar(copiNota);
+      setAlteracionAgregar(alteracionCombo);
+      let regex = /[cCdDeEfFgGaAbB]/;
+      let i = copiNota.search(regex);
+      setNotaSimpleAgregarPos(i);
+    }
+  }
+
+  function editarDuracionAgregar(duracionCombo){
+    let editado = 0;
+    let regexfrac = /[\d][/][\d]+$/gm;
+    let posDur = notaAgregar.search(regexfrac);
+    if (posDur !== -1 && editado === 0){
+      let copiNota = notaAgregar.substring(0,posDur) + duracionCombo /*+ nota.substring(posDur+3,nota.length)*/;
+      console.log(copiNota);
+      setPartituraAgregar(partituraAgregar.replace(notaAgregar, copiNota));
+      setNotaAgregar(copiNota);
+      setDuracionAgregar(duracionCombo);
+      let regex = /[cCdDeEfFgGaAbB]/;
+      let i = copiNota.search(regex);
+      setNotaSimpleAgregarPos(i);
+      editado = 1;
+    }
+  }
+
+  function convertirSilencioAgregar(){
+    let n = 'z1/4';
+    setPartituraAgregar( compas + longitudNotas + key + cleff + n );
+    setNotaAgregar(n);
+    setDuracionAgregar('1/4');
+    setMostrarNotaAgregar(false);
+    setMostrarSilencioAgregar(true);
+  }
+
+  function convertirNotaAgregar(){
+    let n = 'C1/4';
+    setPartituraAgregar( compas + longitudNotas + key + cleff + n );
+    setNotaAgregar(n);
+    setNotaSimpleAgregarPos(0);
+    setAlteracionAgregar(' ');
+    setDuracionAgregar('1/4');
+    setMostrarSilencioAgregar(false);
+    setMostrarNotaAgregar(true);
+  }
+
+  
+  function agregar(){
+    let after = null;
+    if (ubicacion === 'Izquierda'){
+      after = false;
+    }
+    if (ubicacion === 'Derecha'){
+      after = true;
+    }
+    let InicioNotas = partitura.indexOf('|');
+    handler.addNote(notaInicio - InicioNotas, notaAgregar, after);
+    let partituraSinEncabezadoModificada = handler.getScore();
+    setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
+    setNota('');
+    setNotaSimplePos(0);
+    setAlteracion(' ');
+    setDuracion('');
+    setNotaInicio(null);
+    setNotaFinal(null);
+    setEditar('');
+    setTipoNotaBase('');
+    setNotaSimpleAgregarPos(0);
+    setAlteracionAgregar(' ');
+    setDuracionAgregar('');
+    setNotaAgregar('');
+    setPartituraAgregar('');
+    setUbicacion('Derecha');
+    setMostrarNotaAgregar(false);
+    setMostrarSilencioAgregar(false);
+    setMostrarAgregar(false);
+    setMostrarMenu(false);
   }
 
 
@@ -595,7 +712,7 @@ function EditorPartitura(props) {
             </div>
           }
           </div>
-          <Modal show={mostrarEditarEncabezada} onHide={handleClose} size="lg">
+          <Modal show={mostrarEditarEncabezada} onHide={handleClose} size="lg" centered>
                 <Modal.Header className="text-center" closeButton>
                   <h2 style={{margin: "0"}} className="w-100">Editar Encabezado</h2>
                 </Modal.Header>
@@ -635,7 +752,7 @@ function EditorPartitura(props) {
                     <br/>
                     <div className="row">
                       <div className="col align-self-center" align="center">
-                        <h3>Modo</h3>
+                        <h3>Tonalidad</h3>
                       </div>
                       <div className="col-8" align="center">
                       <select value={keyEditado} className="form-control" onChange={e => setKeyEditado(e.target.value)}>
@@ -792,7 +909,7 @@ function EditorPartitura(props) {
                   <h2 style={{margin: "0"}} className="w-100">Menu</h2>
                 </Modal.Header>
                 <Modal.Body style={{textAlign: "center"}}>
-                  {mostrar &&
+                  {tipoNotaBase === 'Nota' &&
                   <div className="row">
                     <div className="col align-self-center">
                       <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => habilitarLigadura(true)}>Agregar Ligadura</button>
@@ -811,13 +928,13 @@ function EditorPartitura(props) {
                     </div>
                   </div>
                   }
-                  {mostrarSilencio &&
+                  {tipoNotaBase === 'Silencio' &&
                   <div className="row">
                     <div className="col align-self-center">
                       <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEditar(true); setMostrarMenu(false)}}>Editar Nota</button>
                     </div>
                     <div className="col align-self-center">
-                      <button className="btn btn-secondary btn-lg btn-block">Agregar Nota</button>
+                      <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {inicioAgregar()}}>Agregar Nota</button>
                     </div>
                     <div className="col align-self-center">
                       <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEliminar(true); setMostrarMenu(false)}}>Eliminar Nota</button>
@@ -879,8 +996,8 @@ function EditorPartitura(props) {
                         fluid
                         selection
                         options={Constantes.Notas}
-                        defaultValue={nota.substring(notaSimplePos, notaSimplePos+1).toUpperCase()}
-                        onChange={(e, data) => editadoEditar(data.value)}
+                        defaultValue={notaAgregar.substring(notaSimpleAgregarPos, notaSimpleAgregarPos+1).toUpperCase()}
+                        onChange={(e, data) => editarAgregadoNota(data.value)}
                       />
                     </div>
                     <div className="col align-self-center">
@@ -889,12 +1006,12 @@ function EditorPartitura(props) {
                     <div className="col align-self-center">
                       <div className="botoneraE">
                         <div className="botonespacio">
-                          <button style={{width: "50px"}} className="btn btn-primary" onClick={() => aumentarOctava()}>
+                          <button style={{width: "50px"}} className="btn btn-primary" onClick={() => aumentarOctavaAgregar()}>
                             <i className="fas fa-angle-up"></i>
                           </button>
                         </div>
                         <div className="botonespacio">
-                          <button style={{width: "50px"}} className="btn btn-primary" onClick={() => disminuirOctava()}>
+                          <button style={{width: "50px"}} className="btn btn-primary" onClick={() => disminuirOctavaAgregar()}>
                             <i className="fas fa-angle-down"></i>
                           </button>
                         </div>
@@ -911,8 +1028,8 @@ function EditorPartitura(props) {
                         fluid
                         selection
                         options={Constantes.Alteraciones}
-                        defaultValue={alteracion}
-                        onChange={(e, data) => editarAlteraciones(data.value)}
+                        defaultValue={alteracionAgregar}
+                        onChange={(e, data) => editarAlteracionesAgregar(data.value)}
                       />
                     </div>
                     <div className="col align-self-center">
@@ -923,8 +1040,8 @@ function EditorPartitura(props) {
                         fluid
                         selection
                         options={Constantes.Duraciones}
-                        defaultValue={duracion}
-                        onChange={(e, data) => editarDuracion(data.value)}
+                        defaultValue={duracionAgregar}
+                        onChange={(e, data) => editarDuracionAgregar(data.value)}
                       />
                     </div>
                   </div>
@@ -935,7 +1052,7 @@ function EditorPartitura(props) {
                       <span style={{color: "red"}}>* Esto borrar la informacion de la nota</span>
                     </div>
                     <div className="col align-self-center">
-                      <button className="btn btn-primary btn-lg btn-block" onClick={e => convertirSilencio()}>Convertir</button>
+                      <button className="btn btn-primary btn-lg btn-block" onClick={e => convertirSilencioAgregar()}>Convertir</button>
                     </div>
                     <div className="col align-self-center">
                       <h3>Ubicación</h3>
@@ -965,18 +1082,20 @@ function EditorPartitura(props) {
                         <h3>Duracion</h3>
                       </div>
                       <div className="col align-self-center">
-                      <Button.Group>
-                        <Button color="green" onClick={() => setUbicacion('Izquierda')}>Izquierda</Button>
-                        <Button.Or />
-                        <Button color="teal" onClick={() => setUbicacion('Derecha')}>Derecha</Button>
-                      </Button.Group>
+                      <Dropdown
+                          fluid
+                          selection
+                          options={Constantes.DuracionesSilencios}
+                          defaultValue={duracionAgregar}
+                          onChange={(e, data) => editarDuracionAgregar(data.value)}
+                        />
                       </div>
                       <div className="col align-self-center">
                         <h3 style={{margin: "0"}}>Convertir en Nota</h3>
                         <span style={{color: "red"}}>* Esto borrar la informacion del Silencio</span>
                       </div>
                       <div className="col align-self-center">
-                        <button className="btn btn-primary btn-lg btn-block" onClick={e => convertirNota()}>Convertir</button>
+                        <button className="btn btn-primary btn-lg btn-block" onClick={e => convertirNotaAgregar()}>Convertir</button>
                       </div>
                     </div>
                     <br/>
@@ -985,13 +1104,11 @@ function EditorPartitura(props) {
                         <h3>Ubicación</h3>
                       </div>
                       <div className="col align-self-center">
-                        <Dropdown
-                          fluid
-                          selection
-                          options={Constantes.DuracionesSilencios}
-                          defaultValue={duracion}
-                          onChange={(e, data) => editarDuracion(data.value)}
-                        />
+                        <Button.Group>
+                        <Button color="green" onClick={() => setUbicacion('Izquierda')}>Izquierda</Button>
+                        <Button.Or />
+                        <Button color="teal" onClick={() => setUbicacion('Derecha')}>Derecha</Button>
+                      </Button.Group>
                       </div>
                       <div className="col align-self-center">
                       </div>
@@ -1004,7 +1121,7 @@ function EditorPartitura(props) {
                 <Modal.Footer>
                 <div className="row no-gutters" style={{width: "100%"}}>
                   <div className="col-11">
-              <button className="btn btn-secondary btn-lg btn-block" onClick={e => editarEnGrande()}>{'Agregar a la '+ubicacion}</button>
+                    <button className="btn btn-secondary btn-lg btn-block" onClick={e => agregar()}>{'Agregar a la '+ubicacion}</button>
                   </div>
                   <div className="col">
                     <button className="btn btn-warning btn-lg btn-block"><i className="fas fa-question-circle"></i></button>
