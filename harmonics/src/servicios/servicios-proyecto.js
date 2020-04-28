@@ -1,5 +1,4 @@
-import JSZip from "jszip";
-import { saveAs } from 'file-saver';
+
 
 const URL_PROYECTO = "http://localhost:8000/";
 
@@ -45,6 +44,7 @@ export async function getProyectosBusqueda (searchWord,Voces){
         const response = await fetch(URL_PROYECTO+'project/?keyWord='+searchWord+'&keyVoices='+Voces, {
             method: 'GET',})
             const json = await response.json();
+            console.log(json);
         return await json;
       } catch (error) {
           console.log(error);
@@ -105,7 +105,7 @@ export async function descargarProyecto (idProyecto) {
           blob.name = "proyZip";
           //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
           var url = window.URL.createObjectURL(blob);
-          
+
           return {data:url , bandera: true}
         }
         else {

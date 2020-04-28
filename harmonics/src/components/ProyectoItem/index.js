@@ -16,7 +16,6 @@ function ProyectoItem({id,name,voices}) {
     alert(id);
   }
   function goToInstruments ({id},{name},{voices}){
-console.log(id);
     history.push("/instrumentos", {idProyecto:id ,nomProyecto:name,voices:voices });
   }
 

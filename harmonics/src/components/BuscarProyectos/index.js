@@ -53,6 +53,7 @@ class Search extends React.Component {
 
 
 		getProyectosBusqueda(query ,voices).then( respuesta => {
+			console.log(query);
 			const json = respuesta;
 			const resultNotFoundMsg = ! respuesta.length
 									? 'There are no more search results. Please try a new search'
@@ -118,6 +119,8 @@ class Search extends React.Component {
 			if(tags.length > 0){
 				voices = tags.join(",")
 			}
+			else
+			voices= '';
 			this.setState( { query, loading: true, message: '' }, () => {
 				this.fetchSearchResults( 1, query,voices );
 			} );

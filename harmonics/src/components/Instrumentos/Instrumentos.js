@@ -5,7 +5,7 @@ import {Tab,Tabs} from 'react-bootstrap';
 import Reproductor from '../Reproductor/Reproductor';
 import VisualizadorPDF from '../VisualizadorPDF/VisualizadorPDF';
 import './Instrumentos.css';
-import { useLocation } from "react-router-dom";
+import { useLocation,useHistory } from "react-router-dom";
 import {descargarProyecto} from '../../servicios/servicios-proyecto'
 
 
@@ -13,11 +13,16 @@ import {descargarProyecto} from '../../servicios/servicios-proyecto'
 function Instrumentos(props) {
 
   const location = useLocation();
+  const history = useHistory();
 
   const [idProyecto] = useState(location.state.idProyecto);
   const [nomProyecto] = useState(location.state.nomProyecto);
   const [voices] = useState(location.state.voices);
 
+
+  function goToEditar (){
+    history.push("/Editar", {});
+  }
 
   function descargarProy (idProy)  {
     console.log(idProy);
@@ -58,7 +63,13 @@ function Instrumentos(props) {
                     <VisualizadorPDF idVoz={voz.id}/>
                     <br/>
                     <button className="btnDescargarVoz" ><i className="fa fa-download"></i> Descargar Intrumento</button>
+                    <button className="btnEditar" onClick={()=>goToEditar()} >Editar partitura</button>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
                   </Tab>
+
                 ))
               }
 
