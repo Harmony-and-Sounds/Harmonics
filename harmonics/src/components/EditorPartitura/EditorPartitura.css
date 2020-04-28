@@ -11,6 +11,7 @@
     padding-top: 30px;
     display: flex;
     justify-content: center;
+    padding-bottom: 30px;
 }
 
 .botonespacio {
@@ -19,9 +20,47 @@
 }
 
 .prueba .abcjs-inner svg{
-    width: 175px;
+    -webkit-transform-origin-x: unset !important;
+    width: 100px;
+    height: 500px;
 }
 
+.prueba > div > div {
+    width: unset !important;
+}
+
+/*.prueba .abcjs-inner{
+    width: 50%;
+    margin: 0;
+}*/
+
 .desaparecer {
-    /*display: none;*/
+    display: none;
+}
+
+.encabezado {
+    float: right;
+    padding-right: 60px;
+}
+
+#midi-id {
+    width: 900px;
+    display: inline-block;
+}
+
+.item .image{
+    width: 30px;
+    height: 30px;
+}
+
+.modal-90w {
+    width: 90%;
+    max-width: none;
+}
+
+.modal-styling-title{
+    text-align: center;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
 }
