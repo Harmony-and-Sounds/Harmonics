@@ -9,11 +9,20 @@ import { Modal } from 'react-bootstrap';
 import Constantes from './Constantes';
 import { Dropdown, Checkbox, Button } from 'semantic-ui-react'
 import {ABCHandler} from './libreriaABC/ABCHandler';
+import Carousel from 'react-bootstrap/Carousel'
+
+
 function EditorPartitura(props) {
 
   //Libreria
   const [handler, setHandler] = useState(null);
   const [handlerInicializado, setHandlerInicializado] = useState(false);
+
+  //Ayuda
+  const [mostrarAyuda, setMostrarAyuda] = useState(false);
+  const [mostrarAyudaEditarNota, setMostrarAyudaEditarNota] = useState(false);
+  const [mostrarAyudaAgregarNota, setMostrarAyudaAgregarNota] = useState(false);
+  const [mostrarAyudaEliminarNota, setMostrarAyudaEliminarNota] = useState(false);
 
   //Encabezado
   const [mostrarEditarEncabezada, setMostrarEditarEncabezada] = useState(false);
@@ -26,10 +35,10 @@ function EditorPartitura(props) {
   //Menu
   const [mostrarMenu, setMostrarMenu] = useState(false);
   const [tipoNotaBase, setTipoNotaBase] = useState('');
-  
+
   //Partitura completa
-  const [partitura, setPartitura] = useState('T: TITULO\nM: 4/4\nL: 1\nK: C treble\n|z1/4|C1/8|');
-  
+  const [partitura, setPartitura] = useState('T: Cooley\n M: 4/4\n L: 1/8\n K: Emin\n |:D2|"Em"EB{c}BA B2 EB|~B2 AB dBAG|\n 	"D"FDAD BDAD|FDAD dAFD| "Em"EBBA B2 EB|B2 AB defg|\n 	"D"afe^c dBAF|"Em"DEFD E2:| |:gf|"Em"eB B2 efge|eB B2 gedB|\n 	"D"A2 FA DAFA|A2 FA defg| "Em"eB B2 eBgB|eB B2 defg|\n 	"D"afe^c dBAF|"Em"DEFD E2:|');
+
   //Fragmento editado
   const [nota, setNota] = useState('');
   const [notaSimplePos, setNotaSimplePos] = useState(0);
@@ -70,6 +79,10 @@ function EditorPartitura(props) {
   const [cleff, setCleff] = useState('');
 
   const handleClose = () => setMostrarEditarEncabezada(false);
+  const handleCloseMostrarAyuda = () => setMostrarAyuda(false);
+  const handleCloseMostrarAyudaEditarNota = () => setMostrarAyudaEditarNota(false);
+  const handleCloseMostrarAyudaAgregarNota = () => setMostrarAyudaAgregarNota(false);
+  const handleCloseMostrarAyudaEliminarNota = () => setMostrarAyudaEliminarNota(false);
   const handleCloseMostrarEditar = () => {setMostrarEditar(false); setMostrarMenu(true)};
   const handleCloseMostrarMenu = () => setMostrarMenu(false);
   const handleCloseMostrarEliminar = () => {setMostrarEliminar(false); setMostrarMenu(true)};
@@ -89,6 +102,7 @@ function EditorPartitura(props) {
     //responsive: "resize",
   };
 
+
   useEffect(() => {
 
   });
@@ -96,6 +110,8 @@ function EditorPartitura(props) {
   useEffect(() => {
     extraerEncabezado();
     renderizarReproductor();
+    let mAyuda = (localStorage.getItem('ayudaEditar') == 'true');
+    setMostrarAyuda(mAyuda);
   }, [partitura]);
 
 
@@ -207,6 +223,11 @@ function EditorPartitura(props) {
     setMostrarMenu(false);
   }
 
+  function closeMostrarAyuda(){
+    localStorage.setItem("ayudaEditar", false);
+    setMostrarAyuda(false);
+  }
+
   function obtenerMidi(){
     var x = document.getElementsByClassName("desaparecer");
     let dataUri = x[0].firstChild.getAttribute("href");
@@ -246,14 +267,14 @@ function EditorPartitura(props) {
           console.log(n.substring(posSlash+1,n.length));
           setDuracion(n.substring(posSlash+1,n.length));
         }
-  
+
         let regexfrac = /[\d][/][\d]+$/gm;
         let posDur = n.search(regexfrac);
         if (posDur !== -1){
           console.log(n.substring(posDur,n.length));
           setDuracion(n.substring(posDur,n.length));
         }
-  
+
         let regexNumero = /[^/][1-9]$/gm;
         let posNumero = n.search(regexNumero);
         if (posNumero !== -1){
@@ -278,7 +299,7 @@ function EditorPartitura(props) {
           console.log(n.substring(posSlash+1,n.length));
           setDuracion(n.substring(posSlash+1,n.length));
         }
-  
+
         let regexfrac = /[\d][/][\d]+$/gm;
         let posDur = n.search(regexfrac);
         console.log(posDur);
@@ -286,7 +307,7 @@ function EditorPartitura(props) {
           console.log(n.substring(posDur,n.length));
           setDuracion(n.substring(posDur,n.length));
         }
-  
+
         let regexNumero = /[^/][1-9]$/gm;
         let posNumero = n.search(regexNumero);
         console.log(n);
@@ -341,7 +362,7 @@ function EditorPartitura(props) {
           setEditar('');
           setTipoNotaBase('');
           setMostrarEditar(false);
-  
+
         }
         else{
           alert('Seleccione una nota distinta a la propia');
@@ -382,7 +403,7 @@ function EditorPartitura(props) {
     }
   }
 
-  
+
   function disminuirOctava(){
     if (nota.indexOf("'") !== -1){
       let i = nota.indexOf("'");
@@ -564,7 +585,7 @@ function EditorPartitura(props) {
     }
   }
 
-  
+
   function disminuirOctavaAgregar(){
     if (notaAgregar.indexOf("'") !== -1){
       let i = notaAgregar.indexOf("'");
@@ -644,7 +665,7 @@ function EditorPartitura(props) {
     setMostrarNotaAgregar(true);
   }
 
-  
+
   function agregar(){
     let after = null;
     if (ubicacion === 'Izquierda'){
@@ -686,6 +707,7 @@ function EditorPartitura(props) {
             <div className="encabezado">
               <button className="btn btn-secondary" onClick={() => setMostrarEditarEncabezada(true)}>Editar Encabezado</button>
               <button className="btn btn-success" onClick={obtenerMidi}>Guardar</button>
+              <button className="btn btn-warning justify-content-center" onClick={() => setMostrarAyuda(true)}><i className="fas fa-question-circle"></i></button>
             </div>
             <div style={{paddingTop: "40px"}}>
               <Abcjs
@@ -696,7 +718,7 @@ function EditorPartitura(props) {
               />
             </div>
             <div id="midi-id"/>
-          {mostrarLigadura && 
+          {mostrarLigadura &&
             <div className="container pad">
                 <div className="row">
                   <div className="col align-self-center">
@@ -711,6 +733,7 @@ function EditorPartitura(props) {
                 </div>
             </div>
           }
+
           </div>
           <Modal show={mostrarEditarEncabezada} onHide={handleClose} size="lg" centered>
                 <Modal.Header className="text-center" closeButton>
@@ -769,12 +792,40 @@ function EditorPartitura(props) {
                 </Modal.Footer>
             </Modal>
 
+            <Modal show={mostrarAyuda} onHide={handleCloseMostrarAyuda} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+                <Modal.Header>
+                  <Modal.Title>Ayuda</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <Carousel>
+                {Constantes.AyudaImagenes.map((e, key) => {
+                    return (
+                    <Carousel.Item>
+                    <div className = "AyudaItem">
+                      <img
+                        className="imageCarouselAyuda"
+                        src={e.image.src}
+                        alt={key}
+                      />
+                    </div>
+                    </Carousel.Item>
+                  )
+                })}
+                </Carousel>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={() => {closeMostrarAyuda()}} >
+                    Entendido
+                  </Button>
+                </Modal.Footer>
+            </Modal>
+
             <Modal show={mostrarEditar} onHide={handleCloseMostrarEditar} dialogClassName="modal-90w" centered>
                 <Modal.Header className="text-center" closeButton>
                     <h2 style={{margin: "0"}} className="w-100">Editar</h2>
                 </Modal.Header>
                 <Modal.Body style={{textAlign: "center"}}>
-                  {mostrar && 
+                  {mostrar &&
                   <div className="container">
                   <div className="prueba col-12">
                   <Abcjs
@@ -858,7 +909,7 @@ function EditorPartitura(props) {
                   </div>
                 </div>
                 }
-                {mostrarSilencio && 
+                {mostrarSilencio &&
                   <div className="container">
                     <div className="prueba">
                       <Abcjs
@@ -898,7 +949,7 @@ function EditorPartitura(props) {
                     <button className="btn btn-secondary btn-lg btn-block" onClick={e => editarEnGrande()}>Editar</button>
                   </div>
                   <div className="col">
-                    <button className="btn btn-warning btn-lg btn-block"><i className="fas fa-question-circle"></i></button>
+                    <button className="btn btn-warning btn-lg btn-block" onClick={() => setMostrarAyudaEditarNota(true)}><i className="fas fa-question-circle"></i></button>
                   </div>
                 </div>
                 </Modal.Footer>
@@ -964,7 +1015,7 @@ function EditorPartitura(props) {
                     <button className="btn btn-secondary btn-lg btn-block" onClick={e => eliminarNota()}>Eliminar</button>
                   </div>
                   <div className="col">
-                    <button className="btn btn-warning btn-lg btn-block"><i className="fas fa-question-circle"></i></button>
+                    <button className="btn btn-warning btn-lg btn-block"onClick={() => setMostrarAyudaEliminarNota(true)}><i className="fas fa-question-circle"></i></button>
                   </div>
                 </div>
                 </Modal.Footer>
@@ -977,7 +1028,7 @@ function EditorPartitura(props) {
                     <h2 style={{margin: "0"}} className="w-100">Agregar</h2>
                 </Modal.Header>
                 <Modal.Body style={{textAlign: "center"}}>
-                  {mostrarNotaAgregar && 
+                  {mostrarNotaAgregar &&
                   <div className="container">
                   <div className="prueba col-12">
                   <Abcjs
@@ -1067,7 +1118,7 @@ function EditorPartitura(props) {
                   </div>
                 </div>
                 }
-                {mostrarSilencioAgregar && 
+                {mostrarSilencioAgregar &&
                   <div className="container">
                     <div className="prueba">
                       <Abcjs
@@ -1124,9 +1175,93 @@ function EditorPartitura(props) {
                     <button className="btn btn-secondary btn-lg btn-block" onClick={e => agregar()}>{'Agregar a la '+ubicacion}</button>
                   </div>
                   <div className="col">
-                    <button className="btn btn-warning btn-lg btn-block"><i className="fas fa-question-circle"></i></button>
+                    <button className="btn btn-warning btn-lg btn-block"onClick={() => setMostrarAyudaAgregarNota(true)}><i className="fas fa-question-circle"></i></button>
                   </div>
                 </div>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={mostrarAyudaEditarNota} onHide={handleCloseMostrarAyudaEditarNota} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+                <Modal.Header>
+                  <Modal.Title>Ayuda</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <Carousel>
+                {Constantes.AyudaEditarImagenes.map((e, key) => {
+                    return (
+                    <Carousel.Item>
+                    <div className = "AyudaItem">
+                      <img
+                        className="imageCarouselAyuda"
+                        src={e.image.src}
+                        alt={key}
+                      />
+                    </div>
+                    </Carousel.Item>
+                  )
+                })}
+                </Carousel>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleCloseMostrarAyudaEditarNota} >
+                    Entendido
+                  </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={mostrarAyudaAgregarNota} onHide={handleCloseMostrarAyudaAgregarNota} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+                <Modal.Header>
+                  <Modal.Title>Ayuda</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <Carousel>
+                {Constantes.AyudaAgregarImagenes.map((e, key) => {
+                    return (
+                    <Carousel.Item>
+                    <div className = "AyudaItem">
+                      <img
+                        className="imageCarouselAyuda"
+                        src={e.image.src}
+                        alt={key}
+                      />
+                    </div>
+                    </Carousel.Item>
+                  )
+                })}
+                </Carousel>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleCloseMostrarAyudaAgregarNota} >
+                    Entendido
+                  </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={mostrarAyudaEliminarNota} onHide={handleCloseMostrarAyudaEliminarNota} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+                <Modal.Header>
+                  <Modal.Title>Ayuda</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <Carousel>
+                {Constantes.AyudaElimnarImagenes.map((e, key) => {
+                    return (
+                    <Carousel.Item>
+                    <div className = "AyudaItem">
+                      <img
+                        className="imageCarouselAyuda"
+                        src={e.image.src}
+                        alt={key}
+                      />
+                    </div>
+                    </Carousel.Item>
+                  )
+                })}
+                </Carousel>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleCloseMostrarAyudaEliminarNota} >
+                    Entendido
+                  </Button>
                 </Modal.Footer>
             </Modal>
         </div>

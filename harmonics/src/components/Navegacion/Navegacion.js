@@ -22,10 +22,12 @@ function Navegacion(){
 
     useEffect(() => {
         document.getElementById("notificacion").style.visibility = "hidden";
+        document.getElementById("linkEmpezar").style.visibility = "hidden";
         const access = sessionStorage.getItem('access');
         if(access !== null){
             setToken(access);
             solicitarNotificaciones();
+            document.getElementById("linkEmpezar").style.visibility = "visible";
         }
       }, [solicitarNotificaciones] );
 
@@ -99,14 +101,14 @@ function Navegacion(){
                                 <span className="nav-link link">Nosotros</span>
                             </li>
                             </Link>
-                            <Link to="/empezar" style={{ textDecoration: 'none' }}>
-                                <li className="nav-item">
-                                    <span className="nav-link link">Empezar</span>
-                                </li>
-                            </Link>
                             <Link to="/proyectos" style={{ textDecoration: 'none' }}>
                                 <li className="nav-item">
                                     <span className="nav-link link">Proyectos</span>
+                                </li>
+                            </Link>
+                            <Link to="/empezar" style={{ textDecoration: 'none' }} id="linkEmpezar">
+                                <li className="nav-item">
+                                    <span className="nav-link link">Empezar</span>
                                 </li>
                             </Link>
                         </ul>

@@ -128,11 +128,13 @@ class Search extends React.Component {
 			return (
 				<div className="results-container">
 					{ results.map( result => {
+						let logueado = true;
 						return (
 							<ProyectoItem
 							key = {result.id}
 						 name = {result.name}
 						 voices = {result.voices}
+						 logueado = {logueado} 
 						  />
 						)
 					} ) }

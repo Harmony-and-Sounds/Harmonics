@@ -20,6 +20,8 @@ function Login() {
                     sessionStorage .setItem('access', respuesta.data.access);
                     sessionStorage .setItem('refresh', respuesta.data.refresh);
                     history.push("/");
+                    const ayuda = true;
+                    localStorage.setItem('ayudaEditar', ayuda);
                 }
                 else{
                     alert(respuesta.data)

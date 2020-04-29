@@ -18,6 +18,7 @@ function Instrumentos(props) {
   const [idProyecto] = useState(location.state.idProyecto);
   const [nomProyecto] = useState(location.state.nomProyecto);
   const [voices] = useState(location.state.voices);
+  const [logueado] = useState(location.state.logueado);
 
 
   function goToEditar (){
@@ -63,7 +64,7 @@ function Instrumentos(props) {
                     <VisualizadorPDF idVoz={voz.id}/>
                     <br/>
                     <button className="btnDescargarVoz" ><i className="fa fa-download"></i> Descargar Intrumento</button>
-                    <button className="btnEditar" onClick={()=>goToEditar()} >Editar partitura</button>
+                    {logueado && <button className="btnEditar" onClick={()=>goToEditar()} >Editar partitura</button>}
                     <br/>
                     <br/>
                     <br/>

@@ -26,6 +26,7 @@ function SignUp() {
             signup( userName, password, email ).then( data => {
                 if (data.bandera === true){
                     alert("Usuario creado correctamente.");
+                    localStorage.setItem('ayudaEditar', true);
                     history.push("/login");
                 }
                 else{
