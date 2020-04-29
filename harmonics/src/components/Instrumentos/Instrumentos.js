@@ -20,8 +20,9 @@ function Instrumentos(props) {
   const [voices] = useState(location.state.voices);
 
 
-  function goToEditar (){
-    history.push("/Editar", {});
+  function goToEditar (vozId){
+    console.log("hola", vozId);
+    history.push("/Editar", {idVoz:vozId});
   }
 
   function descargarProy (idProy)  {
@@ -63,7 +64,7 @@ function Instrumentos(props) {
                     <VisualizadorPDF idVoz={voz.id}/>
                     <br/>
                     <button className="btnDescargarVoz" ><i className="fa fa-download"></i> Descargar Intrumento</button>
-                    <button className="btnEditar" onClick={()=>goToEditar()} >Editar partitura</button>
+                    <button className="btnEditar" onClick={()=>goToEditar(voz.id)} >Editar partitura</button>
                     <br/>
                     <br/>
                     <br/>
