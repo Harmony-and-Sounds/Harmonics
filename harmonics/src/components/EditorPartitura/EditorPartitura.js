@@ -12,7 +12,14 @@ import {ABCHandler} from './libreriaABC/ABCHandler';
 import Carousel from 'react-bootstrap/Carousel'
 
 
+import { useLocation,useHistory } from "react-router-dom";
+import { getPartituraABC, guardarABC } from '../../servicios/servicios-proyecto';
 function EditorPartitura(props) {
+
+  const history = useHistory();
+
+  //Elemento traido de misProyectos
+  const location = useLocation();
 
   //Libreria
   const [handler, setHandler] = useState(null);
@@ -37,7 +44,7 @@ function EditorPartitura(props) {
   const [tipoNotaBase, setTipoNotaBase] = useState('');
 
   //Partitura completa
-  const [partitura, setPartitura] = useState('T: Cooley\n M: 4/4\n L: 1/8\n K: Emin\n |:D2|"Em"EB{c}BA B2 EB|~B2 AB dBAG|\n 	"D"FDAD BDAD|FDAD dAFD| "Em"EBBA B2 EB|B2 AB defg|\n 	"D"afe^c dBAF|"Em"DEFD E2:| |:gf|"Em"eB B2 efge|eB B2 gedB|\n 	"D"A2 FA DAFA|A2 FA defg| "Em"eB B2 eBgB|eB B2 defg|\n 	"D"afe^c dBAF|"Em"DEFD E2:|');
+  const [partitura, setPartitura] = useState('');//T: TITULO\nM: 4/4\nL: 1\nK: C treble\n|z1/4|C1/8|
 
   //Fragmento editado
   const [nota, setNota] = useState('');
@@ -104,15 +111,41 @@ function EditorPartitura(props) {
 
 
   useEffect(() => {
-
-  });
+    console.log(location);
+    if (location.state === undefined){
+      alert('Error cargando la partitura');
+      history.push('/');
+    }
+    else{
+      getABC();
+    }
+  }, []);
 
   useEffect(() => {
-    extraerEncabezado();
-    renderizarReproductor();
     let mAyuda = (localStorage.getItem('ayudaEditar') == 'true');
-    setMostrarAyuda(mAyuda);
+    if (partitura !== ''){
+      console.log(partitura);
+      extraerEncabezado();
+      renderizarReproductor();
+    }
   }, [partitura]);
+
+  function getABC () {
+    const access = sessionStorage.getItem('access');
+    const idVoz = location.state.idVoz;
+    console.log(idVoz);
+    if(access !== null){
+        getPartituraABC(access, idVoz).then(respuesta => {
+            if (respuesta.bandera === true){
+                console.log(respuesta.data);
+                setPartitura(respuesta.data);
+            }
+            else{
+                alert(respuesta.data);
+            }
+        });
+    }
+}
 
 
   function renderizarReproductor() {
@@ -136,12 +169,14 @@ function EditorPartitura(props) {
     let compasLocal = '';
     if(partitura.indexOf('T: ') !== -1){
       let inicio = partitura.indexOf('T: ');
+      console.log(inicio);
       let fin = partitura.indexOf('\n', ultimoSalto)+1;
+      console.log(fin);
       let titulo = partitura.substring(inicio, fin);
       ultimoSalto = fin;
       setTitulo(titulo);
       setTituloEditado(titulo.substring(3,titulo.length-1));
-      //console.log(titulo);
+      console.log(titulo);
     }
     if(partitura.indexOf('M: ') !== -1){
       let inicio = partitura.indexOf('M: ');
@@ -160,7 +195,7 @@ function EditorPartitura(props) {
       let longitudNotas = partitura.substring(inicio, fin);
       ultimoSalto = fin;
       setLongitudNotas(longitudNotas);
-      //console.log(longitudNotas);
+      console.log(longitudNotas);
     }
     if(partitura.indexOf('K: ') !== -1){
       let inicio = partitura.indexOf('K: ');
@@ -189,6 +224,7 @@ function EditorPartitura(props) {
     if (!handlerInicializado){
       let InicioNotas = partitura.indexOf('|');
       let notas = partitura.substring(InicioNotas, partitura.length);
+      console.log(notas, compasLocal.substring(3, compasLocal.length));
       let h = new ABCHandler(compasLocal.substring(3, compasLocal.length), notas);
       setHandler(h);
       console.log(h.getScore());
@@ -226,6 +262,18 @@ function EditorPartitura(props) {
   function closeMostrarAyuda(){
     localStorage.setItem("ayudaEditar", false);
     setMostrarAyuda(false);
+    
+  function guardar (archivo) {
+    const access = sessionStorage.getItem('access');
+    const idVoz = location.state.idVoz;
+    guardarABC (access, idVoz, archivo).then( respuesta => {
+      if (respuesta.bandera === true){
+        history.goBack();
+      }
+      else{
+          alert("Error guardando partitura.");
+      }
+    });
   }
 
   function obtenerMidi(){
@@ -236,7 +284,8 @@ function EditorPartitura(props) {
     .then(blob => {
       let nombre = titulo.trim();
       var file = new File([blob], nombre);
-      console.log(file);
+      guardar(file);
+      //console.log(file);
     })
   }
 

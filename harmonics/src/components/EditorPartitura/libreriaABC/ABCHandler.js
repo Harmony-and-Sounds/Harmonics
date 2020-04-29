@@ -84,7 +84,7 @@ class ABCHandler {
         let scorePart1 = this.ABCString.substring(0,characterIndex1);
         let scorePart2 = this.ABCString.substring(characterIndex2);
         let match = getMatchingNotes(scorePart2, true);
-        scorePart2 = this.ABCString.substring(characterIndex1+1, characterIndex2 + match.length);
+        scorePart2 = this.ABCString.substring(characterIndex1, characterIndex2 + match.length-1);
         let scorePart3 = this.ABCString.substring(characterIndex2 + match.length);
         this.ABCString = scorePart1+scorePart2+scorePart3;
     }
@@ -176,6 +176,7 @@ class ABCHandler {
         return this.ABCString;    
     }
 }
+
 
 class Note {
     constructor(note){ 

@@ -88,6 +88,26 @@ export async function getAudioMidi (token, idVoz){
     }
 }
 
+export async function getPartituraABC (token, idVoz){
+
+    try {
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/ABC', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer '+token}
+        })
+        const json = await response.json();
+        if (response.ok) {
+            console.log(json);
+          return {data:json , bandera: true};
+        }
+        else {
+            return {data:json.detail , bandera: false}
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function descargarProyecto (idProyecto) {
 
     try {
@@ -117,6 +137,7 @@ export async function descargarProyecto (idProyecto) {
 }
 
 export async function getAudioVozSeparada (token, idVoz) {
+    console.log(token);
   try {
       const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz, {
           method: 'GET',
@@ -158,6 +179,29 @@ export async function getPDF (token, idVoz) {
         }
         else {
             let json = await response.json();
+            return {data:json.detail , bandera: false}
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function guardarABC (token, idVoz, archivo){
+    try {
+        const form = new FormData()
+        form.append('file', archivo);
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/midi/', {
+            method: 'PUT',
+            headers: { 'Authorization': 'Bearer '+token},
+            body: form,
+        });
+
+        const json = await response.json();
+        console.log(json);
+        if (response.ok) {
+          return {bandera: true};
+        }
+        else {
             return {data:json.detail , bandera: false}
         }
     } catch (error) {

@@ -13,7 +13,6 @@ function Reproductor(props) {
 
 
     function getMidi () {
-
         const access = sessionStorage.getItem('access');
         if(access !== null){
             getAudioMidi(access, idVoz).then(respuesta => {
@@ -34,6 +33,7 @@ function Reproductor(props) {
           console.log(idVoz);
             getAudioVozSeparada(access, idVoz).then(respuesta => {
                 if (respuesta.bandera === true){
+                    console.log(respuesta.data);
                     setvozSeparada(respuesta.data);
                 }
                 else{
