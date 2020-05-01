@@ -58,6 +58,11 @@
     max-width: none;
 }
 
+.modal-50w {
+    width: 50%;
+    max-width: none;
+}
+
 .modal-styling-title{
     text-align: center;
     justify-content: center;

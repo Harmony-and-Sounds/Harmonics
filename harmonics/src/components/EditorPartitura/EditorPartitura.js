@@ -926,7 +926,7 @@ function EditorPartitura(props) {
                       <div className="col align-self-center">
                         <Dropdown
                           fluid
-                          selection
+                          selections
                           options={Constantes.DuracionesSilencios}
                           defaultValue={duracion}
                           onChange={(e, data) => editarDuracion(data.value)}
@@ -955,40 +955,94 @@ function EditorPartitura(props) {
                 </Modal.Footer>
             </Modal>
 
-            <Modal show={mostrarMenu} onHide={handleCloseMostrarMenu} dialogClassName="modal-90w" centered>
+            <Modal show={mostrarMenu} onHide={handleCloseMostrarMenu} dialogClassName="modal-50w" centered>
                 <Modal.Header className="text-center" closeButton>
                   <h2 style={{margin: "0"}} className="w-100">Menu</h2>
                 </Modal.Header>
                 <Modal.Body style={{textAlign: "center"}}>
                   {tipoNotaBase === 'Nota' &&
-                  <div className="row">
-                    <div className="col align-self-center">
-                      <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => habilitarLigadura(true)}>Agregar Ligadura</button>
+                  <div>
+                    <div className="row">
+                      <div className="col">
+                      </div>
+                      <div className="col">
+                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => habilitarLigadura(true)}>Agregar Ligadura</button>
+                      </div>
+                      <div className="col">
+                      </div>
                     </div>
-                    <div className="col align-self-center">
-                      <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => habilitarLigadura(false)}>Eliminar Ligadura</button>
+                    <br/>
+                    <div className="row">
+                      <div className="col">
+                      </div>
+                      <div className="col">
+                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => habilitarLigadura(false)}>Eliminar Ligadura</button>
+                      </div>
+                      <div className="col">
+                      </div>
                     </div>
-                    <div className="col align-self-center">
-                      <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEditar(true); setMostrarMenu(false)}}>Editar Nota</button>
+                    <br/>
+                    <div className="row">
+                      <div className="col">
+                      </div>
+                      <div className="col">
+                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEditar(true); setMostrarMenu(false)}}>Editar Nota</button>
+                      </div>
+                      <div className="col">
+                      </div>
                     </div>
-                    <div className="col align-self-center">
-                      <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {inicioAgregar()}}>Agregar Nota</button>
+                    <br/>
+                    <div className="row">
+                      <div className="col">
+                      </div>
+                      <div className="col align-self-center">
+                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {inicioAgregar()}}>Agregar Nota</button>
+                      </div>
+                      <div className="col">
+                      </div>
                     </div>
-                    <div className="col align-self-center">
-                      <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEliminar(true); setMostrarMenu(false)}}>Eliminar Nota</button>
+                    <br/>
+                    <div className="row">
+                      <div className="col">
+                      </div>
+                      <div className="col align-self-center">
+                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEliminar(true); setMostrarMenu(false)}}>Eliminar Nota</button>
+                      </div>
+                      <div className="col">
+                      </div>
                     </div>
                   </div>
                   }
                   {tipoNotaBase === 'Silencio' &&
-                  <div className="row">
-                    <div className="col align-self-center">
-                      <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEditar(true); setMostrarMenu(false)}}>Editar Nota</button>
+                  <div>
+                    <div className="row">
+                      <div className="col">
+                      </div>
+                      <div className="col">
+                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEditar(true); setMostrarMenu(false)}}>Editar Nota</button>
+                      </div>
+                      <div className="col">
+                      </div>
                     </div>
-                    <div className="col align-self-center">
-                      <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {inicioAgregar()}}>Agregar Nota</button>
+                    <br/>
+                    <div className="row">
+                      <div className="col">
+                      </div>
+                      <div className="col align-self-center">
+                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {inicioAgregar()}}>Agregar Nota</button>
+                      </div>
+                      <div className="col">
+                      </div>
                     </div>
-                    <div className="col align-self-center">
-                      <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEliminar(true); setMostrarMenu(false)}}>Eliminar Nota</button>
+                    <br/>
+                    <div className="row">
+                      <div className="col">
+                      </div>
+                      <div className="col align-self-center">
+                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEliminar(true); setMostrarMenu(false)}}>Eliminar Nota</button>
+                      </div>
+                      <div className="col">
+                      </div>
                     </div>
                   </div>
                   }
