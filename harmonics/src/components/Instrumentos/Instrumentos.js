@@ -65,11 +65,7 @@ function Instrumentos(props) {
                     <VisualizadorPDF idVoz={voz.id}/>
                     <br/>
                     <button className="btnDescargarVoz" ><i className="fa fa-download"></i> Descargar Intrumento</button>
-<<<<<<< HEAD
                     {logueado && <button className="btnEditar" onClick={()=>goToEditar()} >Editar partitura</button>}
-=======
-                    <button className="btnEditar" onClick={()=>goToEditar(voz.id)} >Editar partitura</button>
->>>>>>> 9653783f8bc09e3b7d0513f93425a0fded47f9ff
                     <br/>
                     <br/>
                     <br/>

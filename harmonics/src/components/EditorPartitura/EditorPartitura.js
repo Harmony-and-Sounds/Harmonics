@@ -262,6 +262,7 @@ function EditorPartitura(props) {
   function closeMostrarAyuda(){
     localStorage.setItem("ayudaEditar", false);
     setMostrarAyuda(false);
+  }
     
   function guardar (archivo) {
     const access = sessionStorage.getItem('access');
@@ -1372,23 +1373,3 @@ function EditorPartitura(props) {
 }
 
 export default EditorPartitura;
-
-//<Midi notation={partitura} midiParams={{generateDownload: true, downloadLabel:'Descarga de "%T"'}} />
-//<button onClick={() => setMostrar(true)}>mostrar</button>
-//{mostrar === true && <Midi id="midi" notation={partitura} midiParams={{generateDownload: true, downloadLabel:'Descarga de "%T"'}} />}
-
-
-/*<select value={alteracion}className="form-control" onChange={(e) => editarAlteraciones(e.target.value)}>
-<option value="" disabled hidden>Seleccione una alteracion..</option>
-{Constantes.Alteraciones.map((e, key) => {
-    return <option key={key} value={e.value}>{e.name}</option>;
-})}
-</select>*/
-
-/*<select value={nota.substring(notaSimplePos, notaSimplePos+1).toUpperCase()} className="form-control" onChange={(e) => editadoEditar(e.target.value)}>
-{Constantes.Notas.map((e, key) => {
-    return <option key={key} value={e.value}>{e.name}</option>;
-})}
-</select>*/
-
-//setArreglar(e.target.value)
