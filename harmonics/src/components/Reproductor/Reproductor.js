@@ -30,6 +30,7 @@ function Reproductor(props) {
     async function getVozSeparada () {
         const access = sessionStorage.getItem('access');
         if(access !== null){
+          console.log(idVoz);
             getAudioVozSeparada(access, idVoz).then(respuesta => {
                 if (respuesta.bandera === true){
                     console.log(respuesta.data);
@@ -47,7 +48,7 @@ function Reproductor(props) {
         getMidi();
         getVozSeparada();
     },[]);
-    
+
 
   return (
         <div className="Reproductor">

@@ -30,71 +30,85 @@ import SilencioFusa from '../../recursos/Notas-iconos/SilencioFusaIcon.png';
 //import SemiFusaPuntillo from '../../recursos/Notas-iconos/SemiFusaPuntilloIcon.png';
 import SilencioSemiFusa from '../../recursos/Notas-iconos/SilencioSemiFusaIcon.png';
 
+import ayuda1 from '../../recursos/Ayuda1.png'
+import ayuda2 from '../../recursos/Ayuda2.png'
+import ayuda3 from '../../recursos/Ayuda3.png'
+import ayuda4 from '../../recursos/Ayuda4.png'
+import ayuda5 from '../../recursos/Ayuda5.png'
 
+import ayudaEditar1 from '../../recursos/AyudaEditar1.png'
+import ayudaEditar2 from '../../recursos/AyudaEditar2.png'
+import ayudaEditar3 from '../../recursos/AyudaEditar3.png'
+import ayudaEditar4 from '../../recursos/AyudaEditar4.png'
+import ayudaEditar5 from '../../recursos/AyudaEditar5.png'
+
+import ayudaAgregarNota from '../../recursos/AyudaAgregarNota.png'
+
+import ayudaEliminarNota from '../../recursos/AyudaEliminarNota.png'
 
 
 const Modo = [
     //Ionian
-    {value: 'C#', name: 'C# Mayor'}, {value: 'F#', name: 'F# Mayor'}, {value: 'B', name: 'B Mayor'}, 
+    {value: 'C#', name: 'C# Mayor'}, {value: 'F#', name: 'F# Mayor'}, {value: 'B', name: 'B Mayor'},
     {value: 'E', name: 'E Mayor'}, {value: 'A', name: 'A Mayor'}, {value: 'D', name: 'D Mayor'},
-    {value: 'G', name: 'G Mayor'}, {value: 'C', name: 'C Mayor'}, {value: 'F', name: 'F Mayor'}, 
-    {value: 'Bb', name: 'Bb Mayor'}, {value: 'Eb', name: 'Eb Mayor'}, {value: 'Ab', name: 'Ab Mayor'}, 
+    {value: 'G', name: 'G Mayor'}, {value: 'C', name: 'C Mayor'}, {value: 'F', name: 'F Mayor'},
+    {value: 'Bb', name: 'Bb Mayor'}, {value: 'Eb', name: 'Eb Mayor'}, {value: 'Ab', name: 'Ab Mayor'},
     {value: 'Db', name: 'Db Mayor'}, {value: 'Gb', name: 'Gb Mayor'}, {value: 'Cb', name: 'Cb Mayor'},
     //Aeolian
-    {value: 'A#m', name: 'A# Menor'}, {value: 'D#m', name: 'D# Menor'}, {value: 'G#m', name: 'G# Menor'}, 
+    {value: 'A#m', name: 'A# Menor'}, {value: 'D#m', name: 'D# Menor'}, {value: 'G#m', name: 'G# Menor'},
     {value: 'C#m', name: 'C# Menor'}, {value: 'F#m', name: 'F# Menor'}, {value: 'Bm', name: 'B Menor'},
-    {value: 'Em', name: 'E Menor'}, {value: 'Am', name: 'A Menor'}, {value: 'Dm', name: 'D Menor'}, 
-    {value: 'Gm', name: 'G Menor'}, {value: 'Cm', name: 'C Menor'}, {value: 'Fm', name: 'F Menor'}, 
+    {value: 'Em', name: 'E Menor'}, {value: 'Am', name: 'A Menor'}, {value: 'Dm', name: 'D Menor'},
+    {value: 'Gm', name: 'G Menor'}, {value: 'Cm', name: 'C Menor'}, {value: 'Fm', name: 'F Menor'},
     {value: 'Bbm', name: 'Bb Menor'}, {value: 'Ebm', name: 'Eb Menor'}, {value: 'Abm', name: 'Ab Menor'},
     //Mixolydian
-    /*{value: 'G#Mix', name: 'G# Mixolidio'}, {value: 'C#Mix', name: 'C# Mixolidio'}, {value: 'F#Mix', name: 'F# Mixolidio'}, 
+    /*{value: 'G#Mix', name: 'G# Mixolidio'}, {value: 'C#Mix', name: 'C# Mixolidio'}, {value: 'F#Mix', name: 'F# Mixolidio'},
     {value: 'BMix', name: 'B Mixolidio'}, {value: 'EMix', name: 'E Mixolidio'}, {value: 'AMix', name: 'A Mixolidio'},
-    {value: 'DMix', name: 'D Mixolidio'}, {value: 'GMix', name: 'G Mixolidio'}, {value: 'CMix', name: 'C Mixolidio'}, 
-    {value: 'FMix', name: 'F Mixolidio'}, {value: 'BbMix', name: 'Bb Mixolidio'}, {value: 'EbMix', name: 'Eb Mixolidio'}, 
+    {value: 'DMix', name: 'D Mixolidio'}, {value: 'GMix', name: 'G Mixolidio'}, {value: 'CMix', name: 'C Mixolidio'},
+    {value: 'FMix', name: 'F Mixolidio'}, {value: 'BbMix', name: 'Bb Mixolidio'}, {value: 'EbMix', name: 'Eb Mixolidio'},
     {value: 'AbMix', name: 'Ab Mixolidio'}, {value: 'DbMix', name: 'Db Mixolidio'}, {value: 'GbMix', name: 'Gb Mixolidio'},
     //Dorian
-    {value: 'D#Dor', name: 'D# Dórico'}, {value: 'G#Dor', name: 'G# Dórico'}, {value: 'C#Dor', name: 'C# Dórico'}, 
+    {value: 'D#Dor', name: 'D# Dórico'}, {value: 'G#Dor', name: 'G# Dórico'}, {value: 'C#Dor', name: 'C# Dórico'},
     {value: 'F#Dor', name: 'F# Dórico'}, {value: 'BDor', name: 'B Dórico'}, {value: 'EDor', name: 'E Dórico'},
-    {value: 'ADor', name: 'A Dórico'}, {value: 'DDor', name: 'D Dórico'}, {value: 'GDor', name: 'G Dórico'}, 
-    {value: 'CDor', name: 'C Dórico'}, {value: 'FDor', name: 'F Dórico'}, {value: 'BbDor', name: 'Bb Dórico'}, 
+    {value: 'ADor', name: 'A Dórico'}, {value: 'DDor', name: 'D Dórico'}, {value: 'GDor', name: 'G Dórico'},
+    {value: 'CDor', name: 'C Dórico'}, {value: 'FDor', name: 'F Dórico'}, {value: 'BbDor', name: 'Bb Dórico'},
     {value: 'EbDor', name: 'Eb Dórico'}, {value: 'AbDor', name: 'Ab Dórico'}, {value: 'DbDor', name: 'Db Dórico'},
     //Phrygian
-    {value: 'E#Phr', name: 'E# Frigio'}, {value: 'A#Phr', name: 'A# Frigio'}, {value: 'D#Phr', name: 'D# Frigio'}, 
+    {value: 'E#Phr', name: 'E# Frigio'}, {value: 'A#Phr', name: 'A# Frigio'}, {value: 'D#Phr', name: 'D# Frigio'},
     {value: 'G#Phr', name: 'G# Frigio'}, {value: 'C#Phr', name: 'C# Frigio'}, {value: 'F#Phr', name: 'F# Frigio'},
-    {value: 'BPhr', name: 'B Frigio'}, {value: 'EPhr', name: 'E Frigio'}, {value: 'APhr', name: 'A Frigio'}, 
-    {value: 'DPhr', name: 'D Frigio'}, {value: 'GPhr', name: 'G Frigio'}, {value: 'CPhr', name: 'C Frigio'}, 
+    {value: 'BPhr', name: 'B Frigio'}, {value: 'EPhr', name: 'E Frigio'}, {value: 'APhr', name: 'A Frigio'},
+    {value: 'DPhr', name: 'D Frigio'}, {value: 'GPhr', name: 'G Frigio'}, {value: 'CPhr', name: 'C Frigio'},
     {value: 'FPhr', name: 'F Frigio'}, {value: 'BbPhr', name: 'Bb Frigio'}, {value: 'EbPhr', name: 'Eb Frigio'},
     //Lydian
-    {value: 'F#Lyd', name: 'F# Lidio'}, {value: 'BLyd', name: 'B Lidio'}, {value: 'ELyd', name: 'E Lidio'}, 
+    {value: 'F#Lyd', name: 'F# Lidio'}, {value: 'BLyd', name: 'B Lidio'}, {value: 'ELyd', name: 'E Lidio'},
     {value: 'ALyd', name: 'A Lidio'}, {value: 'DLyd', name: 'D Lidio'}, {value: 'GLyd', name: 'G Lidio'},
-    {value: 'CLyd', name: 'C Lidio'}, {value: 'FLyd', name: 'F Lidio'}, {value: 'BbLyd', name: 'Bb Lidio'}, 
-    {value: 'EbLyd', name: 'Eb Lidio'}, {value: 'AbLyd', name: 'Ab Lidio'}, {value: 'DbLyd', name: 'Db Lidio'}, 
+    {value: 'CLyd', name: 'C Lidio'}, {value: 'FLyd', name: 'F Lidio'}, {value: 'BbLyd', name: 'Bb Lidio'},
+    {value: 'EbLyd', name: 'Eb Lidio'}, {value: 'AbLyd', name: 'Ab Lidio'}, {value: 'DbLyd', name: 'Db Lidio'},
     {value: 'GbLyd', name: 'Gb Lidio'}, {value: 'CbLyd', name: 'Cb Lidio'}, {value: 'FbLyd', name: 'Fb Lidio'},
     //Locrian
-    {value: 'B#Loc', name: 'B# Locrio'}, {value: 'E#Loc', name: 'E# Locrio'}, {value: 'A#Loc', name: 'A# Locrio'}, 
+    {value: 'B#Loc', name: 'B# Locrio'}, {value: 'E#Loc', name: 'E# Locrio'}, {value: 'A#Loc', name: 'A# Locrio'},
     {value: 'D#Loc', name: 'D# Locrio'}, {value: 'G#Loc', name: 'G# Locrio'}, {value: 'C#Loc', name: 'C# Locrio'},
-    {value: 'F#Loc', name: 'F# Locrio'}, {value: 'BLoc', name: 'B Locrio'}, {value: 'ELoc', name: 'E Locrio'}, 
-    {value: 'ALoc', name: 'A Locrio'}, {value: 'DLoc', name: 'D Locrio'}, {value: 'GLoc', name: 'G Locrio'}, 
+    {value: 'F#Loc', name: 'F# Locrio'}, {value: 'BLoc', name: 'B Locrio'}, {value: 'ELoc', name: 'E Locrio'},
+    {value: 'ALoc', name: 'A Locrio'}, {value: 'DLoc', name: 'D Locrio'}, {value: 'GLoc', name: 'G Locrio'},
     {value: 'CLoc', name: 'C Locrio'}, {value: 'FLoc', name: 'F Locrio'}, {value: 'BbLoc', name: 'Bb Locrio'}*/
 ]
 
 
 const Claves = [
 
-    {value: 'treble', name: 'Clave de Sol'}, {value: 'bass', name: 'Clave de Fa'}, {value: 'bass3', name: 'Clave de Fa en tercera'}, 
+    {value: 'treble', name: 'Clave de Sol'}, {value: 'bass', name: 'Clave de Fa'}, {value: 'bass3', name: 'Clave de Fa en tercera'},
     {value: 'tenor', name: 'Clave de Do en cuarta'}, {value: 'alto', name: 'Clave de Do en tercera'}, {value: 'alto2', name: 'Clave de Do en segunda'},
     {value: 'alto1', name: 'Clave de Do en primera'}
 ]
 
 const Notas = [
-    {key: 'Do', text: 'Do', value: 'C'}, {key: 'Re', text: 'Re', value: 'D'}, {key: 'Mi',  text: 'Mi', value: 'E'}, 
+    {key: 'Do', text: 'Do', value: 'C'}, {key: 'Re', text: 'Re', value: 'D'}, {key: 'Mi',  text: 'Mi', value: 'E'},
     {key: 'Fa', text: 'Fa', value: 'F'}, {key: 'Sol', text: 'Sol', value: 'G'}, {key: 'La', text: 'La', value: 'A'},
     {key: 'Si', text: 'Si', value: 'B'}
 ]
 
 
 const Alteraciones = [
-    {key: 'Sin-alteraciones',  text: 'Sin alteraciones', value: ' '},{key: 'Bemol',  text: 'Bemol', value: '_'}, {key: 'Doble bemol', text: 'Doble bemol', value: '__'}, {key: 'Sostenido', text: 'Sostenido', value: '^'}, 
+    {key: 'Sin-alteraciones',  text: 'Sin alteraciones', value: ' '},{key: 'Bemol',  text: 'Bemol', value: '_'}, {key: 'Doble bemol', text: 'Doble bemol', value: '__'}, {key: 'Sostenido', text: 'Sostenido', value: '^'},
     {key: 'Doble Sostenido', text: 'Doble Sostenido', value: '^^'}, {key: 'Becuadro', text: 'Becuadro', value: '='}
 ]
 
@@ -134,6 +148,34 @@ const Duraciones = [
     {key: 'SilencioSemiFusa', text: 'Silencio SemiFusa', value: '1/64', image: { avatar: true, src: SilencioSemiFusa },}
   ]
 
+  const AyudaImagenes = [
+    {key: 'AyudaInicio', image: { avatar: true, src: ayuda1 },},
+    {key: 'AyudaEdicionMenu',  image: { avatar: true, src: ayuda2 },},
+    {key: 'AyudaFuncionalidadesMenu',  image: { avatar: true, src: ayuda3 },},
+    {key: 'AyudaEncabezado', image: { avatar: true, src: ayuda4 },},
+    {key: 'AyudaGuardar',  image: { avatar: true, src: ayuda5 },}
+  ]
+
+  const AyudaEditarImagenes = [
+    {key: 'AyudaNota', image: { avatar: true, src: ayudaEditar1 },},
+    {key: 'AyudaAlteracion',  image: { avatar: true, src: ayudaEditar2 },},
+    {key: 'AyudaDuracionSilencio',  image: { avatar: true, src: ayudaEditar3 },},
+    {key: 'AyudaOctava', image: { avatar: true, src: ayudaEditar4 },},
+    {key: 'AyudaDuracionNota',  image: { avatar: true, src: ayudaEditar5 },}
+  ]
+
+  const AyudaAgregarImagenes = [
+    {key: 'AyudaNota', image: { avatar: true, src: ayudaEditar1 },},
+    {key: 'AyudaAlteracion',  image: { avatar: true, src: ayudaEditar2 },},
+    {key: 'AyudaDuracionSilencio',  image: { avatar: true, src: ayudaEditar3 },},
+    {key: 'AyudaOctava', image: { avatar: true, src: ayudaEditar4 },},
+    {key: 'AyudaDuracionNota',  image: { avatar: true, src: ayudaEditar5 },},
+    {key: 'AyudaAgregarNota',  image: { avatar: true, src: ayudaAgregarNota },}
+  ]
+
+  const AyudaElimnarImagenes = [
+    {key: 'AyudaEliminarNota', image: { avatar: true, src: ayudaEliminarNota },}
+  ]
 
 
-export default { Modo, Claves, Notas, Alteraciones, Duraciones, DuracionesSilencios} ;
+export default { Modo, Claves, Notas, Alteraciones, Duraciones, DuracionesSilencios,AyudaImagenes,AyudaEditarImagenes,AyudaAgregarImagenes,AyudaElimnarImagenes} ;

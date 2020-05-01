@@ -7,7 +7,7 @@ import Paginacion from "../Paginacion";
 
 
 
-function ProyectoItem({id,name,voices}) {
+function ProyectoItem({id,name,voices,logueado}) {
 
 
   const history = useHistory();
@@ -16,7 +16,8 @@ function ProyectoItem({id,name,voices}) {
     alert(id);
   }
   function goToInstruments ({id},{name},{voices}){
-    history.push("/instrumentos", {idProyecto:id ,nomProyecto:name,voices:voices });
+console.log(id);
+    history.push("/instrumentos", {idProyecto:id ,nomProyecto:name,voices:voices,logueado:logueado });
   }
 
   return (
