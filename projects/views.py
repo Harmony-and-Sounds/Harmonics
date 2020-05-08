@@ -14,6 +14,10 @@ from .projectSerializer import ProjectSerializer, VoiceSerializer
 from .projectPermissions import projectPermissions
 from . import projectHandler
 from django.db.models import Q
+import shutil
+from zipfile import ZipFile
+import os
+from separation.separator.musicTranscription.transcriptor import updateTranscriptions
 
 class ProjectRestController (ViewSet):
     queryset = ''
@@ -36,15 +40,23 @@ class ProjectRestController (ViewSet):
         ser = VoiceSerializer(voices,many=True)
         return Response(ser.data, status.HTTP_200_OK)
 
-    @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)', detail=False)
+    @action(methods=['GET', 'DELETE'], url_path='voice/(?P<voiceId>[0-9]+)', detail=False)
     def get_isolated_voice(self, request, voiceId):
         #directory = BASE_DIR+"/testfiles/vocals.mp3" if int(voiceId)%2 == 2 else BASE_DIR+"/testfiles/novacaine.mp3"
-        voice = Voice.objects.get(id = voiceId)
-        directory = BASE_DIR + "/media/"+voice.isolated_voice_directory
-        file = open(directory, 'rb')
-        response = HttpResponse(FileWrapper(file), content_type='audio')
-        response['Content-Disposition'] = 'attachment; filename="%s"' % 'isolatedVoice.mp3'
-        return response
+        if request.method == 'GET' :
+            voice = Voice.objects.get(id = voiceId)
+            directory = BASE_DIR + "/media/"+voice.isolated_voice_directory
+            file = open(directory, 'rb')
+            response = HttpResponse(FileWrapper(file), content_type='audio')
+            response['Content-Disposition'] = 'attachment; filename="%s"' % 'isolatedVoice.mp3'
+            return response
+
+        elif request.method == 'DELETE':
+            voice = Voice.objects.get(id=voiceId)
+            directory = BASE_DIR + voice.project.directory + "/" + voice.instrument
+            shutil.rmtree(directory)
+            voice.delete()
+            return Response("voz borrada con exito", status.HTTP_200_OK)
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/sheet', detail=False)
     def get_transcription_sheet(self, request, voiceId):
@@ -55,6 +67,15 @@ class ProjectRestController (ViewSet):
         response = HttpResponse(FileWrapper(file), content_type='audio')
         response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi_sheet.pdf'
         return response
+
+    @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/abc', detail=False)
+    def get_transcription_abc(self, request, voiceId):
+        #directory = BASE_DIR + "/testfiles/midi_sheet.pdf" if int(voiceId)%2 == 2 else BASE_DIR+"/testfiles/Libertango.pdf"
+        voice = Voice.objects.get(id=voiceId)
+        directory = BASE_DIR + "/media/"+voice.voice_abc_directory
+        file = open(directory, 'r')
+        
+        return Response(file.read(),status.HTTP_200_OK)
 
     @action(methods=['GET'], url_path='voice/(?P<voiceId>[0-9]+)/transcription/midi', detail=False)
     def get_transcription_midi(self, request, voiceId):
@@ -87,6 +108,70 @@ class ProjectRestController (ViewSet):
         ser = ProjectSerializer(project)
         return Response(ser.data,status.HTTP_200_OK)
 
+    @action(methods=['GET'], url_path='(?P<pk>[0-9]+)/download', detail=False)
+    def download_project(self, request, pk):
+        #directory = BASE_DIR + "/testfiles/zipPrueba.zip"
+        #file = open(directory, 'rb')
+        #response = HttpResponse(FileWrapper(file), content_type='audio')
+        #response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi_audio.mp3'
+
+        project = Project.objects.get(id = pk)
+        response = HttpResponse(content_type='application/zip')
+        response['Content-Disposition'] = 'attachment; filename=' + "project.zip"
+
+        # open a file, writable
+        zip = ZipFile(response, 'w')
+        abs_src = os.path.abspath(BASE_DIR+"/media/"+project.user.user.username)
+
+        directory = BASE_DIR+project.directory
+        # loop through the directory provided
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                absname = os.path.join(root, file)
+                arcname = absname[len(abs_src) + 1:]
+                zip.write(absname,arcname)
+
+        zip.close()
+
+        return response
+
+    @action(methods=['GET'], url_path='voice/(?P<pk>[0-9]+)/download', detail=False)
+    def download_voice(self, request, pk):
+        #directory = BASE_DIR + "/testfiles/zipPrueba.zip"
+        #file = open(directory, 'rb')
+        #response = HttpResponse(FileWrapper(file), content_type='audio')
+        #response['Content-Disposition'] = 'attachment; filename="%s"' % 'midi_audio.mp3'
+
+        voice = Voice.objects.get(id = pk)
+        response = HttpResponse(content_type='application/zip')
+        response['Content-Disposition'] = 'attachment; filename=' + "voice.zip"
+
+        # open a file, writable
+        zip = ZipFile(response, 'w')
+        abs_src = os.path.abspath(BASE_DIR+"/media/"+voice.project.user.user.username+"/"+voice.project.name)
+
+        directory = BASE_DIR+voice.project.directory+"/"+voice.instrument
+        # loop through the directory provided
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                absname = os.path.join(root, file)
+                arcname = absname[len(abs_src) + 1:]
+                zip.write(absname,arcname)
+
+        zip.close()
+
+        return response
+
+    @action(methods = ['PUT'], url_path='voice/(?P<voiceId>[0-9]+)/transcription', detail=False)
+    def update_midi(self, request, voiceId):
+
+        voice = Voice.objects.get(id = voiceId)
+        directory = BASE_DIR + "/media/" + voice.voice_midi_directory
+        midi = request.FILES['file']
+        ABCString = request.data['ABCString']
+        updateTranscriptions(directory,midi,ABCString)
+
+        return Response("voz editada", status.HTTP_200_OK)
 
     def list(self, request):
         voiceParams = request.query_params.get('keyVoices',None)

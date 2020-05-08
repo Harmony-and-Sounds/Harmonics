@@ -7,30 +7,18 @@ from pathlib import Path
 from os.path import join
 from tempfile import gettempdir
 
-# pylint: disable=import-error
 import tensorflow as tf
 
 from tensorflow.contrib import predictor
-# pylint: enable=import-error
 
 from ..model import model_fn
 from ..model.provider import get_default_model_provider
 
-# Default exporting directory for predictor.
 DEFAULT_EXPORT_DIRECTORY = join(gettempdir(), 'serving')
 
 
 def create_estimator(params, MWF):
-    """
-        Initialize tensorflow estimator that will perform separation
 
-        Params:
-        - params: a dictionnary of parameters for building the model
-
-        Returns:
-            a tensorflow estimator
-    """
-    # Load model.
     model_directory = params['model_dir']
     model_provider = get_default_model_provider()
     params['model_dir'] = model_provider.get(model_directory)

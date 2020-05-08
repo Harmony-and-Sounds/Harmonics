@@ -5,7 +5,6 @@ import os
 import ffmpeg
 import numpy as np
 
-from .adapter import AudioAdapter
 from .. import HarmonicsError
 from ..utils.logging import get_logger
 
@@ -18,16 +17,8 @@ def _to_ffmpeg_time(n):
     return '%d:%02d:%09.6f' % (h, m, s)
 
 
-def _to_ffmpeg_codec(codec):
-    ffmpeg_codecs = {
-        'm4a': 'aac',
-        'ogg': 'libvorbis',
-        'wma': 'wmav2',
-    }
-    return ffmpeg_codecs.get(codec) or codec
 
-
-class FFMPEGProcessAudioAdapter(AudioAdapter):
+class AudioAdapter():
 
     def load(self, path, offset=None, duration=None, sample_rate=None, dtype=np.float32):
 
@@ -75,7 +66,7 @@ class FFMPEGProcessAudioAdapter(AudioAdapter):
         if bitrate:
             output_kwargs['audio_bitrate'] = bitrate
         if codec is not None and codec != 'wav':
-            output_kwargs['codec'] = _to_ffmpeg_codec(codec)
+            output_kwargs['codec'] = codec
         process = (
             ffmpeg
             .input('pipe:', format='f32le', **input_kwargs)

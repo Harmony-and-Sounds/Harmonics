@@ -6,7 +6,7 @@ from multiprocessing import Pool
 from os.path import basename, join, splitext
 
 from . import HarmonicsError
-from .audio.adapter import get_default_audio_adapter
+from .audio.ffmpeg import AudioAdapter
 from .audio.convertor import to_stereo
 from .utils.configuration import load_configuration
 from .utils.estimator import create_estimator, to_predictor
@@ -50,7 +50,7 @@ class Separator(object):
 
     def separate_to_file(
             self, audio_descriptor, destination, chunkNumber,
-            audio_adapter=get_default_audio_adapter(),
+            audio_adapter=AudioAdapter(),
             offset=0, duration=600., codec='wav', bitrate='128k',
             filename_format='{instrument}{chunkNumber}.{codec}',
             synchronous=True):

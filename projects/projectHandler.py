@@ -1,11 +1,12 @@
 from harmonicsServer.settings import BASE_DIR
 from .projectSerializer import ProjectSerializer
 from separation import separationHandler
-projectser = ProjectSerializer()
+
 
 def createProject(data,user,up_file):
     username = user.username
     project = None
+    projectser = ProjectSerializer()
     try:
         project = projectser.create(data, user)
     except AssertionError:
@@ -20,3 +21,4 @@ def createProject(data,user,up_file):
 
 
     return project
+

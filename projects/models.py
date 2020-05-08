@@ -17,6 +17,7 @@ class Voice(models.Model):
     voice_sheet_directory = models.CharField(max_length= 255, null= True)
     voice_midi_directory = models.CharField(max_length= 255, null= True)
     voice_midi_audio_directory = models.CharField(max_length= 255, null= True)
+    voice_abc_directory = models.CharField(max_length=255, null=True)
     project = models.ForeignKey(Project, on_delete= models.CASCADE, related_name= 'voices')
 
 # Create your models here.

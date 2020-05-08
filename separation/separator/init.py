@@ -1,9 +1,9 @@
-# CREATED: 11/11/15 11:22 AM by Justin Salamon <justin.salamon@nyu.edu>
-__version__ = '0.0.0'
-import numpy as np
 import pydub
+import librosa
+import numpy as np
+fs = 44100
 
-def write(f, sr, x, normalized=False):
+def write(path, sr, x, codec, normalized=False):
     """numpy array to MP3"""
     audio_segment = pydub.AudioSegment(
         x.tobytes(),
@@ -12,4 +12,8 @@ def write(f, sr, x, normalized=False):
         channels=1
     )
 
-    audio_segment.export(f, format="mp3")
+    audio_segment.export(path, format=codec)
+
+def read(path):
+    data, sr = librosa.load(path, mono=False)
+    return data.astype(np.np.float32),sr

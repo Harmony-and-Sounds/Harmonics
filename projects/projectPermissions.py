@@ -7,6 +7,8 @@ class projectPermissions(permissions.BasePermission):
             return request.user.is_authenticated
         if view.action == 'get_user_projects':
             return request.user.is_authenticated
+        if view.action == 'update_midi':
+            return request.user.is_authenticated
         else:
             return True
 

@@ -1,12 +1,12 @@
 from celery import task
 from .models import PendingSeparation
-from .separator.SeparatorFacade import createSeparation
+from .separator.separator_controller import createSeparation
 from harmonicsServer.settings import BASE_DIR
 import os
 import time
 
 @task
-def prueba_escritura_archivo(id):
+def separation_task(id):
 
     separation = PendingSeparation.objects.get(id = id)
     print(separation.project.user.user.username)
