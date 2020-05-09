@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import Profile
 
-INSTRUMENT_OPTIONS = [("Piano","Piano"),("Vocals","Vocals"),("Bass","Bass"),("Drums","Drums")]
+INSTRUMENT_OPTIONS = [("piano","piano"),("vocals","vocals"),("bass","bass"),("drums","drums")]
 
 class Project(models.Model):
     id = models.AutoField(primary_key = True)

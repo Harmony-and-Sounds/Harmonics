@@ -24,11 +24,7 @@ from . import apply
 
 
 def _get_conv_activation_layer(params):
-    """
 
-    :param params:
-    :returns: Required Activation function.
-    """
     conv_activation = params.get('conv_activation')
     if conv_activation == 'ReLU':
         return ReLU()

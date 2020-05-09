@@ -7,7 +7,6 @@ from tensorflow.keras.layers import (
     Flatten,
     Reshape,
     TimeDistributed)
-# pylint: enable=import-error
 
 from . import apply
 
@@ -39,5 +38,4 @@ def apply_blstm(input_tensor, output_name='output', params={}):
 
 
 def blstm(input_tensor, output_name='output', params={}):
-    """ Model function applier. """
     return apply(apply_blstm, input_tensor, output_name, params)

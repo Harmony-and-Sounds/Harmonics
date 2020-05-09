@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf8
 
-""" Module that provides configuration loading function. """
-
 import json
 
 try:

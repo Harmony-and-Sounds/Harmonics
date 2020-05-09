@@ -23,11 +23,11 @@ def create_estimator(params, MWF):
     model_provider = get_default_model_provider()
     params['model_dir'] = model_provider.get(model_directory)
     params['MWF'] = MWF
-    # Setup config
+    
     session_config = tf.compat.v1.ConfigProto()
     session_config.gpu_options.per_process_gpu_memory_fraction = 0.7
     config = tf.estimator.RunConfig(session_config=session_config)
-    # Setup estimator
+
     estimator = tf.estimator.Estimator(
         model_fn=model_fn,
         model_dir=params['model_dir'],
@@ -38,12 +38,7 @@ def create_estimator(params, MWF):
 
 
 def to_predictor(estimator, directory=DEFAULT_EXPORT_DIRECTORY):
-    """ Exports given estimator as predictor into the given directory
-    and returns associated tf.predictor instance.
 
-    :param estimator: Estimator to export.
-    :param directory: (Optional) path to write exported model into.
-    """
     def receiver():
         shape = (None, estimator.params['n_channels'])
         features = {

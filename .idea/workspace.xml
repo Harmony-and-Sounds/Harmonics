@@ -2,56 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="96b89b84-6e21-4cf8-8461-736d1a58a9d4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/separation/separator/musicTranscription/melodia_extractor.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/separation/separator/musicTranscription/note.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/separation/separator/musicTranscription/render.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/separation/separator/musicTranscription/transcriptor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/celerybeat-schedule" beforeDir="false" afterPath="$PROJECT_DIR$/celerybeat-schedule" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comands" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/bass/bass.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/bass/bass_midi.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/bass/bass_midi.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/bass/bass_midi.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/bass/bass_midi_audio.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/drums/drums.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/drums/drums_midi.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/drums/drums_midi.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/drums/drums_midi.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/drums/drums_midi_audio.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/piano/piano.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/piano/piano_midi.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/piano/piano_midi.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/piano/piano_midi.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/piano/piano_midi_audio.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/vocals/vocals.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/vocals/vocals_midi.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/vocals/vocals_midi.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/vocals/vocals_midi.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/darrell/elnuevo14/vocals/vocals_midi_audio.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/randy/queue/last-of-the-american-girls-official-music-video.mp3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/projectHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/projectHandler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/projectPermissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/projectPermissions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separationHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separationHandler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/SeparatorFacade.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/separator_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/init.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/init.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/musicTranscription/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/musicTranscription/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/musicTranscription/scoreWriter.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/novacaine.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/audio/adapter.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/audio/convertor.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/audio/convertor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/audio/ffmpeg.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/audio/ffmpeg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/audio/spectrogram.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/commands/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/commands/train.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/separator.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/separator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/functions/blstm.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/functions/blstm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/functions/unet.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/functions/unet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/provider/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/provider/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/configuration.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/configuration.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/estimator.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/estimator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/logging.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/logging.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/tensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/tensor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,13 +75,28 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="com.intellij.history.integration.ui.views.FileHistoryDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1587443822048" />
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1588904780102">
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1588977531320">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1588904780102" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1588977531320" />
+    <state x="641" y="264" width="704" height="576" key="find.popup" timestamp="1588981434750">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="641" y="264" width="704" height="576" key="find.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1588981434750" />
     <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1586836347591">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1586836347591" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/separation/separator/sourceSeparation/model/functions/blstm.py</url>
+          <line>1</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

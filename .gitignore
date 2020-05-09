@@ -2,8 +2,8 @@
 db.sqlite3
 
 *.pyc
-media/
+media/*/
 */__pycache__/
-output/
+output/*/
 separation/separator/pretrained_models/
  
