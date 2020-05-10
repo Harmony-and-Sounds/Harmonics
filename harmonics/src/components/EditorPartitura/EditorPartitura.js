@@ -10,10 +10,20 @@ import Constantes from './Constantes';
 import { Dropdown, Checkbox, Button } from 'semantic-ui-react'
 import {ABCHandler} from './libreriaABC/ABCHandler';
 import Carousel from 'react-bootstrap/Carousel'
-
-
 import { useLocation,useHistory } from "react-router-dom";
-import { getPartituraABC, guardarABC } from '../../servicios/servicios-proyecto';
+import { getPartituraABC, guardarPartitura } from '../../servicios/servicios-proyecto';
+
+import 'semantic-ui-css/components/reset.min.css';
+//import 'semantic-ui-css/components/transition.min.css';
+import 'semantic-ui-css/components/dropdown.min.css';
+import 'semantic-ui-css/components/icon.min.css';
+import 'semantic-ui-css/components/label.min.css';
+import 'semantic-ui-css/components/list.min.css';
+import 'semantic-ui-css/components/menu.min.css';
+import 'semantic-ui-css/components/item.min.css';
+import 'semantic-ui-css/components/checkbox.min.css';
+import 'semantic-ui-css/components/button.min.css';
+
 function EditorPartitura(props) {
 
   const history = useHistory();
@@ -111,7 +121,6 @@ function EditorPartitura(props) {
 
 
   useEffect(() => {
-    console.log(location);
     if (location.state === undefined){
       alert('Error cargando la partitura');
       history.push('/');
@@ -124,7 +133,6 @@ function EditorPartitura(props) {
   useEffect(() => {
     let mAyuda = (localStorage.getItem('ayudaEditar') == 'true');
     if (partitura !== ''){
-      console.log(partitura);
       extraerEncabezado();
       renderizarReproductor();
     }
@@ -133,11 +141,9 @@ function EditorPartitura(props) {
   function getABC () {
     const access = sessionStorage.getItem('access');
     const idVoz = location.state.idVoz;
-    console.log(idVoz);
     if(access !== null){
         getPartituraABC(access, idVoz).then(respuesta => {
             if (respuesta.bandera === true){
-                console.log(respuesta.data);
                 setPartitura(respuesta.data);
             }
             else{
@@ -169,14 +175,14 @@ function EditorPartitura(props) {
     let compasLocal = '';
     if(partitura.indexOf('T: ') !== -1){
       let inicio = partitura.indexOf('T: ');
-      console.log(inicio);
+      //console.log(inicio);
       let fin = partitura.indexOf('\n', ultimoSalto)+1;
-      console.log(fin);
+      //console.log(fin);
       let titulo = partitura.substring(inicio, fin);
       ultimoSalto = fin;
       setTitulo(titulo);
       setTituloEditado(titulo.substring(3,titulo.length-1));
-      console.log(titulo);
+      //console.log(titulo);
     }
     if(partitura.indexOf('M: ') !== -1){
       let inicio = partitura.indexOf('M: ');
@@ -187,7 +193,7 @@ function EditorPartitura(props) {
       let posSlash = compasLocal.indexOf('/');
       setNumeradorEditado(compasLocal.substring(3,posSlash))
       setDenominadorEditado(compasLocal.substring(posSlash+1, compasLocal.indexOf('\n')));
-      console.log(compasLocal);
+      //console.log(compasLocal);
     }
     if(partitura.indexOf('L: ') !== -1){
       let inicio = partitura.indexOf('L: ');
@@ -195,7 +201,7 @@ function EditorPartitura(props) {
       let longitudNotas = partitura.substring(inicio, fin);
       ultimoSalto = fin;
       setLongitudNotas(longitudNotas);
-      console.log(longitudNotas);
+      //console.log(longitudNotas);
     }
     if(partitura.indexOf('K: ') !== -1){
       let inicio = partitura.indexOf('K: ');
@@ -208,7 +214,7 @@ function EditorPartitura(props) {
         let clef = k.substring(i, k.length);
         //console.log(k);
         //console.log(nk);
-        console.log(clef.length);
+        //console.log(clef.length);
         setKey(nk);
         setCleff(clef);
         setCleffEditado(clef.substring(0, clef.length-1));
@@ -224,10 +230,10 @@ function EditorPartitura(props) {
     if (!handlerInicializado){
       let InicioNotas = partitura.indexOf('|');
       let notas = partitura.substring(InicioNotas, partitura.length);
-      console.log(notas, compasLocal.substring(3, compasLocal.length));
+      //console.log(notas, compasLocal.substring(3, compasLocal.length));
       let h = new ABCHandler(compasLocal.substring(3, compasLocal.length), notas);
       setHandler(h);
-      console.log(h.getScore());
+      //console.log(h.getScore());
       setHandlerInicializado(true);
     }
   }
@@ -238,11 +244,11 @@ function EditorPartitura(props) {
     console.log(partituraSinEncabezadoModificada);
     let InicioNotas = partitura.indexOf('|');*/
     let copiaPartitura = partitura;
-    console.log(copiaPartitura);
+    //console.log(copiaPartitura);
     copiaPartitura = copiaPartitura.replace(titulo,'T: '+tituloEditado+'\n');
     copiaPartitura = copiaPartitura.replace(key+cleff,'K: '+keyEditado+' '+cleffEditado+'\n');
     copiaPartitura = copiaPartitura.replace(compas,'M: '+numeradorEditado+'/'+denominadorEditado+'\n');
-    console.log(copiaPartitura);
+    //console.log(copiaPartitura);
 
     handler.setTempo(numeradorEditado+'/'+denominadorEditado);
     let partituraSinEncabezadoModificada = handler.getScore();
@@ -250,7 +256,7 @@ function EditorPartitura(props) {
 
     copiaPartitura = copiaPartitura.substring(0,InicioNotas) + partituraSinEncabezadoModificada;
     setPartitura(copiaPartitura);
-    console.log(copiaPartitura);
+    //console.log(copiaPartitura);
 
     setMostrarEditarEncabezada(false);
     setMostrar(false);
@@ -267,7 +273,7 @@ function EditorPartitura(props) {
   function guardar (archivo) {
     const access = sessionStorage.getItem('access');
     const idVoz = location.state.idVoz;
-    guardarABC (access, idVoz, archivo).then( respuesta => {
+    guardarPartitura (access, idVoz, archivo, partitura).then( respuesta => {
       if (respuesta.bandera === true){
         history.goBack();
       }
@@ -295,7 +301,7 @@ function EditorPartitura(props) {
       setMostrarMenu(true);
       setMostrar(false);
       setMostrarSilencio(false);
-      console.log(abcElem);
+      //console.log(abcElem);
       if (abcElem.el_type === "note" && abcElem.pitches !== undefined){
         setNotaInicio(abcElem.startChar);
         setNotaFinal(abcElem.endChar);
@@ -311,25 +317,13 @@ function EditorPartitura(props) {
         if (pos !== -1){
           setAlteracion(n.substring(pos,i));
         }
-        let regexSlash =/[^0-9][/][\d]+$/gm;
-        let posSlash = n.search(regexSlash);
-        if (posSlash !== -1){
-          console.log(n.substring(posSlash+1,n.length));
-          setDuracion(n.substring(posSlash+1,n.length));
-        }
-
-        let regexfrac = /[\d][/][\d]+$/gm;
+        let regexfrac = /[\d]+[/][\d]+/gm;
         let posDur = n.search(regexfrac);
         if (posDur !== -1){
-          console.log(n.substring(posDur,n.length));
-          setDuracion(n.substring(posDur,n.length));
-        }
-
-        let regexNumero = /[^/][1-9]$/gm;
-        let posNumero = n.search(regexNumero);
-        if (posNumero !== -1){
-          console.log(n.substring(posNumero+1,n.length));
-          setDuracion(n.substring(posNumero+1,n.length));
+          regexfrac.test(n);
+          let lastIndex = regexfrac.lastIndex;
+          //console.log(n.substring(posDur,lastIndex));
+          setDuracion(n.substring(posDur,lastIndex));
         }
         setTipoNotaBase('Nota');
         setMostrar(true);
@@ -337,34 +331,19 @@ function EditorPartitura(props) {
       else{
         setNotaInicio(abcElem.startChar);
         setNotaFinal(abcElem.endChar);
-        console.log(abcElem.startChar);
-        console.log(abcElem.endChar);
+        //console.log(abcElem.startChar);
+        //console.log(abcElem.endChar);
         let n = partitura.slice(abcElem.startChar, abcElem.endChar)
         setEditar( compas + longitudNotas + key + cleff + n );
         setNota(n);
-        let regexSlash =/[^0-9][/][\d]+$/gm;
-        let posSlash = n.search(regexSlash);
-        console.log(posSlash);
-        if (posSlash !== -1){
-          console.log(n.substring(posSlash+1,n.length));
-          setDuracion(n.substring(posSlash+1,n.length));
-        }
-
-        let regexfrac = /[\d][/][\d]+$/gm;
+        let regexfrac = /[\d]+[/][\d]+/gm;
         let posDur = n.search(regexfrac);
-        console.log(posDur);
+        //console.log(posDur);
         if (posDur !== -1){
-          console.log(n.substring(posDur,n.length));
-          setDuracion(n.substring(posDur,n.length));
-        }
-
-        let regexNumero = /[^/][1-9]$/gm;
-        let posNumero = n.search(regexNumero);
-        console.log(n);
-        console.log(posNumero);
-        if (posNumero !== -1){
-          console.log(n.substring(posNumero+1,n.length));
-          setDuracion(n.substring(posNumero+1,n.length));
+          regexfrac.test(n);
+          let lastIndex = regexfrac.lastIndex;
+          //console.log(n.substring(posDur,lastIndex));
+          setDuracion(n.substring(posDur,lastIndex));
         }
         setTipoNotaBase('Silencio');
         setMostrarSilencio(true);
@@ -436,7 +415,7 @@ function EditorPartitura(props) {
       let remplazo = nota.substring(0, notaSimplePos) + notaSimple + nota.substring(notaSimplePos+1, nota.length);
       setEditar(editar.replace(nota, remplazo));
       setNota(remplazo);
-      console.log(editar);
+      //console.log(editar);
     }
   }
 
@@ -473,7 +452,7 @@ function EditorPartitura(props) {
     if (alteracionCombo === ' '){
       alteracionCombo = '';
     }
-    console.log(alteracionCombo);
+    //console.log(alteracionCombo);
     if (pos !== -1) {
       let copiNota = nota.substring(0,pos) + alteracionCombo + nota.substring(notaSimplePos,nota.length);
       //console.log(copiNota);
@@ -498,13 +477,16 @@ function EditorPartitura(props) {
 
   function editarDuracion(duracionCombo){
     let editado = 0;
-    let regexfrac = /[\d][/][\d]+$/gm;
+    let regexfrac = /[\d]+[/][\d]+/gm;
     let posDur = nota.search(regexfrac);
-    console.log(posDur);
+    //console.log(nota);
+    //console.log(posDur);
     if (posDur !== -1 && editado === 0){
-      let copiNota = nota.substring(0,posDur) + duracionCombo /*+ nota.substring(posDur+3,nota.length)*/;
-      console.log(nota);
-      console.log(copiNota);
+      regexfrac.test(nota);
+      let lastIndex = regexfrac.lastIndex;
+      let copiNota = nota.substring(0,posDur) + duracionCombo + nota.substring(lastIndex,nota.length);
+      //console.log(nota);
+      //console.log(copiNota);
       setEditar(editar.replace(nota, copiNota));
       setNota(copiNota);
       setDuracion(duracionCombo);
@@ -618,7 +600,7 @@ function EditorPartitura(props) {
       let remplazo = notaAgregar.substring(0, notaSimpleAgregarPos) + notaSimple + notaAgregar.substring(notaSimpleAgregarPos+1, notaAgregar.length);
       setPartituraAgregar(partituraAgregar.replace(notaAgregar, remplazo));
       setNotaAgregar(remplazo);
-      console.log(editar);
+      //console.log(editar);
     }
   }
 
@@ -655,7 +637,7 @@ function EditorPartitura(props) {
     if (alteracionCombo === ' '){
       alteracionCombo = '';
     }
-    console.log(alteracionCombo);
+    //console.log(alteracionCombo);
     if (pos !== -1) {
       let copiNota = notaAgregar.substring(0,pos) + alteracionCombo + notaAgregar.substring(notaSimpleAgregarPos,notaAgregar.length);
       //console.log(copiNota);
@@ -680,11 +662,13 @@ function EditorPartitura(props) {
 
   function editarDuracionAgregar(duracionCombo){
     let editado = 0;
-    let regexfrac = /[\d][/][\d]+$/gm;
+    let regexfrac = /[\d]+[/][\d]+/gm;
     let posDur = notaAgregar.search(regexfrac);
     if (posDur !== -1 && editado === 0){
-      let copiNota = notaAgregar.substring(0,posDur) + duracionCombo /*+ nota.substring(posDur+3,nota.length)*/;
-      console.log(copiNota);
+      regexfrac.test(notaAgregar);
+      let lastIndex = regexfrac.lastIndex;
+      let copiNota = notaAgregar.substring(0,posDur) + duracionCombo + nota.substring(lastIndex,notaAgregar.length);
+      //console.log(copiNota);
       setPartituraAgregar(partituraAgregar.replace(notaAgregar, copiNota));
       setNotaAgregar(copiNota);
       setDuracionAgregar(duracionCombo);
@@ -752,7 +736,7 @@ function EditorPartitura(props) {
   return (
 
         <div className="Editor">
-          <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/components/transition.min.css" />
           <div className="fluid-container correcion">
             <div className="encabezado">
               <button className="btn btn-secondary" onClick={() => setMostrarEditarEncabezada(true)}>Editar Encabezado</button>
@@ -787,7 +771,7 @@ function EditorPartitura(props) {
           </div>
           <Modal show={mostrarEditarEncabezada} onHide={handleClose} size="lg" centered>
                 <Modal.Header className="text-center" closeButton>
-                  <h2 style={{margin: "0"}} className="w-100">Editar Encabezado</h2>
+                  <h2 style={{margin: "0", paddingLeft: "32px"}} className="w-100">Editar Encabezado</h2>
                 </Modal.Header>
                 <Modal.Body>
                   <div className="container">
@@ -872,7 +856,7 @@ function EditorPartitura(props) {
 
             <Modal show={mostrarEditar} onHide={handleCloseMostrarEditar} dialogClassName="modal-90w" centered>
                 <Modal.Header className="text-center" closeButton>
-                    <h2 style={{margin: "0"}} className="w-100">Editar</h2>
+                    <h2 style={{margin: "0", paddingLeft: "32px"}} className="w-100">Editar</h2>
                 </Modal.Header>
                 <Modal.Body style={{textAlign: "center"}}>
                   {mostrar &&
@@ -976,7 +960,7 @@ function EditorPartitura(props) {
                       <div className="col align-self-center">
                         <Dropdown
                           fluid
-                          selections
+                          selections='true'
                           options={Constantes.DuracionesSilencios}
                           defaultValue={duracion}
                           onChange={(e, data) => editarDuracion(data.value)}
@@ -1007,7 +991,7 @@ function EditorPartitura(props) {
 
             <Modal show={mostrarMenu} onHide={handleCloseMostrarMenu} dialogClassName="modal-50w" centered>
                 <Modal.Header className="text-center" closeButton>
-                  <h2 style={{margin: "0"}} className="w-100">Menu</h2>
+                  <h2 style={{margin: "0", paddingLeft: "32px"}} className="w-100">Menu</h2>
                 </Modal.Header>
                 <Modal.Body style={{textAlign: "center"}}>
                   {tipoNotaBase === 'Nota' &&
@@ -1069,7 +1053,7 @@ function EditorPartitura(props) {
                       <div className="col">
                       </div>
                       <div className="col">
-                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEditar(true); setMostrarMenu(false)}}>Editar Nota</button>
+                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEditar(true); setMostrarMenu(false)}}>Editar Silencio</button>
                       </div>
                       <div className="col">
                       </div>

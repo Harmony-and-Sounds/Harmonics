@@ -1,4 +1,5 @@
-const URL_PROYECTO = "http://localhost:8000/";
+//const URL_PROYECTO = "http://localhost:8000/";  local
+const URL_PROYECTO = "http://10.39.1.124:8000/";
 
 export async function crearProyecto (token, project_name, archivo, voces){
     try {
@@ -13,7 +14,6 @@ export async function crearProyecto (token, project_name, archivo, voces){
         });
 
         const json = await response.json();
-        console.log(json);
         if (response.ok) {
           return {bandera: true};
         }
@@ -30,7 +30,6 @@ export async function getProyectos (){
         const response = await fetch(URL_PROYECTO+'project/', {
             method: 'GET',})
             const json = await response.json();
-            console.log(json);
         return await json;
       } catch (error) {
           console.log(error);
@@ -42,7 +41,6 @@ export async function getProyectosBusqueda (searchWord,Voces){
         const response = await fetch(URL_PROYECTO+'project/?keyWord='+searchWord+'&keyVoices='+Voces, {
             method: 'GET',})
             const json = await response.json();
-            console.log(json);
         return await json;
       } catch (error) {
           console.log(error);
@@ -55,9 +53,7 @@ export async function getProyectosUsusario (token){
             method: 'GET',
             headers: { 'Authorization': 'Bearer '+token}
           })
-
             const json = await response.json();
-            console.log(json);
         return await json;
       } catch (error) {
           console.log(error);
@@ -91,13 +87,12 @@ export async function getAudioMidi (token, idVoz){
 export async function getPartituraABC (token, idVoz){
 
     try {
-        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/ABC', {
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/abc', {
             method: 'GET',
             headers: { 'Authorization': 'Bearer '+token}
         })
         const json = await response.json();
         if (response.ok) {
-            console.log(json);
           return {data:json , bandera: true};
         }
         else {
@@ -115,7 +110,6 @@ export async function descargarProyecto (idProyecto) {
             method: 'GET',
             //headers: { 'Authorization': 'Bearer '+token}
         })
-          console.log("entro");
 
         if (response.ok) {
 
@@ -128,8 +122,7 @@ export async function descargarProyecto (idProyecto) {
         }
         else {
             let json = await response.json();
-            console.log(json);
-          return {bandera: false}
+            return {bandera: false}
         }
     } catch (error) {
         console.log(error);
@@ -137,7 +130,6 @@ export async function descargarProyecto (idProyecto) {
 }
 
 export async function getAudioVozSeparada (token, idVoz) {
-    console.log(token);
   try {
       const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz, {
           method: 'GET',
@@ -186,18 +178,18 @@ export async function getPDF (token, idVoz) {
     }
 }
 
-export async function guardarABC (token, idVoz, archivo){
+export async function guardarPartitura (token, idVoz, archivo, partitura){
     try {
         const form = new FormData()
         form.append('file', archivo);
-        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/midi/', {
+        form.append('ABCString', partitura);
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/', {
             method: 'PUT',
             headers: { 'Authorization': 'Bearer '+token},
             body: form,
         });
 
         const json = await response.json();
-        console.log(json);
         if (response.ok) {
           return {bandera: true};
         }

@@ -44,7 +44,6 @@ function ReproductorMidi(props) {
       const eventLogger = payload => {
         setCurrentSongTime(payload.time || 0);
         setCurrentSongState(payload.event);
-        //console.log(payload.time);
         if (payload.event === MIDI_ERROR) {
           console.error(payload.message);
           console.error(payload.error);

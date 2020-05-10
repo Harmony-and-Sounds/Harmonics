@@ -1,4 +1,5 @@
-const URL_PROYECTO = "http://localhost:8000/";
+//const URL_PROYECTO = "http://localhost:8000/";  local
+const URL_PROYECTO = "http://10.39.1.124:8000/";
 
 export async function getInfoUsuario (token){
     try {
@@ -25,7 +26,6 @@ export async function borrarNotificaciones (token){
             headers: { 'Authorization': 'Bearer '+token },
         });
         const json = await response.json();
-        console.log(json);
         if (response.ok) {
           return {data:json , bandera: true};
         }

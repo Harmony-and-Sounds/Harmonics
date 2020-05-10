@@ -1,19 +1,35 @@
 import React, {useMemo,useState,useCallback,useEffect} from 'react';
 import {useDropzone} from 'react-dropzone';
-import Multiselect from 'react-widgets/lib/Multiselect'
+//import Multiselect from 'react-widgets/lib/Multiselect'
 import { useHistory } from 'react-router-dom'
-import 'react-widgets/dist/css/react-widgets.css';
+//import 'react-widgets/dist/css/react-widgets.css';
 import './Empezar.css';
 import {crearProyecto} from '../../servicios/servicios-proyecto'
 import { Button, Modal } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel'
+import { Dropdown } from 'semantic-ui-react'
 
 import SeleccionarArchivo from '../../recursos/PU_SeleccionarArchivo.png'
 import ElegirInstrumentos from '../../recursos/PU_ElegirInstrumentos.png'
 import RealizarSeparacion from '../../recursos/PU_RealizarSeparacion.png'
 import MisProyectos from '../../recursos/PU_MisProyectos.png'
 
-let instrumentos = ['Guitarra', 'Charango', 'Flauta', 'Bateria', 'Voz'];
+import 'semantic-ui-css/components/reset.min.css';
+//import 'semantic-ui-css/components/transition.min.css';
+import 'semantic-ui-css/components/dropdown.min.css';
+import 'semantic-ui-css/components/icon.min.css';
+import 'semantic-ui-css/components/label.min.css';
+import 'semantic-ui-css/components/list.min.css';
+import 'semantic-ui-css/components/menu.min.css';
+import 'semantic-ui-css/components/item.min.css';
+
+const instrumentos = [
+  { key: 'vocals', text: 'Voces', value: 'vocals' },
+  { key: 'piano', text: 'Piano', value: 'piano' },
+  { key: 'drums', text: 'Percuciones', value: 'drums' },
+  { key: 'bass', text: 'Bajo', value: 'bass' },
+  { key: 'other', text: 'Otros', value: 'other' },
+];
 
 const baseStyle = {
     flex: 1,
@@ -73,7 +89,7 @@ function Empezar(props) {
   }, []);
 
   const {acceptedFiles, getRootProps, getInputProps,  isDragActive, isDragAccept, isDragReject} = useDropzone({
-    accept: 'audio/mp3', //audio/mp3
+    accept: 'audio/mpeg', //audio/mp3
     multiple: false,
     onDrop
   });
@@ -98,7 +114,6 @@ function Empezar(props) {
  function crearProy () {
   //Encriptar si se requiere
   if (archivo !== null && value.length !== 0 && nombreProy !== ""){
-
       crearProyecto(token, nombreProy, archivo, value).then( respuesta => {
         if (respuesta.bandera === true){
           setMostrar(true);
@@ -117,21 +132,21 @@ function Empezar(props) {
 }
 
 function volverHome (){
-
   history.push("/");
 }
 
 return (
   <div className="container-fluid vertical-center">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/components/transition.min.css" />
     <div className="fila">
       <div className="columna_centrada">
-        <h2>Nombre del proyecto</h2>
+        <h1>Nombre del proyecto</h1>
         <input type="text" className="form-control over" placeholder="Ingrese el nombre del proyecto" value={nombreProy} onChange={e => setNombreProy(e.target.value)} required/>
       </div>
     </div>
     <div className="row">
       <div className="col-sm-6 col-md-6 col-lg-6">
-        <h2>Canción</h2>
+        <h1>Canción</h1>
         <div {...getRootProps({style})}>
           <input {...getInputProps()} />
           <p>Drag 'n' drop</p>
@@ -144,8 +159,8 @@ return (
         </aside>
       </div>
       <div className="col-sm-6 col-md-6 col-lg-6">
-        <h2>Instrumentos</h2>
-        <Multiselect data={instrumentos} value={value} onChange={(value) => setValue(value)}/>
+        <h1>Instrumentos</h1>
+        <Dropdown placeholder="Seleccione los instrumentos que tiene la canción ..." fluid multiple selection options={instrumentos} onChange={(event, data) => setValue(data.value)}/>
       </div>
     </div>
     <div className="flex-row">

@@ -22,15 +22,30 @@ function Instrumentos(props) {
 
 
   function goToEditar (vozId){
-    console.log("hola", vozId);
     history.push("/Editar", {idVoz:vozId});
   }
 
+  function ponerTitulo(nombre){
+    if (nombre === 'vocals'){
+      return 'Voces';
+    }
+    if (nombre === 'piano'){
+      return 'Piano';
+    }
+    if (nombre === 'drums'){
+      return 'Percuciones';
+    }
+    if (nombre === 'bass'){
+      return 'Bajo';
+    }
+    if (nombre === 'other'){
+      return 'Otros';
+    }
+  }
+
   function descargarProy (idProy)  {
-    console.log(idProy);
       descargarProyecto(idProyecto).then( respuesta => {
         if (respuesta.bandera === true){
-          console.log(respuesta.data);
           fetch(respuesta.data, {
         mode: 'no-cors' /*{mode:'cors'}*/
     }).then((transfer) => {
@@ -52,15 +67,22 @@ function Instrumentos(props) {
 
         <div className="Instrumentos">
           <div className="fluid-container correcion">
-            <div className="flex-row">
-              <h2>{nomProyecto}<button className="btnDescargar"  onClick={()=>descargarProy({idProyecto})}><i className="fa fa-download" ></i> Descargar proyecto</button></h2>
+            <div className="row">
+              <div className="col">
+              </div>
+              <div className="col">
+              <h2>{nomProyecto}</h2>
+              </div>
+              <div className="col">
+                <button className="btnDescargar"  onClick={()=>descargarProy({idProyecto})}><i className="fa fa-download" ></i> Descargar proyecto</button>
+              </div>
             </div>
             <Tabs id="uncontrolled-tab-example">
               {
                 voices.map( voz => (
-                  <Tab key={voz.id} eventKey={voz.id} title={voz.instrument}>
+                  <Tab key={voz.id} eventKey={voz.id} title={ponerTitulo(voz.instrument)}>
                     <br/>
-                    <h3>{voz.instrument}</h3>
+                    <h3>{ponerTitulo(voz.instrument)}</h3>
                     <Reproductor idVoz={voz.id}/>
                     <VisualizadorPDF idVoz={voz.id}/>
                     <br/>

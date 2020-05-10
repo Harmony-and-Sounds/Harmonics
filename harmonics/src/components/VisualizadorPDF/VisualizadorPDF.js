@@ -16,7 +16,6 @@ function VisualizadorPDF(props) {
         if(access !== null){
             getPDF(access, idVoz).then(respuesta => {
                 if (respuesta.bandera === true){
-                    console.log(respuesta.data);
                     setPdf(respuesta.data);
                 }
                 else{

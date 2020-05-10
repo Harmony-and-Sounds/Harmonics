@@ -51,7 +51,7 @@ class Search extends React.Component {
 	 */
 	fetchSearchResults = ( updatedPageNo = '', query = '' ) => {
 		const access = sessionStorage.getItem('access');
-		console.log(this.state.token);
+		//console.log(this.state.token);
 		getProyectosUsusario(access).then( respuesta => {
 			const json = respuesta;
 			const resultNotFoundMsg = ! respuesta.length

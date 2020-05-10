@@ -32,18 +32,9 @@ function Navegacion(){
       }, [solicitarNotificaciones] );
 
     function cerrarSesion () {
-        /*const respuesta = await logout(user);
-        if (respuesta[0].name==="Colombia"){
-            sessionStorage.removeItem('access');
-            /*var user = JSON.parse(sessionStorage.getItem('sesion')).name;
-            console.log(user);
-            history.push("/");
-        }
-        else{
-            alert("Error cerrando sesion.");
-        }*/
         sessionStorage.removeItem('access');
         sessionStorage.removeItem('refresh');
+        history.push('/home');
         window.location.reload();
     }
 
@@ -54,6 +45,7 @@ function Navegacion(){
                 //if (respuesta.data.pending_notifications === false){
                     document.getElementById("notificacion").style.visibility = "hidden";
                     setColor('btn btn-primary');
+                    setMostrar(false);
                 //}
               }
               else{

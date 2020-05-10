@@ -14,11 +14,11 @@ class ABCHandler {
         let scorePart2 = this.ABCString.substring(characterIndex);
         let match = getMatchingNotes(scorePart2, true);
         let notes = [new Note(updatedNote)].concat(this.tokenize(match.length,scorePart2));
-        console.log(notes);
+        //console.log(notes);
         let lastMeasure = this.getLastMeasure(scorePart1);
-        console.log(lastMeasure);
+        //console.log(lastMeasure);
         scorePart1 = scorePart1.substring(0,lastMeasure[0]+1);
-        console.log(scorePart1);
+        //console.log(scorePart1);
         let measure = this.tokenize(0,lastMeasure[1]);
         this.fixScore(scorePart1,notes,measure);
     }
@@ -34,23 +34,32 @@ class ABCHandler {
 
         if(after){
             let match = getMatchingNotes(scorePart2, true);
-            console.log(match);
+            //console.log(match);
             notes = [new Note(new String(match)),new Note(note)].concat(this.tokenize(match.length,scorePart2));
         }else{
             notes = [new Note(note)].concat(this.tokenize(0,scorePart2));
         }
-        console.log(notes);
+        //console.log(notes);
 
         this.fixScore(scorePart1,notes,measure);
     }
 
     deleteNote(characterIndex , fix = false){
+        if (this.ABCString.length < 3){
+            alert("No puede borrar la ultima nota de la partitura");
+            return ;
+        }
         let scorePart1 = this.ABCString.substring(0,characterIndex);
         let scorePart2 = this.ABCString.substring(characterIndex);
         let match = getMatchingNotes(scorePart2, true);
-        
+
         if(!fix){
-            scorePart1 = scorePart1 + scorePart2.substring(match.length);
+            let exists = this.existNoteAhead(match.length,scorePart2);
+            let size = match.length+1;
+            if(exists){
+                size -= 1;
+            }
+            scorePart1 = scorePart1 + scorePart2.substring(size);
             this.ABCString = scorePart1;
         }else{
             let lastMeasure = this.getLastMeasure(scorePart1);
@@ -59,12 +68,12 @@ class ABCHandler {
             let notes =  this.tokenize(match.length,scorePart2);
             this.fixScore(scorePart1,notes,measure);
         }
-        
+        this.ABCString.replace("||","|");
     }
 
     setTempo (tempo){
         this.tempo = eval(tempo);
-        console.log("tempo: "+this.tempo);
+        //console.log("tempo: "+this.tempo);
         let notes = this.tokenize(1);
         this.fixScore("|",notes,[]);
     }
@@ -80,19 +89,24 @@ class ABCHandler {
     }
 
     untieNotes(characterIndex1, characterIndex2){
-        
-        let scorePart1 = this.ABCString.substring(0,characterIndex1);
-        let scorePart2 = this.ABCString.substring(characterIndex2);
-        let match = getMatchingNotes(scorePart2, true);
-        scorePart2 = this.ABCString.substring(characterIndex1, characterIndex2 + match.length-1);
-        let scorePart3 = this.ABCString.substring(characterIndex2 + match.length);
-        this.ABCString = scorePart1+scorePart2+scorePart3;
+        if(this.ABCString[characterIndex1] == "("){
+            let scorePart1 = this.ABCString.substring(0,characterIndex1);
+            let scorePart2 = this.ABCString.substring(characterIndex2);
+            let match = getMatchingNotes(scorePart2, true);
+            scorePart2 = this.ABCString.substring(characterIndex1+1, characterIndex2 + match.length-1);
+            let scorePart3 = this.ABCString.substring(characterIndex2 + match.length);
+            this.ABCString = scorePart1+scorePart2+scorePart3;
+        }else{
+            alert("No puede desligar notas sin ligaduras")
+            
+        }
     }
 
     fixScore(scorePart1, notes, lastMeasure){
-        console.log("tempo:  "+this.tempo);
+        //console.log("tempo:  "+this.tempo);
         let measure = lastMeasure;
         let i = 0;
+        let j = 1;
         while(i < notes.length){
             let duration  = this.getMeasureDuration(measure);
             while(duration < this.tempo && i < notes.length){
@@ -100,21 +114,19 @@ class ABCHandler {
                     measure.push(notes[i]);
 
                 }else if(this.tempo-duration > 0 && duration  + eval(notes[i].duration) > this.tempo){
-                    console.log("tempo:  "+this.tempo);
+                    //console.log("tempo:  "+this.tempo);
                     let diff = this.tempo - duration;
                     let noteDif = eval(notes[i].duration +"-"+diff);
-                    let note_aux = new Note(`(${notes[i].note}${notes[i].duration}`);
-                    if(notes[i].tie === ")"){
-                        note_aux.tie = "";
-                        notes[i].tie = ")";
-                    }else if(notes[i].tie === "("){
-                        notes[i].tie = "";
-                        note_aux.tie = "(";
+                    let note_aux = new Note(`${notes[i].note}${notes[i].duration}`);
+                    if(notes[i].rightTie === ")"){
+                        note_aux.leftTie = "(";
+                        note_aux.rightTie = ")";
+                        notes[i].rightTie = ")";
                     }else{
-                        note_aux.tie = "(";
-                        notes[i].tie = ")";
+                        note_aux.leftTie = "(";
+                        notes[i].rightTie = ")";
                     }
-                    console.log(note_aux);
+                    //console.log(note_aux);
                     let durfrac1 = fraction(diff);
                     note_aux.duration = `${durfrac1.n}/${durfrac1.d}`;
 
@@ -127,15 +139,16 @@ class ABCHandler {
                 i++;
                 duration = this.getMeasureDuration(measure);
             }
-            console.log(measure);
             let aux ="";
             measure.forEach(element => {
                 aux += element.getABCNote();
             });
-            console.log(aux);
             scorePart1 += aux +"|";
+            if(j%5 === 0){
+                scorePart1 += "\n";
+            }
             measure = [];
-            
+            j++;     
         }
         this.ABCString = scorePart1;
     }
@@ -149,7 +162,7 @@ class ABCHandler {
         }else{
             ABCString_aux = this.ABCString.substring(startIndex);
         }
-        console.log(ABCString_aux);
+        //console.log(ABCString_aux);
         return getMatchingNotes(ABCString_aux);
     }
 
@@ -160,7 +173,7 @@ class ABCHandler {
             expression+= "+"+element.duration;
         });
 
-        console.log(expression);
+        //console.log(expression);
         return eval(expression);
     }
 
@@ -170,6 +183,17 @@ class ABCHandler {
             mstartIndex -=1;
         }
         return [mstartIndex, abcstring.substring(mstartIndex)];
+    }
+
+    existNoteAhead(startIndex , abcstring){
+        let cont = 0;
+        while(abcstring[startIndex]!== '|'){
+            if(abcstring[startIndex] !== ' '){
+                cont += 1;     
+            }
+            startIndex +=1;
+        }
+        return cont > 3;
     }
 
     getScore(){
@@ -182,17 +206,12 @@ class Note {
     constructor(note){ 
         this.note = getABCPitch(note);
         this.duration = getNoteDuration(note);
-        this.tie = getNoteTie(note);
+        this.leftTie = note.includes("(") ? "(" : "";
+        this.rightTie = note.includes(")") ? ")" : "";
     }
 
     getABCNote(){
-        if(this.tie === "("){
-            return this.tie+this.note+this.duration;
-        }else if(this.tie === ")"){
-            return this.note+this.duration+this.tie;
-        }else{
-            return this.note+this.duration;
-        }
+        return this.leftTie+this.note+this.duration+this.rightTie;
     }
 }
 
