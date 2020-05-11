@@ -29,17 +29,15 @@ def get_duration(duration):
 
     res = 0
     error = 1000
-    fraction = "4/4"
     if duration > 0:
         for i in [2, 4, 8, 16, 32, 64]:
             for j in range(1, i + 1):
                 if abs(j / i - duration) < error:
                     error = abs(j / i - duration)
                     res = j / i
-                    fraction = [j, i]
     return offres + res
 
-def getMeasureDuration(measure):
+def get_measure_duration(measure):
     duration = 0
 
     for note in measure:
@@ -63,7 +61,7 @@ def get_notes_chords_rests(path):
 
     return note_list
 
-def createABCTranscription(notes, output,tempo,key, instrument):
+def create_ABCTranscription(notes, output, tempo, key, instrument):
 
     ABCString = f'T: {instrument}\nM: ' + tempo + '\nL: 1\nK: ' + key + '\n|'
     tempo = eval(tempo)
@@ -71,7 +69,7 @@ def createABCTranscription(notes, output,tempo,key, instrument):
     measure = []
     endline = 1
     while i < len(notes):
-        duration = getMeasureDuration(measure)
+        duration = get_measure_duration(measure)
 
         while duration < tempo and i < len(notes):
             if duration + notes[i].duration <= tempo:
@@ -99,7 +97,7 @@ def createABCTranscription(notes, output,tempo,key, instrument):
                 measure.append(note_aux)
                 i -= 1
             i += 1
-            duration = getMeasureDuration(measure)
+            duration = get_measure_duration(measure)
 
         aux = ""
         for note in measure:
@@ -111,9 +109,9 @@ def createABCTranscription(notes, output,tempo,key, instrument):
             ABCString += '\n'
         endline += 1
 
-    writeABCTranscription(ABCString,output)
+    write_ABCTranscription(ABCString, output)
 
-def createTranscriptions(midiV1Path, midiOutputPath, directory, instrumentName):
+def create_transcriptions(midiV1Path, midiOutputPath, directory, instrumentName):
 
     notes = get_notes_chords_rests(midiV1Path)
     key = "C"
@@ -121,7 +119,7 @@ def createTranscriptions(midiV1Path, midiOutputPath, directory, instrumentName):
 
     sc.insert(0, metadata.Metadata())
     sc.metadata.title = instrumentName
-    sc.metadata.composer = "Harmonics"
+    sc.metadata.composer = " "
 
     s = m21.stream.Stream()
 
@@ -144,24 +142,35 @@ def createTranscriptions(midiV1Path, midiOutputPath, directory, instrumentName):
     conv = converter.subConverters.ConverterMusicXML()
     conv.write(s, fmt='musicxml', fp=f'{pa}.xml', subformats=['pdf'])
     render_audio(midiOutputPath,directory,f'{pa}')
-    createABCTranscription(notes, midiOutputPath, "4/4", "C",instrumentName)
+    create_ABCTranscription(notes, midiOutputPath, "4/4", "C", instrumentName)
 
-def updateTranscriptions(midiPath, midi_file, ABCString = None):
+def update_transcriptions(voice, midi_file, ABCString = None):
+    midiPath = BASE_DIR + "/media/" + voice.voice_midi_directory
     destination = open(midiPath, 'wb')
     for chunk in midi_file.chunks():
         destination.write(chunk)
     destination.close()
 
+    metadata = get_metadata_from_ABCString(ABCString)
+
     pa = os.path.splitext(midiPath)[0]
-    render(midiPath,pa)
-    render_audio(pa)
+    render(midiPath,pa,metadata[0],metadata[1],metadata[2])
+    render_audio(midiPath,BASE_DIR+"/output",pa)
 
     if ABCString != None :
-        writeABCTranscription(ABCString, midiPath)
+        write_ABCTranscription(ABCString, midiPath)
 
-def writeABCTranscription(ABCString, midiPath):
+def write_ABCTranscription(ABCString, midiPath):
     pa = os.path.splitext(midiPath)[0]
     with open(f'{pa}_ABC.abc', "w") as text_file:
         text_file.write(ABCString)
 
+def get_metadata_from_ABCString(ABCString):
+    rows = ABCString.split("\n")
+    key = filter(lambda x : "K:" in x,rows)
+    str_key = next(key).split(" ")[1]
+    str_key = (str_key[:-1], "minor") if "m" in str_key else (str_key[:-1], "major")
 
+    title = filter(lambda x: "T:" in x, rows)
+    tempo = filter(lambda x: "M:" in x,rows)
+    return (str_key, next(title).split(" ")[1],next(tempo).split(" ")[1])

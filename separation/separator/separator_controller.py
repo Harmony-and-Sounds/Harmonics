@@ -49,7 +49,7 @@ def createSeparation(filename,project):
     for voice in voices:
         instrument = voice.instrument
         audio_to_midi_melodia(infile=f'{userPath}/{instrument}/{instrument}.mp3',outfile=f'{path}/{instrument}_midi.mid',bpm=60)
-        transcriptor.createTranscriptions(f'{path}/{instrument}_midi.mid', f'{userPath}/{instrument}/{instrument}_midi.mid', path, instrument)
+        transcriptor.create_transcriptions(f'{path}/{instrument}_midi.mid', f'{userPath}/{instrument}/{instrument}_midi.mid', path, instrument)
 
         voice.voice_midi_audio_directory = f'/{project.user.user.username}/{project.name}/{instrument}/{instrument}_midi_audio.mp3'
         voice.voice_sheet_directory = f'/{project.user.user.username}/{project.name}/{instrument}/{instrument}_midi.pdf'

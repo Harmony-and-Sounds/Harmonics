@@ -17,7 +17,7 @@ from django.db.models import Q
 import shutil
 from zipfile import ZipFile
 import os
-from separation.separator.musicTranscription.transcriptor import updateTranscriptions
+from separation.separator.musicTranscription.transcriptor import update_transcriptions
 
 class ProjectRestController (ViewSet):
     queryset = ''
@@ -99,7 +99,7 @@ class ProjectRestController (ViewSet):
 
     @action(methods=['GET'], url_path='user', detail= False)
     def get_user_projects(self,request):
-        projects = Project.objects.filter(user__user = request.user)
+        projects = Project.objects.filter(user__user = request.user,active = True)
         ser = ProjectSerializer(projects, many= True)
         return Response(ser.data, status.HTTP_200_OK)
 
@@ -166,23 +166,23 @@ class ProjectRestController (ViewSet):
     def update_midi(self, request, voiceId):
 
         voice = Voice.objects.get(id = voiceId)
-        directory = BASE_DIR + "/media/" + voice.voice_midi_directory
+
         midi = request.FILES['file']
         ABCString = request.data['ABCString']
-        updateTranscriptions(directory,midi,ABCString)
+        update_transcriptions(voice, midi, ABCString)
 
         return Response("voz editada", status.HTTP_200_OK)
 
     def list(self, request):
         voiceParams = request.query_params.get('keyVoices',None)
         keyWord = request.query_params.get('keyWord', None)
-        query = Q()
+        query = Q(project_active = True)
         l = None
         if voiceParams != None:
             l = list(request.query_params['keyVoices'].split(","))
-            query |= Q(instrument__in = l)
+            query &= Q(instrument__in = l)
         if keyWord != None :
-            query |= Q(project__name__icontains = keyWord)
+            query &= Q(project__name__icontains = keyWord)
 
         voices  = Voice.objects.filter(query).select_related("project").distinct()
 

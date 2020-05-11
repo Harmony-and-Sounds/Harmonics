@@ -2,18 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="96b89b84-6e21-4cf8-8461-736d1a58a9d4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/functions/blstm.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/functions/blstm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/functions/unet.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/functions/unet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/provider/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/model/provider/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/configuration.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/configuration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/estimator.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/estimator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/logging.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/logging.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/tensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/sourceSeparation/utils/tensor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/musicTranscription/render.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/musicTranscription/render.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/musicTranscription/transcriptor.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/musicTranscription/transcriptor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/separation/separator/separator_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/separation/separator/separator_controller.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,10 +68,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="com.intellij.history.integration.ui.views.FileHistoryDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1587443822048" />
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1588977531320">
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1589149564764">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1588977531320" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1589149564764" />
     <state x="641" y="264" width="704" height="576" key="find.popup" timestamp="1588981434750">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

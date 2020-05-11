@@ -15,11 +15,23 @@ us['musescoreDirectPNGPath'] = '/usr/bin/musescore'
 us['musicxmlPath'] = '/usr/bin/musescore'
 us['lilypondPath'] = '/usr/bin/lilypond'
 
-def render(path, out_path):
+def render(path, out_path,key,title,tempo):
     midi = converter.parse(path)
+    sc = m21.stream.Score()
+    sc.insert(0, metadata.Metadata())
+    sc.metadata.title = title
+    sc.metadata.composer = " "
+    s = m21.stream.Stream()
+    s.append(m21.key.Key(key[0],key[1]))
+    s.append(m21.meter.TimeSignature(tempo))
+    s.append(list(filter(lambda x: isinstance(x, note.Note) or isinstance(x, note.Rest) ,midi.parts[0].elements)))
+
+    sc.insert(1,s)
+    # s.quarterLength = 1
+
     conv = converter.subConverters.ConverterMusicXML()
 
-    conv.write(midi, fmt='musicxml', fp=f'{out_path}.xml', subformats=['pdf'])
+    conv.write(s, fmt='musicxml', fp=f'{out_path}.xml', subformats=['pdf'])
 
 
 def render_audio(path,auxiliarDirectory ,out_path):
@@ -30,4 +42,5 @@ def render_audio(path,auxiliarDirectory ,out_path):
     sr, signal = read(f'{auxiliarDirectory}/aux_audio.wav')
     x = signal[:, 0]
     write(f'{out_path}_audio.mp3', sr, x, 'mp3')
+    os.remove(f'{auxiliarDirectory}/aux_audio.wav')
 
