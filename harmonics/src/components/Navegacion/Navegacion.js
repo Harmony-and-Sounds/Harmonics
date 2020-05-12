@@ -124,7 +124,7 @@ function Navegacion(){
                         ) : (
                             <div>
                                 <button type="button" className="btn btn-light colorPersona" onClick={() => {history.push("/login")}}>
-                                   <p><img className="persona" src={persona} alt="persona" align="middle"/> Iniciar sesion</p>
+                                   <p><img className="persona" src={persona} alt="persona" align="middle"/> Iniciar sesión</p>
                                 </button>
                                 <div className="dropdown-menu">
                                     <Link to="/login">

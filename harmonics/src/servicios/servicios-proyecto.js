@@ -103,6 +103,32 @@ export async function getPartituraABC (token, idVoz){
     }
 }
 
+export async function descargarVoz (idVoz) {
+
+    try {
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/download', {
+            method: 'GET',
+            //headers: { 'Authorization': 'Bearer '+token}
+        })
+
+        if (response.ok) {
+
+          let blob = await response.blob();
+          blob.name = "proyZip";
+          //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
+          var url = window.URL.createObjectURL(blob);
+
+          return {data:url , bandera: true}
+        }
+        else {
+            let json = await response.json();
+            return {bandera: false}
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function descargarProyecto (idProyecto) {
 
     try {
