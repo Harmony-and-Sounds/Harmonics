@@ -127,6 +127,7 @@ class Search extends React.Component {
 		var voices = 'vocals,piano,drums,bass,other';
 		if ( ! query && tags.length == 0 ) {
 			this.setState( { query, tags:[] ,results: {}, message: '', totalPages: 0, totalResults: 0 } );
+      this.fetchSearchResults( 1,'');
 		}
 		 else {
 			if (! query) {
@@ -229,26 +230,31 @@ class Search extends React.Component {
 			{/*	Loader*/}
 			<img src={ Loader } className={`search-loading ${ loading ? 'show' : 'hide' }`} alt="loader"/>
 
-			{/*Navigation*/}
+			{/*Navigation
 			<Paginacion
 				loading={loading}
 				showPrevLink={showPrevLink}
 				showNextLink={showNextLink}
 				handlePrevClick={ () => this.handlePageClick('prev' )}
 				handleNextClick={ () => this.handlePageClick('next' )}
-			/>
+			/>*/}
 
 			{/*	Result*/}
+
+      <br/>
+      <br/>
+      <br/>
+
 			{ this.renderSearchResults() }
 
-			{/*Navigation*/}
+			{/*Navigation
 			<Paginacion
 				loading={loading}
 				showPrevLink={showPrevLink}
 				showNextLink={showNextLink}
 				handlePrevClick={ () => this.handlePageClick('prev')}
 				handleNextClick={ () => this.handlePageClick('next')}
-			/>
+			/>*/}
 
 			</div>
 		)
