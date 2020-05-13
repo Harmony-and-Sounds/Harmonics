@@ -62,7 +62,6 @@ function EditorPartitura(props) {
   const [alteracion, setAlteracion] = useState(' ');
   const [duracion, setDuracion] = useState('');
   const [notaInicio, setNotaInicio] = useState(null);
-  const [notaFinal, setNotaFinal] = useState(null);
   const [editar, setEditar] = useState('');
   const [mostrarEditar, setMostrarEditar] = useState(false);
   const [mostrar, setMostrar] = useState(false);
@@ -119,7 +118,6 @@ function EditorPartitura(props) {
     //responsive: "resize",
   };
 
-
   useEffect(() => {
     if (location.state === undefined){
       alert('Error cargando la partitura');
@@ -128,14 +126,15 @@ function EditorPartitura(props) {
     else{
       getABC();
     }
+  // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    let mAyuda = (localStorage.getItem('ayudaEditar') == 'true');
+  useEffect(() => {  
     if (partitura !== ''){
       extraerEncabezado();
       renderizarReproductor();
     }
+  // eslint-disable-next-line
   }, [partitura]);
 
   function getABC () {
@@ -296,7 +295,7 @@ function EditorPartitura(props) {
     })
   }
 
-  function clickNota(abcElem,tuneNumber,classes) {
+  function clickNota(abcElem) {
     if (!ligar && abcElem.el_type === "note"){
       setMostrarMenu(true);
       setMostrar(false);
@@ -304,7 +303,6 @@ function EditorPartitura(props) {
       //console.log(abcElem);
       if (abcElem.el_type === "note" && abcElem.pitches !== undefined){
         setNotaInicio(abcElem.startChar);
-        setNotaFinal(abcElem.endChar);
         let n = partitura.slice(abcElem.startChar, abcElem.endChar)
         //let n = obtener(abcElem.startChar);
         setEditar( compas + longitudNotas + key + cleff + n );
@@ -330,7 +328,6 @@ function EditorPartitura(props) {
       }
       else{
         setNotaInicio(abcElem.startChar);
-        setNotaFinal(abcElem.endChar);
         //console.log(abcElem.startChar);
         //console.log(abcElem.endChar);
         let n = partitura.slice(abcElem.startChar, abcElem.endChar)
@@ -360,11 +357,13 @@ function EditorPartitura(props) {
               handler.tieNotes(primero, segundo);
               let partituraSinEncabezadoModificada = handler.getScore();
               setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
+              console.log(partituraSinEncabezadoModificada);
             }
             if (segundo < primero){
               handler.tieNotes(segundo, primero);
               let partituraSinEncabezadoModificada = handler.getScore();
               setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
+              console.log(partituraSinEncabezadoModificada);
             }
           }
           if (accion === 'Eliminar'){
@@ -387,11 +386,9 @@ function EditorPartitura(props) {
           setAlteracion(' ');
           setDuracion('');
           setNotaInicio(null);
-          setNotaFinal(null);
           setEditar('');
           setTipoNotaBase('');
           setMostrarEditar(false);
-
         }
         else{
           alert('Seleccione una nota distinta a la propia');
@@ -547,7 +544,6 @@ function EditorPartitura(props) {
     setAlteracion(' ');
     setDuracion('');
     setNotaInicio(null);
-    setNotaFinal(null);
     setEditar('');
     setTipoNotaBase('');
     setMostrar(false);
@@ -568,7 +564,6 @@ function EditorPartitura(props) {
     setAlteracion(' ');
     setDuracion('');
     setNotaInicio(null);
-    setNotaFinal(null);
     setEditar('');
     setTipoNotaBase('');
     setMostrarEliminar(false);
@@ -717,7 +712,6 @@ function EditorPartitura(props) {
     setAlteracion(' ');
     setDuracion('');
     setNotaInicio(null);
-    setNotaFinal(null);
     setEditar('');
     setTipoNotaBase('');
     setNotaSimpleAgregarPos(0);
@@ -919,11 +913,11 @@ function EditorPartitura(props) {
                     </div>
                     <div className="col align-self-center">
                       <Dropdown
-                        placeholder='Ingrese la duracion de la nota ...'
+                        placeholder='Ingrese la duración ...'
                         fluid
                         selection
                         options={Constantes.Duraciones}
-                        defaultValue={duracion}
+                        defaultValue={(Constantes.Duraciones.find(obj => { return obj.value === duracion }) !== undefined) ? duracion : null}
                         onChange={(e, data) => editarDuracion(data.value)}
                       />
                     </div>
@@ -960,11 +954,11 @@ function EditorPartitura(props) {
                       </div>
                       <div className="col align-self-center">
                         <Dropdown
-                          placeholder='Ingrese la duracion del silencio ...'
+                          placeholder='Ingrese la duración del silencio ...'
                           fluid
                           selections='true'
                           options={Constantes.DuracionesSilencios}
-                          defaultValue={duracion}
+                          defaultValue={(Constantes.DuracionesSilencios.find(obj => { return obj.value === duracion }) !== undefined) ? duracion : null}
                           onChange={(e, data) => editarDuracion(data.value)}
                         />
                       </div>
@@ -1075,7 +1069,7 @@ function EditorPartitura(props) {
                       <div className="col">
                       </div>
                       <div className="col align-self-center">
-                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEliminar(true); setMostrarMenu(false)}}>Eliminar Nota</button>
+                        <button className="btn btn-secondary btn-lg btn-block" onClick={(e) => {setMostrarEliminar(true); setMostrarMenu(false)}}>Eliminar Silencio</button>
                       </div>
                       <div className="col">
                       </div>
@@ -1178,11 +1172,11 @@ function EditorPartitura(props) {
                     </div>
                     <div className="col align-self-center">
                       <Dropdown
-                        placeholder='Ingrese la duracion de la nota ...'
+                        placeholder='Ingrese la duración de la nota ...'
                         fluid
                         selection
                         options={Constantes.Duraciones}
-                        defaultValue={duracionAgregar}
+                        defaultValue={(Constantes.Duraciones.find(obj => { return obj.value === duracionAgregar }) !== undefined) ? duracionAgregar : null}
                         onChange={(e, data) => editarDuracionAgregar(data.value)}
                       />
                     </div>
@@ -1225,11 +1219,11 @@ function EditorPartitura(props) {
                       </div>
                       <div className="col align-self-center">
                       <Dropdown
-                          placeholder='Ingrese la duracion del silencio ...'
+                          placeholder='Ingrese la duración del silencio ...'
                           fluid
                           selection
                           options={Constantes.DuracionesSilencios}
-                          defaultValue={duracionAgregar}
+                          defaultValue={(Constantes.DuracionesSilencios.find(obj => { return obj.value === duracionAgregar }) !== undefined) ? duracionAgregar : null}
                           onChange={(e, data) => editarDuracionAgregar(data.value)}
                         />
                       </div>

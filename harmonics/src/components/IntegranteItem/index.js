@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from "react-router-dom"
 import "./IntegranteItem.css"
 import gitLogo from "../../recursos/gitlogo.png"
 import emailLogo from "../../recursos/EmailIcon.png"

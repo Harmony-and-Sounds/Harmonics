@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Link, useHistory} from 'react-router-dom'
 import './Navegacion.css';
-import {logout} from '../../servicios/servicios-sesion'
 import {getInfoUsuario,borrarNotificaciones} from '../../servicios/servicio-usuario'
 import logo from '../../recursos/logo_horizontal_blanco.png'
 import persona from '../../recursos/icono_usuario_miniatura.png'
@@ -55,7 +54,7 @@ function Navegacion(){
       }
     }
 
-
+    // eslint-disable-next-line
     function solicitarNotificaciones () {
         if (token !== ""){
             getInfoUsuario(token).then( respuesta => {

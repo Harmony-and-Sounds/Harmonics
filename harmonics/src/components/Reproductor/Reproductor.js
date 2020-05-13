@@ -43,6 +43,7 @@ function Reproductor(props) {
     useEffect(() => {
         getMidi();
         getVozSeparada();
+        // eslint-disable-next-line
     },[]);
 
 

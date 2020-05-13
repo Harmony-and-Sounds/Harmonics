@@ -89,7 +89,7 @@ function Empezar(props) {
   }, []);
 
   const {acceptedFiles, getRootProps, getInputProps,  isDragActive, isDragAccept, isDragReject} = useDropzone({
-    accept: 'audio/mpeg', //audio/mp3
+    accept: 'audio/*', //audio/mp3
     multiple: false,
     onDrop
   });
@@ -150,8 +150,8 @@ return (
         <div {...getRootProps({style})}>
           <input {...getInputProps()} />
           <p>Drag 'n' drop</p>
-          <p>La canción de musica andina que desea separar.</p>
-          <em>(Solo un archivo .mp3 sera permitido.)</em>
+          <p>La canción que desea separar.</p>
+          <em>(Solo sera permitido un archivo de sonido.)</em>
         </div>
         <aside>
           {archivo !== null && <h4>Archivos aceptados</h4>}

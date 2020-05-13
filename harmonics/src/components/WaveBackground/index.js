@@ -4,7 +4,7 @@ class WaveBackground extends Component {
 
     render(){
         return (
-                <div class="wave-background">
+                <div className="wave-background">
                 <svg id="wave" xmlns="http://www.w3.org/2000/svg" width="949" height="262" viewBox="0 0 949 262">
                   <path id="Line_1" data-name="Line 1" d="M 444.828 102.895 c -3.773 0 -6.828 3.055 -6.828 6.824 v 34.133 c 0 3.773 3.055 6.828 6.828 6.828 c 3.77 0 6.824 -3.055 6.824 -6.828 v -34.133 c 0 -3.77 -3.055 -6.824 -6.824 -6.824 z M 444.828 102.895 z"></path>
                   <path id="Line_2" data-name="Line 2" d="M 38.984 74.941 c -3.77 0 -6.828 3.059 -6.828 6.828 v 94.516 c 0 3.773 3.059 6.828 6.828 6.828 s 6.828 -3.055 6.828 -6.828 v -94.516 c 0 -3.77 -3.059 -6.828 -6.828 -6.828 z M 38.984 74.941 z"></path>

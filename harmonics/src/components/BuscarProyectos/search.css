@@ -108,3 +108,14 @@
 	background: #f1f1f1;
 	opacity: 0.5;
 }
+
+.btnBuscar{
+	margin-top: 25px;
+	background-color: #eeb20d;
+	border: none;
+	color: white;
+	padding: 7px 30px;
+	cursor: pointer;
+	font-size: 20px;
+	 border-radius: 10px;
+  }

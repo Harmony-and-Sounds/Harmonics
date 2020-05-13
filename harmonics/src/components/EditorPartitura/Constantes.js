@@ -28,9 +28,9 @@ import Fusa3Puntillos from '../../recursos/Notas-iconos/Fusa3PuntilloIcon.png';
 import Fusa2Puntillos from '../../recursos/Notas-iconos/Fusa2PuntilloIcon.png';
 import FusaPuntillo from '../../recursos/Notas-iconos/FusaPuntilloIcon.png';
 import Fusa from '../../recursos/Notas-iconos/FusaIcon.png';
-import SemiFusa4Puntillos from '../../recursos/Notas-iconos/Fusa4PuntilloIcon.png';
-import SemiFusa3Puntillos from '../../recursos/Notas-iconos/Fusa3PuntilloIcon.png';
-import SemiFusa2Puntillos from '../../recursos/Notas-iconos/Fusa2PuntilloIcon.png';
+//import SemiFusa4Puntillos from '../../recursos/Notas-iconos/Fusa4PuntilloIcon.png';
+//import SemiFusa3Puntillos from '../../recursos/Notas-iconos/Fusa3PuntilloIcon.png';
+//import SemiFusa2Puntillos from '../../recursos/Notas-iconos/Fusa2PuntilloIcon.png';
 import SemiFusaPuntillo from '../../recursos/Notas-iconos/SemiFusaPuntilloIcon.png';
 import SemiFusa from '../../recursos/Notas-iconos/SemiFusaIcon.png';
 
@@ -64,9 +64,9 @@ import SilencioFusa3Puntillos from '../../recursos/Notas-iconos/SilencioFusa3Pun
 import SilencioFusa2Puntillos from '../../recursos/Notas-iconos/SilencioFusa2PuntilloIcon.png';
 import SilencioFusaPuntillo from '../../recursos/Notas-iconos/SilencioFusaPuntilloIcon.png';
 import SilencioFusa from '../../recursos/Notas-iconos/SilencioFusaIcon.png';
-import SilencioSemiFusa4Puntillos from '../../recursos/Notas-iconos/SilencioSemiFusa4PuntilloIcon.png';
-import SilencioSemiFusa3Puntillos from '../../recursos/Notas-iconos/SilencioSemiFusa3PuntilloIcon.png';
-import SilencioSemiFusa2Puntillos from '../../recursos/Notas-iconos/SilencioSemiFusa2PuntilloIcon.png';
+//import SilencioSemiFusa4Puntillos from '../../recursos/Notas-iconos/SilencioSemiFusa4PuntilloIcon.png';
+//import SilencioSemiFusa3Puntillos from '../../recursos/Notas-iconos/SilencioSemiFusa3PuntilloIcon.png';
+//import SilencioSemiFusa2Puntillos from '../../recursos/Notas-iconos/SilencioSemiFusa2PuntilloIcon.png';
 import SilencioSemiFusaPuntillo from '../../recursos/Notas-iconos/SilencioSemiFusaPuntilloIcon.png';
 import SilencioSemiFusa from '../../recursos/Notas-iconos/SilencioSemiFusaIcon.png';
 

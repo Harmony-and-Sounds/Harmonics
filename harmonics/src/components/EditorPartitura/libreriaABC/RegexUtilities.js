@@ -6,7 +6,6 @@ let uniqueregexp = RegExp(regex,'i');
 let numregex = /([0-9]+\/[0-9]+)/gi;
 let numregexp = RegExp(numregex,'gi');
 let charregex = "(=|_|\\^)*[A-Ga-gz](,+|'+)?";
-let charregexp = RegExp(charregex,'i');
 let tieregex = /(\(|\)){1}/; 
 
 
@@ -49,7 +48,7 @@ function calculateMeasureDuration(measure){
     while ((match = numregexp.exec(measure)) !== null) {
         expresion += "+"+match[0];
     }
-    
+    // eslint-disable-next-line
     return eval(expresion);
 }
 

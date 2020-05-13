@@ -1,4 +1,4 @@
-import { getMatchingNotes, getNoteDuration, getABCPitch, getNoteTie, calculateMeasureDuration } from './RegexUtilities';
+import { getMatchingNotes, getNoteDuration, getABCPitch} from './RegexUtilities';
 import { fraction } from 'mathjs';
 
 
@@ -6,6 +6,7 @@ class ABCHandler {
     
     constructor(tempo,ABCString) {
         this.ABCString = ABCString;
+        // eslint-disable-next-line
         this.tempo = eval(tempo);
     }
 
@@ -33,8 +34,10 @@ class ABCHandler {
         let notes = [];
 
         if(after){
+            // eslint-disable-next-line
             let match = getMatchingNotes(scorePart2, true);
             //console.log(match);
+            // eslint-disable-next-line
             notes = [new Note(new String(match)),new Note(note)].concat(this.tokenize(match.length,scorePart2));
         }else{
             notes = [new Note(note)].concat(this.tokenize(0,scorePart2));
@@ -72,6 +75,7 @@ class ABCHandler {
     }
 
     setTempo (tempo){
+        // eslint-disable-next-line
         this.tempo = eval(tempo);
         //console.log("tempo: "+this.tempo);
         let notes = this.tokenize(1);
@@ -79,17 +83,22 @@ class ABCHandler {
     }
 
     tieNotes(characterIndex1, characterIndex2){
-        
-        let scorePart1 = this.ABCString.substring(0,characterIndex1)+"(";
-        let scorePart2 = this.ABCString.substring(characterIndex2);
-        let match = getMatchingNotes(scorePart2, true);
-        scorePart2 = this.ABCString.substring(characterIndex1, characterIndex2 + match.length)+")";
-        let scorePart3 = this.ABCString.substring(characterIndex2 + match.length);
-        this.ABCString = scorePart1+scorePart2+scorePart3;
+        let x = this.ABCString.substring(characterIndex1, characterIndex2); 
+        if(x.includes("(") || x.includes(")")){
+            alert("No puedes ligar dos notas cuando existen ligaduras intermedias entre ellas");
+            return ;
+        }else{
+            let scorePart1 = this.ABCString.substring(0,characterIndex1)+"(";
+            let scorePart2 = this.ABCString.substring(characterIndex2);
+            let match = getMatchingNotes(scorePart2, true);
+            scorePart2 = this.ABCString.substring(characterIndex1, characterIndex2 + match.length)+")";
+            let scorePart3 = this.ABCString.substring(characterIndex2 + match.length);
+            this.ABCString = scorePart1+scorePart2+scorePart3;
+        }
     }
 
     untieNotes(characterIndex1, characterIndex2){
-        if(this.ABCString[characterIndex1] == "("){
+        if(this.ABCString[characterIndex1] === "("){
             let scorePart1 = this.ABCString.substring(0,characterIndex1);
             let scorePart2 = this.ABCString.substring(characterIndex2);
             let match = getMatchingNotes(scorePart2, true);
@@ -110,12 +119,14 @@ class ABCHandler {
         while(i < notes.length){
             let duration  = this.getMeasureDuration(measure);
             while(duration < this.tempo && i < notes.length){
+                // eslint-disable-next-line
                 if(duration  + eval(notes[i].duration) <= this.tempo){
                     measure.push(notes[i]);
-
+                // eslint-disable-next-line
                 }else if(this.tempo-duration > 0 && duration  + eval(notes[i].duration) > this.tempo){
                     //console.log("tempo:  "+this.tempo);
                     let diff = this.tempo - duration;
+                    // eslint-disable-next-line
                     let noteDif = eval(notes[i].duration +"-"+diff);
                     let note_aux = new Note(`${notes[i].note}${notes[i].duration}`);
                     if(notes[i].rightTie === ")"){
@@ -174,6 +185,7 @@ class ABCHandler {
         });
 
         //console.log(expression);
+        // eslint-disable-next-line
         return eval(expression);
     }
 

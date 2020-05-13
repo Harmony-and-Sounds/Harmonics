@@ -1,9 +1,8 @@
-import React, {useMemo,useState,useCallback,useEffect} from 'react';
+import React from 'react';
 import './search.css';
 import Loader from './loader.gif';
 import Paginacion from '../Paginacion';
 import ProyectoItem from '../ProyectoItem';
-import Multiselect from 'react-widgets/lib/Multiselect'
 import {getProyectosBusqueda} from '../../servicios/servicios-proyecto'
 import { Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/components/reset.min.css';
@@ -69,9 +68,8 @@ class Search extends React.Component {
 
 
 		getProyectosBusqueda(query ,voices).then( respuesta => {
-			const json = respuesta;
 			var resultNotFoundMsg = '';
-			if (typeof respuesta === 'undefined' || respuesta.length == 0){
+			if (typeof respuesta === 'undefined' || respuesta.length === 0){
 					 resultNotFoundMsg = 'No se encontraron resultados. Por favor haga otra búsqueda.';
 			}
 				this.setState( {
@@ -125,8 +123,9 @@ class Search extends React.Component {
 		var query = this.state.query;
 		const tags = this.state.tags;
 		var voices = 'vocals,piano,drums,bass,other';
-		if ( ! query && tags.length == 0 ) {
+		if ( ! query && tags.length === 0 ) {
 			this.setState( { query, tags:[] ,results: {}, message: '', totalPages: 0, totalResults: 0 } );
+			this.fetchSearchResults( 1,'');
 		}
 		 else {
 			if (! query) {
@@ -197,7 +196,7 @@ class Search extends React.Component {
 	render() {
 
 
-		const { query, loading, message, currentPageNo, totalPages,tags } = this.state;
+		const { query, loading, message, currentPageNo, totalPages } = this.state;
 
 		const showPrevLink = 1 < currentPageNo;
 		const showNextLink = totalPages > currentPageNo;
@@ -208,21 +207,23 @@ class Search extends React.Component {
 				{/*	Heading*/}
 				<h2 className="headingSearch">Buscar Proyectos</h2>
 					{/* Search Input*/}
-
+						<div className="row">
 							<input
 							type="text"
 							name="query"
 							id="search-input"
-							placeholder="Search..."
+							placeholder="Buscar..."
 							value={query}
 							onChange={this.setValue}
+							className="form-control"
+							style={{height:"43px", fontStyle:"normal", fontSize:"17px", fontWeight:"400"}}
 							/>
-
-
-
-					 	<Dropdown placeholder="Seleccione los instrumentos" fluid multiple selection options={instrumentos}  onChange={(event, data) => this.setTags(data.value)}/>
-
-							<button type="submit" onClick={() => this.handleOnInputChange()} >buscar</button>
+						</div>
+						<br/>
+						<div className="row">
+							<Dropdown placeholder="Seleccione los instrumentos" fluid multiple selection options={instrumentos}  onChange={(event, data) => this.setTags(data.value)}/>
+						</div>
+						<button className="btnBuscar" type="submit" onClick={() => this.handleOnInputChange()} >Buscar</button>
 			{/*	Error Message*/}
 				{message && <p className="message">{ message }</p>}
 

@@ -53,7 +53,6 @@ class Search extends React.Component {
 		const access = sessionStorage.getItem('access');
 		//console.log(this.state.token);
 		getProyectosUsusario(access).then( respuesta => {
-			const json = respuesta;
 			const resultNotFoundMsg = ! respuesta.length
 									? 'No se encontraron resultados. Por favor haga otra búsqueda.'
 									: '';
@@ -146,7 +145,7 @@ class Search extends React.Component {
 	};
 
 	render() {
-		const { query, loading, message, currentPageNo, totalPages } = this.state;
+		const { loading, message, currentPageNo, totalPages } = this.state;
 
 		const showPrevLink = 1 < currentPageNo;
 		const showNextLink = totalPages > currentPageNo;

@@ -27,6 +27,7 @@ function VisualizadorPDF(props) {
 
     useEffect(() => {
         getPartitura();
+    // eslint-disable-next-line
       },[]);
 
   return (

@@ -10,8 +10,9 @@ export default ( props ) => {
 	      } = props;
 	return (
 		<div className="navSearch-link-container">
+			{/* eslint-disable-next-line */}
 			<a
-				href="#"
+				//href="#"
 				className={
 					`navSearch-link
 					${ showPrevLink ? 'show' : 'hide'}
@@ -22,8 +23,9 @@ export default ( props ) => {
 			>
 				Prev
 			</a>
+			{/* eslint-disable-next-line */}
 			<a
-				href="#"
+				//href="#"
 				className={
 					`navSearch-link
 					${ showNextLink ? 'show' : 'hide'}

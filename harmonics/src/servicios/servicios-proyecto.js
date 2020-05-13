@@ -121,7 +121,7 @@ export async function descargarVoz (idVoz) {
           return {data:url , bandera: true}
         }
         else {
-            let json = await response.json();
+            //let json = await response.json();
             return {bandera: false}
         }
     } catch (error) {
@@ -147,7 +147,7 @@ export async function descargarProyecto (idProyecto) {
           return {data:url , bandera: true}
         }
         else {
-            let json = await response.json();
+            //let json = await response.json();
             return {bandera: false}
         }
     } catch (error) {

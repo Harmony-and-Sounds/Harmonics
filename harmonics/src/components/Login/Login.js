@@ -17,8 +17,8 @@ function Login() {
         if (userName !== "" && password !== ""){
             login(userName,password).then(respuesta => {
                 if (respuesta.bandera === true){
-                    sessionStorage .setItem('access', respuesta.data.access);
-                    sessionStorage .setItem('refresh', respuesta.data.refresh);
+                    sessionStorage.setItem('access', respuesta.data.access);
+                    sessionStorage.setItem('refresh', respuesta.data.refresh);
                     history.push("/");
                     const ayuda = true;
                     localStorage.setItem('ayudaEditar', ayuda);
