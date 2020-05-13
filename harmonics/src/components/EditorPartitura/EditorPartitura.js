@@ -919,6 +919,7 @@ function EditorPartitura(props) {
                     </div>
                     <div className="col align-self-center">
                       <Dropdown
+                        placeholder='Ingrese la duracion de la nota ...'
                         fluid
                         selection
                         options={Constantes.Duraciones}
@@ -959,6 +960,7 @@ function EditorPartitura(props) {
                       </div>
                       <div className="col align-self-center">
                         <Dropdown
+                          placeholder='Ingrese la duracion del silencio ...'
                           fluid
                           selections='true'
                           options={Constantes.DuracionesSilencios}
@@ -1176,6 +1178,7 @@ function EditorPartitura(props) {
                     </div>
                     <div className="col align-self-center">
                       <Dropdown
+                        placeholder='Ingrese la duracion de la nota ...'
                         fluid
                         selection
                         options={Constantes.Duraciones}
@@ -1222,6 +1225,7 @@ function EditorPartitura(props) {
                       </div>
                       <div className="col align-self-center">
                       <Dropdown
+                          placeholder='Ingrese la duracion del silencio ...'
                           fluid
                           selection
                           options={Constantes.DuracionesSilencios}
