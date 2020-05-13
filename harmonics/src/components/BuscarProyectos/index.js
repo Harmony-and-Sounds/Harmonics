@@ -1,12 +1,28 @@
-import React,{useState} from 'react';
+import React, {useMemo,useState,useCallback,useEffect} from 'react';
 import './search.css';
 import Loader from './loader.gif';
 import Paginacion from '../Paginacion';
 import ProyectoItem from '../ProyectoItem';
 import Multiselect from 'react-widgets/lib/Multiselect'
 import {getProyectosBusqueda} from '../../servicios/servicios-proyecto'
+import { Dropdown } from 'semantic-ui-react'
+import 'semantic-ui-css/components/reset.min.css';
+//import 'semantic-ui-css/components/transition.min.css';
+import 'semantic-ui-css/components/dropdown.min.css';
+import 'semantic-ui-css/components/icon.min.css';
+import 'semantic-ui-css/components/label.min.css';
+import 'semantic-ui-css/components/list.min.css';
+import 'semantic-ui-css/components/menu.min.css';
+import 'semantic-ui-css/components/item.min.css';
 
-let instrumentos = ['Guitarra', 'Charango', 'Flauta', 'Bateria', 'Voz'];
+
+const instrumentos = [
+  { key: 'vocals', text: 'Voces', value: 'vocals' },
+  { key: 'piano', text: 'Piano', value: 'piano' },
+  { key: 'drums', text: 'Percuciones', value: 'drums' },
+  { key: 'bass', text: 'Bajo', value: 'bass' },
+  { key: 'other', text: 'Otros', value: 'other' },
+];
 
 class Search extends React.Component {
 
@@ -49,16 +65,17 @@ class Search extends React.Component {
 	 * @param {String} query Search Query.
 	 *
 	 */
-	fetchSearchResults = ( updatedPageNo = '', query = '', voices ='Guitarra,Charango,Flauta,Bateria,Voz', ) => {
+	fetchSearchResults = ( updatedPageNo = '', query = '', voices ='vocals,piano,drums,bass,other', ) => {
 
 
 		getProyectosBusqueda(query ,voices).then( respuesta => {
 			const json = respuesta;
-			const resultNotFoundMsg = ! respuesta.length
-									? 'There are no more search results. Please try a new search'
-									: '';
+			var resultNotFoundMsg = '';
+			if (typeof respuesta === 'undefined' || respuesta.length == 0){
+					 resultNotFoundMsg = 'No se encontraron resultados. Por favor haga otra búsqueda.';
+			}
 				this.setState( {
-					results: respuesta,
+					results: respuesta ,
 					message: resultNotFoundMsg,
 					loading: false
 				} )
@@ -107,7 +124,7 @@ class Search extends React.Component {
 	handleOnInputChange = ( event ) => {
 		var query = this.state.query;
 		const tags = this.state.tags;
-		var voices = 'Guitarra,Charango,Flauta,Bateria,Voz';
+		var voices = 'vocals,piano,drums,bass,other';
 		if ( ! query && tags.length == 0 ) {
 			this.setState( { query, tags:[] ,results: {}, message: '', totalPages: 0, totalResults: 0 } );
 		}
@@ -118,8 +135,8 @@ class Search extends React.Component {
 			if(tags.length > 0){
 				voices = tags.join(",")
 			}
-			else
-			voices= '';
+
+
 			this.setState( { query, loading: true, message: '' }, () => {
 				this.fetchSearchResults( 1, query,voices );
 			} );
@@ -149,7 +166,6 @@ class Search extends React.Component {
 	};
 	setTags = ( values ) => {
 		const tags = values;
-
 		this.setState( { tags: tags });
 	};
 
@@ -180,6 +196,7 @@ class Search extends React.Component {
 
 	render() {
 
+
 		const { query, loading, message, currentPageNo, totalPages,tags } = this.state;
 
 		const showPrevLink = 1 < currentPageNo;
@@ -187,10 +204,11 @@ class Search extends React.Component {
 
 		return (
 			<div className="containerSearch">
+			 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/components/transition.min.css" />
 				{/*	Heading*/}
 				<h2 className="headingSearch">Buscar Proyectos</h2>
 					{/* Search Input*/}
-						<label className="search-label" htmlFor="search-input">
+
 							<input
 							type="text"
 							name="query"
@@ -199,14 +217,12 @@ class Search extends React.Component {
 							value={query}
 							onChange={this.setValue}
 							/>
-							<Multiselect
-				 				data={instrumentos}
-				 				value={tags}
-				 				onChange={this.setTags}
-			 				/>
-				 	 	<button type="submit" onClick={() => this.handleOnInputChange()} >buscar</button>
-					 </label>
 
+
+
+					 	<Dropdown placeholder="Seleccione los instrumentos" fluid multiple selection options={instrumentos}  onChange={(event, data) => this.setTags(data.value)}/>
+
+							<button type="submit" onClick={() => this.handleOnInputChange()} >buscar</button>
 			{/*	Error Message*/}
 				{message && <p className="message">{ message }</p>}
 

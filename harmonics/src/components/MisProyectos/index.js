@@ -55,7 +55,7 @@ class Search extends React.Component {
 		getProyectosUsusario(access).then( respuesta => {
 			const json = respuesta;
 			const resultNotFoundMsg = ! respuesta.length
-									? 'There are no more search results. Please try a new search'
+									? 'No se encontraron resultados. Por favor haga otra búsqueda.'
 									: '';
 				this.setState( {
 					results: respuesta,
@@ -132,9 +132,10 @@ class Search extends React.Component {
 						return (
 							<ProyectoItem
 							key = {result.id}
+							id = {result.id}
 						 name = {result.name}
 						 voices = {result.voices}
-						 logueado = {logueado} 
+						 logueado = {logueado}
 						  />
 						)
 					} ) }

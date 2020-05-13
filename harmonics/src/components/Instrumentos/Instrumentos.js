@@ -6,7 +6,7 @@ import Reproductor from '../Reproductor/Reproductor';
 import VisualizadorPDF from '../VisualizadorPDF/VisualizadorPDF';
 import './Instrumentos.css';
 import { useLocation,useHistory } from "react-router-dom";
-import {descargarProyecto} from '../../servicios/servicios-proyecto'
+import {descargarProyecto,descargarVoz} from '../../servicios/servicios-proyecto'
 
 
 
@@ -19,6 +19,7 @@ function Instrumentos(props) {
   const [nomProyecto] = useState(location.state.nomProyecto);
   const [voices] = useState(location.state.voices);
   const [logueado] = useState(location.state.logueado);
+  console.log(idProyecto);
 
 
   function goToEditar (vozId){
@@ -44,7 +45,7 @@ function Instrumentos(props) {
   }
 
   function descargarProy (idProy)  {
-      descargarProyecto(idProyecto).then( respuesta => {
+      descargarProyecto(idProy).then( respuesta => {
         if (respuesta.bandera === true){
           fetch(respuesta.data, {
         mode: 'no-cors' /*{mode:'cors'}*/
@@ -62,6 +63,25 @@ function Instrumentos(props) {
       });
     }
 
+    function descargaVoz (idvoz,intrumentovoz)  {
+        descargarVoz(idvoz).then( respuesta => {
+          if (respuesta.bandera === true){
+            fetch(respuesta.data, {
+          mode: 'no-cors' /*{mode:'cors'}*/
+      }).then((transfer) => {
+          return transfer.blob();
+      }).then((bytes) => {
+          let elm = document.createElement('a');
+          elm.href = URL.createObjectURL(bytes);
+          elm.setAttribute('download', nomProyecto+"_"+intrumentovoz+".zip");
+          elm.click()
+      }).catch((error) => {
+          console.log(error);
+      })
+          }
+        });
+      }
+
 
   return (
 
@@ -74,7 +94,7 @@ function Instrumentos(props) {
               <h2>{nomProyecto}</h2>
               </div>
               <div className="col">
-                <button className="btnDescargar"  onClick={()=>descargarProy({idProyecto})}><i className="fa fa-download" ></i> Descargar proyecto</button>
+                <button className="btnDescargar"  onClick={()=>descargarProy(idProyecto)}><i className="fa fa-download" ></i> Descargar proyecto</button>
               </div>
             </div>
             <Tabs id="uncontrolled-tab-example">
@@ -86,7 +106,7 @@ function Instrumentos(props) {
                     <Reproductor idVoz={voz.id}/>
                     <VisualizadorPDF idVoz={voz.id}/>
                     <br/>
-                    <button className="btnDescargarVoz" ><i className="fa fa-download"></i> Descargar Intrumento</button>
+                    <button className="btnDescargarVoz" onClick={()=>descargaVoz(voz.id,voz.instrument)} ><i className="fa fa-download"></i> Descargar Intrumento</button>
                     {logueado && <button className="btnEditar" onClick={()=>goToEditar(voz.id)} >Editar partitura</button>}
                     <br/>
                     <br/>

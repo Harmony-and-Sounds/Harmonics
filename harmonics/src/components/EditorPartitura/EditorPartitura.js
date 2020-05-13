@@ -269,7 +269,7 @@ function EditorPartitura(props) {
     localStorage.setItem("ayudaEditar", false);
     setMostrarAyuda(false);
   }
-    
+
   function guardar (archivo) {
     const access = sessionStorage.getItem('access');
     const idVoz = location.state.idVoz;
@@ -799,7 +799,7 @@ function EditorPartitura(props) {
                     <br/>
                     <div className="row">
                       <div className="col align-self-center" align="center">
-                        <h3>Compas</h3>
+                        <h3>Compás</h3>
                       </div>
                       <div className="col-8" align="center">
                         <input type="number" className="form-control" defaultValue={numeradorEditado} min="1" onChange={e => setNumeradorEditado(e.target.value)}/>
@@ -915,7 +915,7 @@ function EditorPartitura(props) {
                       />
                     </div>
                     <div className="col align-self-center">
-                      <h3>Duracion</h3>
+                      <h3>Duración</h3>
                     </div>
                     <div className="col align-self-center">
                       <Dropdown
@@ -932,7 +932,7 @@ function EditorPartitura(props) {
                   <div className="row">
                     <div className="col align-self-center">
                       <h3 style={{margin: "0"}}>Convertir en Silencio</h3>
-                      <span style={{color: "red"}}>* Esto borrar la informacion de la nota</span>
+                      <span style={{color: "red"}}>* Esto borrará la informacion de la nota</span>
                     </div>
                     <div className="col align-self-center">
                       <button className="btn btn-primary btn-lg btn-block" onClick={e => convertirSilencio()}>Convertir</button>
@@ -956,7 +956,7 @@ function EditorPartitura(props) {
                     </div>
                     <div className="row">
                       <div className="col align-self-center">
-                        <h3>Duracion</h3>
+                        <h3>Duración</h3>
                       </div>
                       <div className="col align-self-center">
                         <Dropdown
@@ -970,7 +970,7 @@ function EditorPartitura(props) {
                       </div>
                       <div className="col align-self-center">
                         <h3 style={{margin: "0"}}>Convertir en Nota</h3>
-                        <span style={{color: "red"}}>* Esto borrar la informacion del Silencio</span>
+                        <span style={{color: "red"}}>* Esto borrará la informacion del Silencio</span>
                       </div>
                       <div className="col align-self-center">
                         <button className="btn btn-primary btn-lg btn-block" onClick={e => convertirNota()}>Convertir</button>
@@ -993,7 +993,7 @@ function EditorPartitura(props) {
 
             <Modal show={mostrarMenu} onHide={handleCloseMostrarMenu} dialogClassName="modal-50w" centered>
                 <Modal.Header className="text-center" closeButton>
-                  <h2 style={{margin: "0", paddingLeft: "32px"}} className="w-100">Menu</h2>
+                  <h2 style={{margin: "0", paddingLeft: "32px"}} className="w-100">Menú</h2>
                 </Modal.Header>
                 <Modal.Body style={{textAlign: "center"}}>
                   {tipoNotaBase === 'Nota' &&
@@ -1174,7 +1174,7 @@ function EditorPartitura(props) {
                       />
                     </div>
                     <div className="col align-self-center">
-                      <h3>Duracion</h3>
+                      <h3>Duración</h3>
                     </div>
                     <div className="col align-self-center">
                       <Dropdown
@@ -1191,7 +1191,7 @@ function EditorPartitura(props) {
                   <div className="row">
                     <div className="col align-self-center">
                       <h3 style={{margin: "0"}}>Convertir en Silencio</h3>
-                      <span style={{color: "red"}}>* Esto borrar la informacion de la nota</span>
+                      <span style={{color: "red"}}>* Esto borrará la informacion de la nota</span>
                     </div>
                     <div className="col align-self-center">
                       <button className="btn btn-primary btn-lg btn-block" onClick={e => convertirSilencioAgregar()}>Convertir</button>
@@ -1221,7 +1221,7 @@ function EditorPartitura(props) {
                     </div>
                     <div className="row">
                       <div className="col align-self-center">
-                        <h3>Duracion</h3>
+                        <h3>Duración</h3>
                       </div>
                       <div className="col align-self-center">
                       <Dropdown
@@ -1235,7 +1235,7 @@ function EditorPartitura(props) {
                       </div>
                       <div className="col align-self-center">
                         <h3 style={{margin: "0"}}>Convertir en Nota</h3>
-                        <span style={{color: "red"}}>* Esto borrar la informacion del Silencio</span>
+                        <span style={{color: "red"}}>* Esto borrará la informacion del Silencio</span>
                       </div>
                       <div className="col align-self-center">
                         <button className="btn btn-primary btn-lg btn-block" onClick={e => convertirNotaAgregar()}>Convertir</button>
