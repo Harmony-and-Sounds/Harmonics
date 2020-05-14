@@ -223,6 +223,9 @@ class Note {
     }
 
     getABCNote(){
+        if(this.note === "z"){
+            return this.note+this.duration;
+        }
         return this.leftTie+this.note+this.duration+this.rightTie;
     }
 }
