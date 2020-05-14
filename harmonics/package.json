@@ -1,6 +1,7 @@
 {
   "name": "harmonics",
   "version": "0.1.0",
+  "homepage": "http://10.39.1.124:8000",
   "private": true,
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.1.9",
