@@ -19,4 +19,6 @@ class Note:
     def __str__(self):
         pitch_aux = self.get_pitch() if self.pitch != "z" else "z"
         strdur = "{}/{}".format(self.frac_duration.numerator, self.frac_duration.denominator)
+        if self.pitch == "z":
+            return f'{pitch_aux}{strdur}'
         return f'{self.left_tie}{pitch_aux}{strdur}{self.right_tie}'

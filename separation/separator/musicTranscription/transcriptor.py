@@ -21,7 +21,7 @@ us['lilypondPath'] = '/usr/bin/lilypond'
 
 def get_duration(duration):
     offres = 0
-    if duration < 1 / 64:
+    if duration < 1 / 128:
         return -1
     if duration >= 1:
         offres = int(duration / 4)
@@ -30,7 +30,7 @@ def get_duration(duration):
     res = 0
     error = 1000
     if duration > 0:
-        for i in [2, 4, 8, 16, 32, 64]:
+        for i in [2, 4, 8, 16, 32, 64,128]:
             for j in range(1, i + 1):
                 if abs(j / i - duration) < error:
                     error = abs(j / i - duration)
@@ -142,7 +142,7 @@ def create_transcriptions(midiV1Path, midiOutputPath, directory, instrumentName)
     conv = converter.subConverters.ConverterMusicXML()
     conv.write(s, fmt='musicxml', fp=f'{pa}.xml', subformats=['pdf'])
     render_audio(midiOutputPath,directory,f'{pa}')
-    create_ABCTranscription(notes, midiOutputPath, "4/4", "C", instrumentName)
+    create_ABCTranscription(notes, midiOutputPath, "4/4", "C treble", instrumentName)
 
 def update_transcriptions(voice, midi_file, ABCString = None):
     midiPath = BASE_DIR + "/media/" + voice.voice_midi_directory
@@ -168,9 +168,11 @@ def write_ABCTranscription(ABCString, midiPath):
 def get_metadata_from_ABCString(ABCString):
     rows = ABCString.split("\n")
     key = filter(lambda x : "K:" in x,rows)
-    str_key = next(key).split(" ")[1]
-    str_key = (str_key[:-1], "minor") if "m" in str_key else (str_key[:-1], "major")
-
+    str_key = next(key).split(" ")
+    print(str_key)
+    clef = str_key[2]
+    str_key = (str_key[1][:-1], "minor", clef) if "m" in str_key[1] else (str_key[1], "major",clef)
+    print(str_key[0],str_key[1])
     title = filter(lambda x: "T:" in x, rows)
     tempo = filter(lambda x: "M:" in x,rows)
-    return (str_key, next(title).split(" ")[1],next(tempo).split(" ")[1])
+    return (str_key, next(title)[2:],next(tempo).split(" ")[1])

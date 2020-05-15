@@ -22,17 +22,31 @@ def render(path, out_path,key,title,tempo):
     sc.metadata.title = title
     sc.metadata.composer = " "
     s = m21.stream.Stream()
+    s.append(get_clef(key[2]))
     s.append(m21.key.Key(key[0],key[1]))
     s.append(m21.meter.TimeSignature(tempo))
     s.append(list(filter(lambda x: isinstance(x, note.Note) or isinstance(x, note.Rest) ,midi.parts[0].elements)))
 
     sc.insert(1,s)
-    # s.quarterLength = 1
 
     conv = converter.subConverters.ConverterMusicXML()
 
     conv.write(s, fmt='musicxml', fp=f'{out_path}.xml', subformats=['pdf'])
 
+def get_clef(type):
+    if type == "treble":
+        return m21.clef.TrebleClef()
+    elif type == "bass":
+        return m21.clef.BassClef()
+    elif type == "bass3":
+        return m21.clef.FBaritoneClef()
+    elif type == "alto":
+        return m21.clef.CClef()
+    elif type == "alto2":
+        return m21.clef.MezzoSopranoClef()
+    elif type == "alto1" :
+        return m21.clef.SopranoClef()
+    return m21.clef.TrebleClef()
 
 def render_audio(path,auxiliarDirectory ,out_path):
 

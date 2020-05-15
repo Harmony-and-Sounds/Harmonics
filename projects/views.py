@@ -176,7 +176,7 @@ class ProjectRestController (ViewSet):
     def list(self, request):
         voiceParams = request.query_params.get('keyVoices',None)
         keyWord = request.query_params.get('keyWord', None)
-        query = Q(project_active = True)
+        query = Q(project__active = True)
         l = None
         if voiceParams != None:
             l = list(request.query_params['keyVoices'].split(","))
