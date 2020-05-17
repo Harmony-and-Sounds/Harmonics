@@ -4,7 +4,7 @@ import music21 as m21
 from midi2audio import FluidSynth
 from scipy.io.wavfile import read
 from ..init import write
-
+from harmonicsServer.settings import FLUIDSYNTH_FONTS
 us = m21.environment.UserSettings()
 us_path = us.getSettingsPath()
 if not os.path.exists(us_path):
@@ -15,7 +15,7 @@ us['musescoreDirectPNGPath'] = '/usr/bin/musescore'
 us['musicxmlPath'] = '/usr/bin/musescore'
 us['lilypondPath'] = '/usr/bin/lilypond'
 
-def render(path, out_path,key,title,tempo):
+def render(path, out_path,key,title,tempo, notes):
     midi = converter.parse(path)
     sc = m21.stream.Score()
     sc.insert(0, metadata.Metadata())
@@ -25,10 +25,12 @@ def render(path, out_path,key,title,tempo):
     s.append(get_clef(key[2]))
     s.append(m21.key.Key(key[0],key[1]))
     s.append(m21.meter.TimeSignature(tempo))
-    s.append(list(filter(lambda x: isinstance(x, note.Note) or isinstance(x, note.Rest) ,midi.parts[0].elements)))
+    for note in notes:
+        s.append(note)
 
     sc.insert(1,s)
 
+    s.write('midi', fp=path)
     conv = converter.subConverters.ConverterMusicXML()
 
     conv.write(s, fmt='musicxml', fp=f'{out_path}.xml', subformats=['pdf'])
@@ -50,7 +52,7 @@ def get_clef(type):
 
 def render_audio(path,auxiliarDirectory ,out_path):
 
-    fs = FluidSynth('/usr/share/fluidr3mono-gm-soundfont/FluidR3Mono_GM.sf3')
+    fs = FluidSynth(FLUIDSYNTH_FONTS)
     fs.midi_to_audio(path, f'{auxiliarDirectory}/aux_audio.wav')
 
     sr, signal = read(f'{auxiliarDirectory}/aux_audio.wav')

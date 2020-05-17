@@ -3,9 +3,8 @@ import os
 import music21 as m21
 from midi2audio import FluidSynth
 from harmonicsServer.settings import BASE_DIR
-from ..init import write
-from scipy.io.wavfile import read
-from .note import Note
+import re
+from .note import Note,notem21_from_ABCstring
 from fractions import Fraction
 from .render import render_audio, render
 us = m21.environment.UserSettings()
@@ -19,65 +18,84 @@ us['musescoreDirectPNGPath'] = '/usr/bin/musescore'
 us['musicxmlPath'] = '/usr/bin/musescore'
 us['lilypondPath'] = '/usr/bin/lilypond'
 
+
 def get_duration(duration):
     offres = 0
-    if duration < 1 / 128:
-        return -1
+    if duration < 1 / 64:
+        return None
+
     if duration >= 1:
         offres = int(duration / 4)
         duration = (duration % 4) / 4
 
     res = 0
     error = 1000
+    fraction = "4/4"
     if duration > 0:
-        for i in [2, 4, 8, 16, 32, 64,128]:
+        for i in [2, 4, 8, 16, 32, 64]:
             for j in range(1, i + 1):
                 if abs(j / i - duration) < error:
                     error = abs(j / i - duration)
                     res = j / i
-    return offres + res
+                    fraction = [j, i]
+    return (offres + res, fraction)
 
-def get_measure_duration(measure):
-    duration = 0
 
-    for note in measure:
-        duration += note.duration
+def subdivide_duration(duration):
+    if duration[1] == 1:
+        return [Fraction(1, 1)]
 
-    return duration
+    left = duration[0]
+    fractions = []
+    while left > 1:
+        dur = divide([left, duration[1]])
+        fractions.append(Fraction(dur[0], dur[1]))
+        left -= dur[0]
+    if left > 0:
+        fractions.append(Fraction(left, duration[1]))
+    return fractions
+
+
+def divide(duration):
+    cont = 0
+    while duration[1] % (duration[0] - cont) != 0 and (duration[0] - cont) > 1:
+        cont += 1
+
+    return [duration[0] - cont, duration[1]]
+
 
 def get_notes_chords_rests(path):
     midi = converter.parse(path)
 
+    key = ''
     note_list = []
 
     for element_by_offset in stream.iterator.OffsetIterator(midi.parts[0]):
         for entry in element_by_offset:
             duration = get_duration(float(entry.duration.quarterLength))
-            if duration != -1:
+
+            if duration != None:
+                dur = duration[0]
+                sub = Fraction(duration[1][0], duration[1][1])
                 if isinstance(entry, note.Note):
-                    note_list.append(Note(str(entry.pitch), duration, Fraction(duration), "", ""))
+                    note_list.append(Note(str(entry.pitch), dur, sub, "", ""))
                 elif isinstance(entry, note.Rest):
-                    note_list.append(Note('z', duration, Fraction(duration), "", ""))
+                    note_list.append(Note('z', dur, sub, "", ""))
 
     return note_list
 
-def create_ABCTranscription(notes, output, tempo, key, instrument):
 
-    ABCString = f'T: {instrument}\nM: ' + tempo + '\nL: 1\nK: ' + key + '\n|'
+def create_measures(notes, tempo):
+    measures = []
+    current_measure = []
     tempo = eval(tempo)
-    i = 0;
-    measure = []
-    endline = 1
+    i = 0
     while i < len(notes):
-        duration = get_measure_duration(measure)
-
+        duration = get_measure_duration(current_measure)
         while duration < tempo and i < len(notes):
             if duration + notes[i].duration <= tempo:
-
-                measure.append(notes[i])
-
+                current_measure.append(notes[i])
             elif tempo - duration > 0 and duration + notes[i].duration > tempo:
-
                 diff = tempo - duration
                 noteDif = notes[i].duration - diff
                 note_aux = Note(notes[i].pitch, diff, Fraction(diff), "", "")
@@ -90,31 +108,65 @@ def create_ABCTranscription(notes, output, tempo, key, instrument):
                     note_aux.left_tie = "("
                     notes[i].right_tie = ")"
 
-                # note_aux.duration = diff
                 notes[i].duration = noteDif
                 notes[i].frac_duration = Fraction(noteDif)
-
-                measure.append(note_aux)
+                current_measure.append(note_aux)
                 i -= 1
             i += 1
-            duration = get_measure_duration(measure)
+            duration = get_measure_duration(current_measure)
 
-        aux = ""
+        measures.append(current_measure)
+        current_measure = []
+    return measures
+
+
+def fix__notes_durations_in_measures(measures):
+    fixed_measures = []
+    for measure in measures:
+        fixed_measure = []
         for note in measure:
-            aux += note.__str__()
 
-        ABCString += aux + "|"
-        measure = []
-        if endline % 5 == 0 :
-            ABCString += '\n'
-        endline += 1
+            durations = subdivide_duration([note.frac_duration.numerator, note.frac_duration.denominator])
+            if len(durations) == 1:
+                fixed_measure.append(note)
+            else:
+                for duration in durations:
+                    fixed_measure.append(Note(note.pitch, duration, Fraction(duration), "", ""))
+                if note.left_tie == "(":
+                    fixed_measure[-len(durations)].left_tie = "("
+                if note.right_tie == ")":
+                    fixed_measure[-1].right_tie = ")"
+        fixed_measures.append(fixed_measure)
+    return fixed_measures
+
+
+def create_ABCTranscription(measures, output, tempo, key, instrument):
+    ABCString = f'T: {instrument}\nM: {tempo}\nL: 1\nK: {key}\n|'
+    i = 1;
+
+    for measure in measures:
+        for note in measure:
+            ABCString += note.__str__()
+        ABCString += "|"
+        if i % 5 == 0:
+            ABCString += "\n|"
+        i += 1
 
     write_ABCTranscription(ABCString, output)
+
+def get_measure_duration(measure):
+    duration = 0
+
+    for note in measure:
+        duration += note.duration
+
+    return duration
 
 def create_transcriptions(midiV1Path, midiOutputPath, directory, instrumentName):
 
     notes = get_notes_chords_rests(midiV1Path)
-    key = "C"
+    measures = create_measures(notes, "4/4")
+    measures = fix__notes_durations_in_measures(measures)
     sc = m21.stream.Score()
 
     sc.insert(0, metadata.Metadata())
@@ -123,15 +175,15 @@ def create_transcriptions(midiV1Path, midiOutputPath, directory, instrumentName)
 
     s = m21.stream.Stream()
 
-    # s.quarterLength = 1
     s.append(m21.key.Key('C'))
     s.append(m21.meter.TimeSignature('4/4'))
 
-    for note in notes:
-        if (note.pitch == 'z'):
-            s.append(m21.note.Rest(quarterLength=4 * note.duration))
-        else:
-            s.append(m21.note.Note(note.pitch, quarterLength=4 * note.duration))
+    for measure in measures:
+        for note in measure:
+            if (note.pitch == 'z'):
+                s.append(m21.note.Rest(quarterLength=4 * note.duration))
+            else:
+                s.append(m21.note.Note(note.pitch, quarterLength=4 * note.duration))
 
 
     sc.insert(1, s)
@@ -142,19 +194,15 @@ def create_transcriptions(midiV1Path, midiOutputPath, directory, instrumentName)
     conv = converter.subConverters.ConverterMusicXML()
     conv.write(s, fmt='musicxml', fp=f'{pa}.xml', subformats=['pdf'])
     render_audio(midiOutputPath,directory,f'{pa}')
-    create_ABCTranscription(notes, midiOutputPath, "4/4", "C treble", instrumentName)
+    create_ABCTranscription(measures, midiOutputPath, "4/4", "C treble", instrumentName)
 
-def update_transcriptions(voice, midi_file, ABCString = None):
+def update_transcriptions(voice, ABCString = None):
     midiPath = BASE_DIR + "/media/" + voice.voice_midi_directory
-    destination = open(midiPath, 'wb')
-    for chunk in midi_file.chunks():
-        destination.write(chunk)
-    destination.close()
 
     metadata = get_metadata_from_ABCString(ABCString)
-
+    notes = get_notes(ABCString)
     pa = os.path.splitext(midiPath)[0]
-    render(midiPath,pa,metadata[0],metadata[1],metadata[2])
+    render(midiPath,pa,metadata[0],metadata[1],metadata[2],notes)
     render_audio(midiPath,BASE_DIR+"/output",pa)
 
     if ABCString != None :
@@ -176,3 +224,10 @@ def get_metadata_from_ABCString(ABCString):
     title = filter(lambda x: "T:" in x, rows)
     tempo = filter(lambda x: "M:" in x,rows)
     return (str_key, next(title)[2:],next(tempo).split(" ")[1])
+
+def get_notes(ABCString):
+    p = re.compile(r"(\()?(\^|_|=)*[A-Gz](,+|'+)?([0-9]*/?[0-9]+)?(\))?")
+    notes = [x.group(0) for x in p.finditer(ABCString)]
+    m21_notes =  [notem21_from_ABCstring(note) for note in notes[1:] ]
+    return m21_notes
+

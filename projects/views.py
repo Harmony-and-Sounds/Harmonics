@@ -167,9 +167,9 @@ class ProjectRestController (ViewSet):
 
         voice = Voice.objects.get(id = voiceId)
 
-        midi = request.FILES['file']
+
         ABCString = request.data['ABCString']
-        update_transcriptions(voice, midi, ABCString)
+        update_transcriptions(voice, ABCString)
 
         return Response("voz editada", status.HTTP_200_OK)
 

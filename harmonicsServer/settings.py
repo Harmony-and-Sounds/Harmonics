@@ -162,3 +162,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SERVER = False
+FLUIDSYNTH_FONTS = "" if  SERVER else '/usr/share/fluidr3mono-gm-soundfont/FluidR3Mono_GM.sf3'
