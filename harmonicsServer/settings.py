@@ -165,3 +165,9 @@ STATIC_URL = '/static/'
 
 SERVER = False
 FLUIDSYNTH_FONTS = "" if  SERVER else '/usr/share/fluidr3mono-gm-soundfont/FluidR3Mono_GM.sf3'
+
+if not os.path.exists(BASE_DIR+"/media"):
+    os.mkdir(BASE_DIR+"/media")
+
+if not os.path.exists(BASE_DIR+"/output"):
+    os.mkdir(BASE_DIR+"/output")
