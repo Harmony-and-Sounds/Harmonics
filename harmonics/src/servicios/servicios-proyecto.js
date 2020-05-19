@@ -84,6 +84,30 @@ export async function getAudioMidi (token, idVoz){
     }
 }
 
+export async function getAudioMidiNoLogin (idVoz){
+
+    try {
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/audio', {
+            method: 'GET',
+            headers: {}
+        })
+
+        if (response.ok) {
+            let blob = await response.blob();
+            blob.name = "mp3Midi";
+            //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
+            var url = window.URL.createObjectURL(blob);
+            return {data:url , bandera: true}
+        }
+        else {
+            let json = await response.json();
+            return {data:json.detail , bandera: false}
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function getPartituraABC (token, idVoz){
 
     try {
@@ -204,10 +228,32 @@ export async function getPDF (token, idVoz) {
     }
 }
 
-export async function guardarPartitura (token, idVoz, archivo, partitura){
+export async function getPDFNoLogin (idVoz) {
+    try {
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/sheet/', {
+            method: 'GET',
+            headers: {}
+        })
+
+        if (response.ok) {
+            let blob = await response.blob();
+            blob.name = "pdf";
+            //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
+            var url = window.URL.createObjectURL(blob);
+            return {data:url , bandera: true}
+        }
+        else {
+            let json = await response.json();
+            return {data:json.detail , bandera: false}
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function guardarPartitura (token, idVoz, partitura){
     try {
         const form = new FormData()
-        form.append('file', archivo);
         form.append('ABCString', partitura);
         const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz+'/transcription/', {
             method: 'PUT',

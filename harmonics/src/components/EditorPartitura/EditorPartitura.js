@@ -269,10 +269,10 @@ function EditorPartitura(props) {
     setMostrarAyuda(false);
   }
 
-  function guardar (archivo) {
+  function guardar () {
     const access = sessionStorage.getItem('access');
     const idVoz = location.state.idVoz;
-    guardarPartitura (access, idVoz, archivo, partitura).then( respuesta => {
+    guardarPartitura (access, idVoz, partitura).then( respuesta => {
       if (respuesta.bandera === true){
         history.goBack();
       }
@@ -282,18 +282,6 @@ function EditorPartitura(props) {
     });
   }
 
-  function obtenerMidi(){
-    var x = document.getElementsByClassName("desaparecer");
-    let dataUri = x[0].firstChild.getAttribute("href");
-    fetch(dataUri)
-    .then(res => res.blob())
-    .then(blob => {
-      let nombre = titulo.trim();
-      var file = new File([blob], nombre);
-      guardar(file);
-      //console.log(file);
-    })
-  }
 
   function clickNota(abcElem) {
     if (!ligar && abcElem.el_type === "note"){
@@ -357,13 +345,13 @@ function EditorPartitura(props) {
               handler.tieNotes(primero, segundo);
               let partituraSinEncabezadoModificada = handler.getScore();
               setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
-              console.log(partituraSinEncabezadoModificada);
+              //console.log(partituraSinEncabezadoModificada);
             }
             if (segundo < primero){
               handler.tieNotes(segundo, primero);
               let partituraSinEncabezadoModificada = handler.getScore();
               setPartitura(partitura.substring(0, InicioNotas) + partituraSinEncabezadoModificada);
-              console.log(partituraSinEncabezadoModificada);
+              //console.log(partituraSinEncabezadoModificada);
             }
           }
           if (accion === 'Eliminar'){
@@ -734,7 +722,7 @@ function EditorPartitura(props) {
           <div className="fluid-container correcion">
             <div className="encabezado">
               <button className="btn btn-secondary" onClick={() => setMostrarEditarEncabezada(true)}>Editar Encabezado</button>
-              <button className="btn btn-success" onClick={obtenerMidi}>Guardar</button>
+              <button className="btn btn-success" onClick={guardar}>Guardar</button>
               <button className="btn btn-warning justify-content-center" onClick={() => setMostrarAyuda(true)}><i className="fas fa-question-circle"></i></button>
             </div>
             <div style={{paddingTop: "40px"}}>

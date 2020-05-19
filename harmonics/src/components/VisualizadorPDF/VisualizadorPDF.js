@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import PDFViewer from 'mgr-pdf-viewer-react';
-import {getPDF} from '../../servicios/servicios-proyecto'
+import {getPDF, getPDFNoLogin} from '../../servicios/servicios-proyecto'
 //import './Reproductor.css';
 
 function VisualizadorPDF(props) {
@@ -15,6 +15,16 @@ function VisualizadorPDF(props) {
         const access = sessionStorage.getItem('access');
         if(access !== null){
             getPDF(access, idVoz).then(respuesta => {
+                if (respuesta.bandera === true){
+                    setPdf(respuesta.data);
+                }
+                else{
+                    alert(respuesta.data);
+                }
+            });
+        }
+        else {
+            getPDFNoLogin(idVoz).then(respuesta => {
                 if (respuesta.bandera === true){
                     setPdf(respuesta.data);
                 }

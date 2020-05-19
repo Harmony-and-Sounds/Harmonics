@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import './Reproductor.css';
-import {getAudioMidi, getAudioVozSeparada} from '../../servicios/servicios-proyecto'
+import {getAudioMidi, getAudioMidiNoLogin, getAudioVozSeparada} from '../../servicios/servicios-proyecto'
 
 function Reproductor(props) {
 
@@ -16,6 +16,16 @@ function Reproductor(props) {
         const access = sessionStorage.getItem('access');
         if(access !== null){
             getAudioMidi(access, idVoz).then(respuesta => {
+                if (respuesta.bandera === true){
+                    setMidiMP3(respuesta.data);
+                }
+                else{
+                    alert(respuesta.data);
+                }
+            });
+        }
+        else{
+            getAudioMidiNoLogin(idVoz).then(respuesta => {
                 if (respuesta.bandera === true){
                     setMidiMP3(respuesta.data);
                 }
