@@ -204,6 +204,31 @@ export async function getAudioVozSeparada (token, idVoz) {
 
 }
 
+export async function getAudioVozSeparadaNoLogin (idVoz) {
+    try {
+        const response = await fetch(URL_PROYECTO+'project/voice/'+idVoz, {
+            method: 'GET',
+            headers: {}
+        })
+  
+        if (response.ok) {
+            let blob = await response.blob();
+            blob.name = "mp3Voz";
+            //var file = new File([blob], "mp3Midi.mp3", {type: "audio/mp3", lastModified: new Date()});
+            var url = window.URL.createObjectURL(blob);
+  
+            return {data:url , bandera: true}
+        }
+        else {
+            let json = await response.json();
+            return {data:json.detail , bandera: false}
+        }
+    } catch (error) {
+        console.log(error);
+    }
+  
+  }
+
 export async function getPDF (token, idVoz) {
 
     try {
