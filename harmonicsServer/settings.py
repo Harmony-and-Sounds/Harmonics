@@ -29,7 +29,7 @@ SECRET_KEY = '(yd(eiid0gmw8)0%(^dc)559o!xd7w^(emb)&+&9_^9n8yzsi-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -164,7 +164,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 SERVER = False
-FLUIDSYNTH_FONTS = "" if  SERVER else '/usr/share/fluidr3mono-gm-soundfont/FluidR3Mono_GM.sf3'
+FLUIDSYNTH_FONTS = "/usr/share/sounds/sf3/MuseScore_General.sf3" if  SERVER else '/usr/share/fluidr3mono-gm-soundfont/FluidR3Mono_GM.sf3'
 
 if not os.path.exists(BASE_DIR+"/media"):
     os.mkdir(BASE_DIR+"/media")

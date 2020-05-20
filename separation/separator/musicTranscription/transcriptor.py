@@ -180,10 +180,8 @@ def create_transcriptions(midiV1Path, midiOutputPath, directory, instrumentName)
 
     for measure in measures:
         for note in measure:
-            if (note.pitch == 'z'):
-                s.append(m21.note.Rest(quarterLength=4 * note.duration))
-            else:
-                s.append(m21.note.Note(note.pitch, quarterLength=4 * note.duration))
+                s.append(note.note_to_m21_note())
+
 
 
     sc.insert(1, s)

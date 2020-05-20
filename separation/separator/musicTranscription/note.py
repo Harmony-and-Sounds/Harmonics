@@ -20,8 +20,19 @@ class Note:
         return note
 
     def note_to_m21_note(self):
-        note = m21.note.Note()
-
+        note = None
+        if self.pitch != "z" :
+            note = m21.note.Note()
+            note.pitch = m21.pitch.Pitch(self.pitch)
+            note.quarterLength = (4 * self.duration)
+            if self.right_tie != "":
+                note.tie = m21.tie.Tie('stop')
+            elif self.left_tie != "":
+                note.tie = m21.tie.Tie('start')
+        else :
+            note = m21.note.Rest()
+            note.quarterLength = (4 * self.duration)
+        return note
     def __str__(self):
         pitch_aux = self.get_pitch() if self.pitch != "z" else "z"
         strdur = "{}/{}".format(self.frac_duration.numerator, self.frac_duration.denominator)
@@ -52,7 +63,9 @@ def notem21_from_ABCstring(note_string):
     note.duration = m21.duration.Duration(quarterLength= 4 * eval(duration))
     if pitch != 'z' :
 
-        if left_tie != None:
+        if left_tie != None and right_tie != None:
+            note.tie = m21.tie.Tie('continue')
+        elif left_tie != None:
             note.tie = m21.tie.Tie('start')
         elif right_tie != None:
             note.tie = m21.tie.Tie('stop')
