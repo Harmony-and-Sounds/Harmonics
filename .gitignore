@@ -1,9 +1,10 @@
 
-db.sqlite3
+server/db.sqlite3
 
 *.pyc
-media/*/
+server/media/*/
 */__pycache__/
-output/*/
-separation/separator/pretrained_models/
- 
+server/output/*/
+server/separation/separator/pretrained_models/
+*/migrations/*/
+server/celerybeat-schedule
