@@ -1,0 +1,43 @@
+.navbar{
+    position: relative;
+}
+
+.logoPrincipal {
+    width: 250px;
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+    /*width: 50%;*/
+}
+
+.navbar-brand.perso {
+    margin: 0;
+    padding: 0;
+}
+
+.color {
+    background-color: black;
+}
+
+.link {
+    color: white !important;
+    font-size: larger;
+    font-weight: 450;
+}
+
+.persona {
+    width: 30px;
+    height: 30px;
+}
+
+.btn-light.colorPersona {
+    background-color: #fefefe !important;
+    width: 160px;
+    height: 45px;
+}
+
+.text-center.margen {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+  

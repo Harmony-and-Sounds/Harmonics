@@ -1,0 +1,49 @@
+.fluid-container.correcion{
+    position: relative;
+    transform: translate(0, 80px);
+}
+
+.btnDescargar {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+  float: right;
+  border-radius: 10px;
+}
+
+.btnDescargarVoz {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+   border-radius: 10px;
+}
+
+.btnEditar{
+  background-color: #ff9933;
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+   border-radius: 10px;
+}
+
+/* Darker background on mouse-over */
+.btnDescargar:hover {
+  background-color: RoyalBlue;
+
+}
+.btnDescargarVoz:hover {
+  background-color: RoyalBlue;
+
+}
+.btnEditar:hover {
+  background-color: #ff6600;
+
+}
