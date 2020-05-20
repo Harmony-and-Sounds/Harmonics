@@ -1,0 +1,5 @@
+
+
+class HarmonicsError(Exception):
+
+    pass
