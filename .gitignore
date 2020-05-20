@@ -8,3 +8,5 @@ server/output/*/
 server/separation/separator/pretrained_models/
 */migrations/*/
 server/celerybeat-schedule
+
+.idea/
