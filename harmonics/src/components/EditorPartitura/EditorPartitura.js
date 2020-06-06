@@ -24,6 +24,16 @@ import 'semantic-ui-css/components/item.min.css';
 import 'semantic-ui-css/components/checkbox.min.css';
 import 'semantic-ui-css/components/button.min.css';
 
+import Redonda from '../../recursos/Notas-iconos/RedondaIcon.png';
+import Blanca from '../../recursos/Notas-iconos/BlancaIcon.png';
+import Negra from '../../recursos/Notas-iconos/NegraIcon.png';
+import Corchea from '../../recursos/Notas-iconos/CorcheaIcon.png';
+import SemiCorchea from '../../recursos/Notas-iconos/SemicorcheaIcon.png';
+import Fusa from '../../recursos/Notas-iconos/FusaIcon.png';
+import SemiFusa from '../../recursos/Notas-iconos/SemiFusaIcon.png';
+import Puntillo from '../../recursos/Notas-iconos/Puntillo.png';
+import Ligadura from '../../recursos/Notas-iconos/Ligadura.png';
+
 function EditorPartitura(props) {
 
   const history = useHistory();
@@ -36,6 +46,7 @@ function EditorPartitura(props) {
   const [handlerInicializado, setHandlerInicializado] = useState(false);
 
   //Ayuda
+  const [mostrarAyudaEnsenansa, setMostrarAyudaEnsenansa] = useState(false);
   const [mostrarAyuda, setMostrarAyuda] = useState(false);
   const [mostrarAyudaEditarNota, setMostrarAyudaEditarNota] = useState(false);
   const [mostrarAyudaAgregarNota, setMostrarAyudaAgregarNota] = useState(false);
@@ -96,6 +107,7 @@ function EditorPartitura(props) {
 
   const handleClose = () => setMostrarEditarEncabezada(false);
   const handleCloseMostrarAyuda = () => setMostrarAyuda(false);
+  const handleCloseMostrarAyudaEnsenansa = () => setMostrarAyudaEnsenansa(false);
   const handleCloseMostrarAyudaEditarNota = () => setMostrarAyudaEditarNota(false);
   const handleCloseMostrarAyudaAgregarNota = () => setMostrarAyudaAgregarNota(false);
   const handleCloseMostrarAyudaEliminarNota = () => setMostrarAyudaEliminarNota(false);
@@ -724,6 +736,7 @@ function EditorPartitura(props) {
               <button className="btn btn-secondary" onClick={() => setMostrarEditarEncabezada(true)}>Editar Encabezado</button>
               <button className="btn btn-success" onClick={guardar}>Guardar</button>
               <button className="btn btn-warning justify-content-center" onClick={() => setMostrarAyuda(true)}><i className="fas fa-question-circle"></i></button>
+              <button className="btn btn-info justify-content-center" onClick={() => setMostrarAyudaEnsenansa(true)}><i class="fas fa-music"></i></button>
             </div>
             <div style={{paddingTop: "40px"}}>
               <Abcjs
@@ -944,6 +957,7 @@ function EditorPartitura(props) {
                         <Dropdown
                           placeholder='Ingrese la duración del silencio ...'
                           fluid
+                          scrolling={true}
                           selections='true'
                           options={Constantes.DuracionesSilencios}
                           defaultValue={(Constantes.DuracionesSilencios.find(obj => { return obj.value === duracion }) !== undefined) ? duracion : null}
@@ -1210,6 +1224,7 @@ function EditorPartitura(props) {
                           placeholder='Ingrese la duración del silencio ...'
                           fluid
                           selection
+                          scrolling={true}
                           options={Constantes.DuracionesSilencios}
                           defaultValue={(Constantes.DuracionesSilencios.find(obj => { return obj.value === duracionAgregar }) !== undefined) ? duracionAgregar : null}
                           onChange={(e, data) => editarDuracionAgregar(data.value)}
@@ -1334,6 +1349,126 @@ function EditorPartitura(props) {
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleCloseMostrarAyudaEliminarNota} >
+                    Entendido
+                  </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={mostrarAyudaEnsenansa} onHide={handleCloseMostrarAyudaEnsenansa} size="lg" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
+                <Modal.Header className="text-center" closeButton>
+                    <h2 style={{margin: "0"}} className="w-100">Ayuda elementos musicales básicos</h2>
+                </Modal.Header>
+                <Modal.Body>
+                  <h5>Notas musicales básicas</h5>
+                  <h6 style={{display: "inline-block"}}>Redonda</h6>
+                  <div className="row">
+                    <div className="col-2 align-self-center">
+                      <img src={Redonda} style={{width: "40px", height: "40px"}} alt="Redonda"/>
+                    </div>
+                    <div className="col-8 align-self-center">
+                      Figura musical que posee una duración de cuatro pulsos de negra.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Blanca</h6>
+                  <div className="row">
+                    <div className="col-2 align-self-center">
+                      <img src={Blanca} style={{width: "40px", height: "40px"}} alt="Blanca"/>
+                    </div>
+                    <div className="col-8 align-self-center">
+                      Figura musical que equivale a 1/2 del valor de la figura redonda.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Negra</h6>
+                  <div className="row">
+                    <div className="col-2 align-self-center">
+                      <img src={Negra} style={{width: "40px", height: "40px"}} alt="Negra"/>
+                    </div>
+                    <div className="col-8 align-self-center">
+                      Figura musical que equivale a 1/4 del valor de la figura redonda.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Corchea</h6>
+                  <div className="row">
+                    <div className="col-2 align-self-center">
+                      <img src={Corchea} style={{width: "40px", height: "40px"}} alt="Corchea"/>
+                    </div>
+                    <div className="col-8 align-self-center">
+                      Figura musical que equivale a 1/8 del valor de la figura redonda.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Semicorchea</h6>
+                  <div className="row">
+                    <div className="col-2 align-self-center">
+                      <img src={SemiCorchea} style={{width: "40px", height: "40px"}} alt="SemiCorchea"/>
+                    </div>
+                    <div className="col-8 align-self-center">
+                      Figura musical que equivale a 1/16 del valor de la figura redonda.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Fusa</h6>
+                  <div className="row">
+                    <div className="col-2 align-self-center">
+                      <img src={Fusa} style={{width: "40px", height: "40px"}} alt="Fusa"/>
+                    </div>
+                    <div className="col-8 align-self-center">
+                      Figura musical que equivale a 1/32 del valor de la figura redonda.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Semifusa</h6>
+                  <div className="row">
+                    <div className="col-2 align-self-center">
+                      <img src={SemiFusa} style={{width: "40px", height: "40px"}} alt="SemiFusa"/>
+                    </div>
+                    <div className="col-8 align-self-center">
+                      Figura musical que equivale a 1/64 del valor de la figura redonda.
+                    </div>
+                  </div>
+                  <h5>Elementos musicales básicas</h5>
+                  <h6 style={{display: "inline-block"}}>Puntillo</h6>
+                  <div className="row">
+                    <div className="col-2 align-self-center">
+                      <img src={Puntillo} style={{width: "40px", height: "30px"}} alt="Puntillo"/>
+                    </div>
+                    <div className="col-8 align-self-center">
+                      Aumenta la duración de la nota en donde se use, en la mitad de su valor original.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Ligadura</h6>
+                  <div className="row">
+                    <div className="col-2 align-self-center">
+                      <img src={Ligadura} style={{width: "40px", height: "30px"}} alt="Ligadura"/>
+                    </div>
+                    <div className="col-8 align-self-center">
+                      Cuando uno o varias notas están unidas por este elemento, el valor de sus figuras se suma y se ejecuta como una sola figura.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Compas</h6>
+                  <div className="row">
+                    <div className="col align-self-center">
+                      Elemento musical que nos sirve para poder escribir el ritmo de la música.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Clave</h6>
+                  <div className="row">
+                    <div className="col align-self-center">
+                      Signo cuya función es indicar la altura de la musica escrita, asignando una determinada nota a una línea del pentagrama.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Octava</h6>
+                  <div className="row">
+                    <div className="col align-self-center">
+                      Intervalo de ocho grados entre dos notas de la escala musical.
+                    </div>
+                  </div>
+                  <h6 style={{display: "inline-block"}}>Alteración</h6>
+                  <div className="row">
+                    <div className="col align-self-center">
+                      Signos que modifican la entonación o altura de una nota musical.
+                    </div>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleCloseMostrarAyudaEnsenansa} >
                     Entendido
                   </Button>
                 </Modal.Footer>
