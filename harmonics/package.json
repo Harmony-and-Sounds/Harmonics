@@ -15,7 +15,7 @@
     "font-awesome": "^4.7.0",
     "mathjs": "^6.6.4",
     "mgr-pdf-viewer-react": "^1.0.3",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-abcjs": "^0.1.3",
